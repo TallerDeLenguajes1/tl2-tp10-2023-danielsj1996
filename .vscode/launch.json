@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // Si ha cambiado las plataformas de destino, asegúrese de actualizar la ruta de acceso del programa.
-            "program": "${workspaceFolder}/bin/Debug/netcoreapp2.1/tl2-tp10-2023-danielsj1996.dll",
+            "program": "${workspaceFolder}/bin/Debug/net7.0/tl2-tp10-2023-danielsj1996.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,

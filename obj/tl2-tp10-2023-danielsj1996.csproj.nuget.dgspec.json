@@ -1,32 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {}
+    "C:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {}
   },
   "projects": {
-    "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {
+    "C:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+        "projectUniqueName": "C:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
         "projectName": "tl2-tp10-2023-danielsj1996",
-        "projectPath": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
-        "packagesPath": "C:\\Users\\Sistemas10.SISTEMAS10\\.nuget\\packages\\",
-        "outputPath": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\obj\\",
+        "projectPath": "C:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+        "packagesPath": "C:\\Users\\mama\\.nuget\\packages\\",
+        "outputPath": "C:\\tl2-tp10-2023-danielsj1996\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Sistemas10.SISTEMAS10\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\mama\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "netcoreapp2.1"
+          "net7.0"
         ],
         "sources": {
+          "C:\\Program Files\\dotnet\\sdk\\7.0.311\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "netcoreapp2.1": {
+          "net7.0": {
+            "targetAlias": "net7.0",
             "projectReferences": {}
           }
         },
@@ -37,27 +36,12 @@
         }
       },
       "frameworks": {
-        "netcoreapp2.1": {
+        "net7.0": {
+          "targetAlias": "net7.0",
           "dependencies": {
-            "Microsoft.AspNetCore.App": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.1.1, )",
-              "autoReferenced": true
-            },
-            "Microsoft.AspNetCore.Razor.Design": {
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[2.1.2, )"
-            },
             "Microsoft.AspNetCore.Session": {
               "target": "Package",
               "version": "[2.2.0, )"
-            },
-            "Microsoft.NETCore.App": {
-              "target": "Package",
-              "version": "[2.1.0, )",
-              "autoReferenced": true
             },
             "System.Data.SQLite": {
               "target": "Package",
@@ -65,10 +49,25 @@
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.311\\RuntimeIdentifierGraph.json"
         }
       }
     }

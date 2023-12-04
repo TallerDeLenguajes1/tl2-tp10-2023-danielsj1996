@@ -1,0 +1,8 @@
+C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.csproj.AssemblyReference.cache
+C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.GeneratedMSBuildEditorConfig.editorconfig
+C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.AssemblyInfoInputs.cache
+C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.AssemblyInfo.cs
+C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.csproj.CoreCompileInputs.cache
+C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.MvcApplicationPartsAssemblyInfo.cache
+C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.RazorAssemblyInfo.cache
+C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.RazorAssemblyInfo.cs

@@ -1,0 +1,59 @@
+@{
+    ViewData["Title"] = "Tareas";
+}
+
+@model List<tl2_tp10_2023_danielsj1996.ViewModels.ListarTareaViewModel>
+
+<h1>Lista de Tareas</h1>
+
+<table class="table table-grey">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Color</th>
+            <th scope="col">Id Tablero</th>
+            <th scope="col">Id Usuario Asignado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarea in Model)
+
+        {
+            <tr>
+                <td>@tarea.Id</td>
+                <td>@tarea.IdTablero</td>
+                <td>@tarea.Nombre</td>
+                <td>@tarea.Estado</td>
+                <td>@tarea.Descripcion</td>
+                <td><input type="color" value="@tarea.Color" disabled /></td>
+                <td>
+                    @if (tarea.IdUsuarioAsignado != null)
+                    {
+                        <span>@tarea.IdUsuarioAsignado</span>
+                    }
+                    else
+                    {
+                        <span>No Asignado</span>
+                    }
+                </td>
+                <td>
+                    <a asp-controller="Tarea" asp-action="EditarTarea" asp-route-idTarea="@tarea.Id">Editar</a>
+                    <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id"
+                        onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <a asp-controller="Tarea" asp-action="AgregarTarea">Agregar Tarea</a>
+        </tr>
+    </tfoot>
+</table>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
