@@ -52,7 +52,7 @@
             },
             "Microsoft.AspNetCore.Session": {
               "target": "Package",
-              "version": "(, )"
+              "version": "[2.2.0, )"
             },
             "Microsoft.NETCore.App": {
               "target": "Package",
