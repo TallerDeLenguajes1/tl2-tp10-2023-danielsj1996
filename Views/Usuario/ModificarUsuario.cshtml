@@ -1,13 +1,29 @@
-@model Usuario
-<h2>Confirmar Modificacion</h2>
-<div>
-    <p>¿Estás seguro de que deseas modificacion el nombre del usuario "@Model.NombreDeUsuario"?</p>
-</div>
-<form asp-controller="Usuario" asp-action="ConfirmarUsuario">
-    <input asp-for="IdUsuario" type="hidden" />
-    <label asp-for="NombreDeUsuario"></label>
-    <input asp-for="@Model.NombreDeUsuario" />
-    <button type="submit" class="btn btn-success">Actualizar</button>
-    <a asp-controller="Usuario" asp-action="MostrarTodosUsuarios" class="btn btn-danger">Cancelar</a>
+@{
+    ViewData["Title"] = "Modificar Usuario"
 
+}
+
+@model tl2_tp10_2023_danielsj1996.ViewModels.ModificarUsuarioViewModel
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Usuario" asp-action="ModificarUsuarioFromForm" method="post">
+    <input hidden asp-for="@Model.Id" />
+
+    <div class="form-gruop">
+        <label asp-for="@Model.NombreDeUsuario"></label>
+        <input asp-for="@Model.NombreDeUsuario" class="form-control" id="nombre" />
+        <span asp-validation-for="@Model.NombreDeUsuario" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Rol"></label>
+        <select asp-for="@Model.Rol" asp-items="Html.GetEnumSelectList<RolUsuario>()" class="form-control" />
+        <option value="">Seleccionar Rol</option>
+        </select>
+        <span asp-validation-for="@Model.Estado" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Actualizar</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

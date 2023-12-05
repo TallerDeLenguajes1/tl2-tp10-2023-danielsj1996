@@ -1,46 +1,34 @@
 @{
-    ViewData["Title"] = "Agregar Tarea";
+    ViewData["Title"] = "Modificar Tarea";
 }
+@model tl2_tp10_2023_danielsj1996.ViewModels.EditarTareaViewModel
 
-@model tl2_tp10_2023_danielsj1996.ViewModels.CrearTareaViewModel
+<h1>@ViewData["Title"]</h1>
 
-<h1>Crear Nueva Tarea</h1>
-
-<form asp-controller="Tarea" asp-action="CrearTarea" method="post">
-    <div class="form-group">
-        <label asp-for="@Model.Id"></label>
-        <input asp-for="@Model.Id" class="form-control" id="id" />
-        <span asp-validation-for="@Model.Id" class="text-danger"></span>
-    </div>
-
+<form asp-controller="Tarea" asp-action="ModificarTareaFromForm" method="post">
+    <input hidden asp-for="@Model.Id">
     <div class="form-group">
         <label asp-for="@Model.IdTablero"></label>
         <input asp-for="@Model.IdTablero" class="form-control" id="idTablero" />
         <span asp-validation-for="@Model.IdTablero" class="text-danger"></span>
     </div>
-
-
     <div class="form-group">
         <label asp-for="@Model.Nombre"></label>
         <input asp-for="@Model.Nombre" class="form-control" id="nombre" />
         <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
     </div>
-
-
     <div class="form-group">
         <label asp-for="@Model.Estado"></label>
-        <select asp-for="@Model.Estado" asp-items="Html-GetEnumSelectList<EstadoTarea>()" class="form-control" />
+        <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()" class="form-control" />
         <option value="">Seleccionar Estado</option>
         </select>
         <span asp-validation-for="@Model.Estado" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="@Model.Descripcion"></label>
         <input asp-for="@Model.Descripcion" class="form-control" id="descripcion" />
         <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
     </div>
-
     <div class="form-group">
         <label asp-for="@Model.Color"></label>
         <input asp-for="@Model.Color" class="form-control" id="color" />
@@ -48,11 +36,11 @@
     </div>
     <div class="form-group">
         <label asp-for="@Model.IdUsuarioAsignado"></label>
-        <input asp-for="@Model.IdUsuarioAsignado" class="form-control" id="idUsuarioAsignado" />
+        <input asp-for="@Model.IdUsuarioAsignado" class="form-control" id="IdUsuarioAsignado" />
         <span asp-validation-for="@Model.IdUsuarioAsignado" class="text-danger"></span>
     </div>
-    <!-- Agrega más campos según tus necesidades -->
-    <button type="submit" class="btn btn-primary">Crear</button>
+
+    <button type="submit" class="btn btn-primary" >Guardar Cambios</button>
 </form>
 
 

@@ -1,17 +1,30 @@
-@model Tablero
-<h2>Confirmar Modificacion</h2>
-<div>
-    <p>¿Estás seguro de que deseas modificacion el nombre del Tablero "@Model.NombreDeTablero"?</p>
-</div>
-<form asp-controller="Tablero" asp-action="ConfirmarTablero">
-    <input asp-for="IdTablero" type="hidden" />
-    <label asp-for="NombreDeTablero"></label>
-    <input asp-for="@Model.NombreDeTablero" />
-    <label asp-for="DescripcionDeTablero"></label>
-    <input asp-for="@Model.DescripcionDeTablero" />
-    <label asp-for="IdUsuarioPropietario"></label>
-    <input asp-for="@Model.IdUsuarioPropietario" />
-    <button type="submit" class="btn btn-success">Actualizar</button>
-    <a asp-controller="Tablero" asp-action="MostrarTodosTablero" class="btn btn-danger">Cancelar</a>
+@{
+    ViewData["Title"] = "Editar Tablero";
 
+}
+
+
+@model tl2_tp10_2023_danielsj1996.ViewModels.EditarTableroViewModel
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Tablero" asp-action="ModificarTablero" method="post">
+    <input hidden asp-for="@Model.Id" />
+    <div>
+        <label asp-for="@Model.IdUsuarioPropietario"></label>
+        <input asp-for="@Model.IdUsuarioPropietario" class="form-control" id="idUsuario" />
+        <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.Nombre"></label>
+        <input asp-for="@Model.Nombre" class="form-control" id="nombre" />
+        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="@Model.Descripcion"></label>
+        <input asp-for="@Model.Descripcion" class="form-control" id="descripcion" />
+        <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Modificar</button>
 </form>
+
+@section Scripts {<partial name="_ValidationScriptsPartial"/>}

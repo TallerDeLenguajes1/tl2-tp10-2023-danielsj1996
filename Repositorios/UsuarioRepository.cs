@@ -19,27 +19,38 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 {
                     while (reader.Read())
                     {
-                        var usuario = new Usuario();
-                        user.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
-                        user.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
-                        listaDeUsuarios.Add(user);
+                        var nuevoUsuario = new Usuario();
+                        nuevoUsuario.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
+                        nuevoUsuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                        listaDeUsuarios.Add(nuevoUsuario);
                     }
                 }
                 connection.Close();
+            }
+            if (listaDeUsuarios == null)
+            {
+                throw new Exception("Lista de Usuarios no encontrada.");
             }
             return listaDeUsuarios;
         }
         public void CrearUsuario(Usuario nuevoUsuario)
         {
-            var query = "INSERT INTO Usuario (nombre_de_usuario) VALUES(@nombre_de_usuario)";
+            var query = "INSERT INTO Usuario (id,nombre_de_usuario) VALUES(@Id,@nombre_de_usuario)";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@Id", nuevoUsuario.IdUsuario));
                 command.Parameters.Add(new SQLiteParameter("@nombre_de_usuario", nuevoUsuario.NombreDeUsuario));
                 command.ExecuteNonQuery();
                 connection.Close();
             }
+
+            if (nuevoUsuario==null)
+            {
+                throw new Exception("El Usuario no se creo correctamente");
+            }
+            
         }
 
 

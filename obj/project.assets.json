@@ -1194,7 +1194,6 @@
       "path": "runtime.win-arm64.runtime.native.system.data.sqlclient.sni/4.4.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
@@ -1210,7 +1209,6 @@
       "path": "runtime.win-x64.runtime.native.system.data.sqlclient.sni/4.4.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
@@ -1226,7 +1224,6 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
@@ -1963,25 +1960,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\mama\\.nuget\\packages\\": {}
+    "C:\\Users\\Sistemas10.SISTEMAS10\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+      "projectUniqueName": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
       "projectName": "tl2-tp10-2023-danielsj1996",
-      "projectPath": "C:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
-      "packagesPath": "C:\\Users\\mama\\.nuget\\packages\\",
-      "outputPath": "C:\\tl2-tp10-2023-danielsj1996\\obj\\",
+      "projectPath": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+      "packagesPath": "C:\\Users\\Sistemas10.SISTEMAS10\\.nuget\\packages\\",
+      "outputPath": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "C:\\Users\\mama\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Sistemas10.SISTEMAS10\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files\\dotnet\\sdk\\7.0.311\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -2020,6 +2020,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[7.0.14, 7.0.14]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[7.0.14, 7.0.14]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[7.0.14, 7.0.14]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[7.0.14, 7.0.14]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -2028,7 +2046,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.311\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

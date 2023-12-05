@@ -1,0 +1,29 @@
+@{
+    ViewData["Title"] = "Asignar Tarea";
+
+}
+
+@model tl2_tp10_2023_danielsj1996.ViewModels.AsignarTareaViewModel
+
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Tarea" asp-action="AsignarTareaFromForm" method="post">
+
+    <input hidden asp-for="@Model.Id">
+    <input hidden asp-for="@Model.IdTablero">
+    <input hidden asp-for="@Model.Nombre">
+    <input hidden asp-for="@Model.EStado">
+    <input hidden asp-for="@Model.Descripcion">
+    <input hidden asp-for="@Model.Color">
+    <div class="form-group">
+        <label asp-for="@Model.IdUsuarioAsignado"></label>
+        <input asp-for="@Model.IdUsuarioAsignado" class="form-control" id="idUsuarioAsignado">
+        <span asp-validation-for="@Model.IdUsuarioAsignado" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Confirmar</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

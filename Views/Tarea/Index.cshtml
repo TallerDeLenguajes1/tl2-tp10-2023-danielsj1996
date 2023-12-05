@@ -9,13 +9,13 @@
 <table class="table table-grey">
     <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripción</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Color</th>
-            <th scope="col">Id Tablero</th>
-            <th scope="col">Id Usuario Asignado</th>
+            <th hidden>Id</th>
+            <th>Id Tablero</th>
+            <th>Nombre</th>
+            <th>Estado</th>
+            <th>Descripción</th>
+            <th>Color</th>
+            <th>Id Usuario Asignado</th>
         </tr>
     </thead>
     <tbody>
@@ -23,26 +23,19 @@
 
         {
             <tr>
-                <td>@tarea.Id</td>
+                <td hidden>@tarea.Id</td>
                 <td>@tarea.IdTablero</td>
                 <td>@tarea.Nombre</td>
                 <td>@tarea.Estado</td>
                 <td>@tarea.Descripcion</td>
-                <td><input type="color" value="@tarea.Color" disabled /></td>
-                <td>
-                    @if (tarea.IdUsuarioAsignado != null)
-                    {
-                        <span>@tarea.IdUsuarioAsignado</span>
-                    }
-                    else
-                    {
-                        <span>No Asignado</span>
-                    }
-                </td>
+                <td>@tarea.Color</td>
+                <td>@tarea.IdUsuarioAsignado</td>
                 <td>
                     <a asp-controller="Tarea" asp-action="EditarTarea" asp-route-idTarea="@tarea.Id">Editar</a>
+                    <a asp-controller="Tarea" asp-action="AsignarTareaUsuario" asp-route-idTarea="@tarea.Id">Asignar Usuario
+                        a Tarea</a>
                     <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id"
-                        onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>
+                        onclick=" return confirm('¿Estas seguro que quieres eliminar la Tarea?')">Eliminar</a>
                 </td>
 
             </tr>

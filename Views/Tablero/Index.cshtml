@@ -1,22 +1,53 @@
 @{
     ViewData["Title"] = "Tablero";
 }
+@model List<tl2_tp10_2023_danielsj1996.ViewModels.ListarTableroViewModel>
+
+<h2>Lista de Tableros</h2>
 
 <div class="text-start">
-    <h2 class="text-center">Opciones de Tablero</h2>
-    <ol>
-        <li>
-            <a asp-controller="Tablero" asp-action="MostrarTodosTablero">Mostrar Todos los Tablero</a>
-        </li>
-        <li>
-            <a asp-controller="Tablero" asp-action="BuscarTableroPorID">BuscarTableroPorID</a>
-        </li>
-        <li>
-            <a asp-controller="Tablero" asp-action="Buscar">BuscarTablerosPorIdUsuarioEspecifico</a>
-        </li>
-        <li>
-            <a asp-controller="Tablero" asp-action="EliminarTablero">Eliminar Tablero</a>
-        </li>
-    </ol>
+    <table>
+        <thead>
+            <tr>
+                <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero=null>Ver Tareas</a>
+            </tr>
+            <tr>
+                <th hidden>Id</th>
+                <th>IdUsuarioPropietario</th>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tablero in Model)
+            {
 
-</div>
+                <tr>
+                    <td hidden>@tablero.Id</td>
+                    <td>@tablero.IdUsuarioPropietario</td>
+                    <td>@tablero.Nombre</td>
+                    <td>@tablero.Descripcion</td>
+                    <td>
+
+                        <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">Ver Tareas del
+                            Tablero</a>
+                        <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Ver Tareas
+                            del Tablero</a>
+                        <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id"
+                            onclick="return confirm('¿Estas seguro de eliminar el Tablero?')">Eliminar Tablero</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <a asp-controller="Tablero" asp-action="AgregarTablero"> AgregarTablero
+            </tr>
+
+        </tfoot>
+
+
+    </table>
+
+@section Scripts {<partial name="_ValidationScriptsPartial"/>}

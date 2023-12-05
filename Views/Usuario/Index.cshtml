@@ -2,14 +2,52 @@
     ViewData["Title"] = "Usuarios";
 }
 
-<div class="text-center">
-    <h2>Opciones de Usuarios</h2>
+@model List<tl2_tp10_2023_danielsj1996.ViewModels.ListarUsuarioViewModel>
 
-    <ol>
-        <li><a asp-controller="Usuario" asp-action="MostrarTodosUsuarios">Mostrar Todos los Usuarios</a></li>
-        <li><a asp-controller="Usuario" asp-action="AgregarUsuario">Crear Usuario</a></li>
-        <li><a asp-controller="Usuario" asp-action="ModificarUsuario">Modificar Usuario</a></li>
-        <li><a asp-controller="Usuario" asp-action="EliminarUsuario">Eliminar Usuario</a></li>
-    </ol>
 
-</div>
+<h2>Lista de Usuarios</h2>
+
+<table>
+
+    <thead>
+        <tr>
+            <a asp-controller="Tablero" asp-action="Index" asp-route-idUSuario=null>Ver Tableros de Todos los
+                Usuarios</a>
+        </tr>
+        <tr>
+            <th hidden>ID</th>
+            <th>Nombre</th>
+            <th>Rol</th>
+            <th></th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td hidden>@usuario.Id</td>
+                <td>@usuario.Nombre</td>
+                <td>
+                    <a asp-controller="Tablero" asp-action="Index" asp-route-idUsuario="@usuario.Id">Ver Tableros del
+                        Usuario</a>
+                    <a asp-controller="Usuario" asp-action="ModificarUsuario">Modificar</a>
+                    <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-idUsuario="@usuario.Id"
+                        onclick="return confirm('¿Estas seguro de eliminar este Usuario?')">Eliminar</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <a asp-controller="Usuario" asp-action="AgregarUsuario">Agregar Usuario</a>
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

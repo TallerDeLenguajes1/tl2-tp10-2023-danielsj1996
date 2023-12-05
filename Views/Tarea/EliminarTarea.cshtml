@@ -6,9 +6,7 @@
 
 <h1>Eliminar Tarea</h1>
 
-<p>¿Estás seguro de que deseas eliminar la tarea "@Model.NombreTarea"?</p>
-
-<form asp-controller="Tarea" asp-action="Eliminar" method="post">
-    <input type="hidden" asp-for="IdTarea" />
+<form asp-controller="Tarea" asp-action="EliminarTarea" method="post">
+    <input type="hidden" asp-for="@Model.Id" />
     <button type="submit" class="btn btn-danger">Eliminar</button>
 </form>

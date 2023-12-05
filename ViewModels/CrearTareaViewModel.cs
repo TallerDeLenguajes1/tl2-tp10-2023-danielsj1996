@@ -3,13 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace tl2_tp10_2023_danielsj1996.ViewModels;
 using tl2_tp10_2023_danielsj1996.Models;
-/*public enum EstadoTarea{
-  Ideas=1, 
-  ToDo=2, 
-  Doing=3, 
-  Review=4, 
-  Done=5
-}*/
+
 public class CrearTareaViewModel{
     private int? id;
     [Required(ErrorMessage = "Este campo es requerido.")]

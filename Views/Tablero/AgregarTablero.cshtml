@@ -1,11 +1,34 @@
-@model Tablero
-<form asp-controller="Tablero" asp-action="AgregarTablero">
-    <label asp-for="NombreDeTablero"></label>
-    <input asp-for="NombreDeTablero" />
-    <label asp-for="DescripcionDeTablero"></label>
-    <input asp-for="DescripcionDeTablero" />
-    <label asp-for="IdUsuarioPropietario"></label>
-    <input asp-for="IdUsuarioPropietario" />
-    <button type="submit" class="btn btn-success"
-        onclick="return confirm('¿Estás seguro de crear el usuario?')">Agregar</button>
+@model tl2_tp10_2023_danielsj1996.ViewModels.CrearTableroViewModel
+
+
+<h1>@ViewData["Title"]</h1>
+<form asp-controller="Tablero" asp-action="AgregarTablero" method="post">
+    <div class="form-group">
+        <label asp-for="@Model.Id"></label>
+        <input asp-for="@Model.Id" class="form-control" id="id" />
+        <span asp-validation-for="@Model.Id" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.IdUsuarioPropietario"></label>
+        <input asp-for="@Model.IdUsuarioPropietario" class="form-control" id="id" />
+        <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Nombre"></label>
+        <input asp-for="@Model.Nombre" class="form-control" id="id" />
+        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Descripcion"></label>
+        <input asp-for="@Model.Descripcion" class="form-control" id="id" />
+        <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+
+    </div>
+    <button type="submit" class="btn btn-success">Agregar</button>
+
 </form>
+
+@section Scripts {<partial name="_ValidationScriptsPartial"/>}
