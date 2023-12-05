@@ -46,11 +46,11 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 connection.Close();
             }
 
-            if (nuevoUsuario==null)
+            if (nuevoUsuario == null)
             {
                 throw new Exception("El Usuario no se creo correctamente");
             }
-            
+
         }
 
 
@@ -58,13 +58,13 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public Usuario TraerUsuarioPorId(int idRecibe)
         {
             var query = "SELECT * FROM Usuario WHERE id_usuario = @id_usuario";
+            var usuario = new Usuario();
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
                 command.Parameters.Add(new SQLiteParameter("@id_usuario", idRecibe));
 
-                var usuario = new Usuario();
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -73,9 +73,13 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         usuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
                     }
                     connection.Close();
-                    return usuario;
+                }
+                if (usuario == null)
+                {
+                    throw new Exception("El Usuario no está creado");
                 }
             }
+            return usuario;
         }
 
         public void EliminarUsuarioPorId(int idRecibe)
@@ -86,8 +90,13 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
                 command.Parameters.Add(new SQLiteParameter("@id_usuario", idRecibe));
-                command.ExecuteNonQuery();
+                int usuariobusc = command.ExecuteNonQuery();
                 connection.Close();
+                if (usuariobusc == 0)
+                {
+                    throw new Exception("No se encontró ningun usuario con el ID indicado.");
+                }
+
             }
         }
 
@@ -100,8 +109,12 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 var command = new SQLiteCommand(query, connection);
                 command.Parameters.Add(new SQLiteParameter("@nombre_de_usuario", nuevoUsuario.NombreDeUsuario));
                 command.Parameters.Add(new SQLiteParameter("@id_usuario", idRecibe));
-                command.ExecuteNonQuery();
+                int usuariobusc = command.ExecuteNonQuery();
                 connection.Close();
+                if (usuariobusc == 0)
+                {
+                    throw new Exception("No se encontró ningun usuario con el ID indicado.");
+                }
             }
         }
 
