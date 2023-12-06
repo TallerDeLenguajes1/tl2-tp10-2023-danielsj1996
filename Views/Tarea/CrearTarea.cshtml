@@ -6,7 +6,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-controller="Tarea" asp-action="CrearTarea" method="post">
+<form asp-controller="Tarea" asp-action="CrearTareaFromForm" method="post">
     <div class="form-group">
         <label asp-for="@Model.Id"></label>
         <input asp-for="@Model.Id" class="form-control" id="id" />
@@ -29,7 +29,7 @@
 
     <div class="form-group">
         <label asp-for="@Model.Estado"></label>
-        <select asp-for="@Model.Estado" asp-items="Html-GetEnumSelectList<EstadoTarea>()" class="form-control" />
+        <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTarea>()" class="form-control" />
         <option value="">Seleccionar Estado</option>
         </select>
         <span asp-validation-for="@Model.Estado" class="text-danger"></span>

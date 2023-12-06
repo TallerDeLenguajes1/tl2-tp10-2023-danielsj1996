@@ -7,7 +7,7 @@
 @model tl2_tp10_2023_danielsj1996.ViewModels.EditarTableroViewModel
 <h1>@ViewData["Title"]</h1>
 
-<form asp-controller="Tablero" asp-action="ModificarTablero" method="post">
+<form asp-controller="Tablero" asp-action="ModificarTableroFromForm" method="post">
     <input hidden asp-for="@Model.Id" />
     <div>
         <label asp-for="@Model.IdUsuarioPropietario"></label>

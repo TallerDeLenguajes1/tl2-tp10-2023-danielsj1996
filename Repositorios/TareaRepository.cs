@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SQLite;
+using System.Diagnostics;
 using tl2_tp10_2023_danielsj1996.Models;
 
 namespace tl2_tp10_2023_danielsj1996.Repositorios;
@@ -25,7 +27,15 @@ public class TareaRepository : ITareaRepository
             command.Parameters.Add(new SQLiteParameter("@idUsuarioAsignado", nuevaTarea.IdUsuarioAsignado));
             command.ExecuteNonQuery();
             connection.Close();
+        }
+        if (nuevaTarea == null)
+        {
+            throw new Exception("La Tarea no pudo ser Creada correctamente");
+        }
+        else
+        {
             return nuevaTarea;
+
         }
     }
 
@@ -45,9 +55,16 @@ public class TareaRepository : ITareaRepository
             command.Parameters.Add(new SQLiteParameter("@colorTarea", tareaModificada.Color));
             command.Parameters.Add(new SQLiteParameter("@idUsuarioAsignado", tareaModificada.IdUsuarioAsignado));
             command.Parameters.Add(new SQLiteParameter("@idTarea", idTarea));
-            command.ExecuteNonQuery();
+
+            int filaAfectada = command.ExecuteNonQuery();
             connection.Close();
+            if (filaAfectada == 0)
+            {
+                throw new Exception("No se encontró ninguna tarea con el ID proporcionado");
+            }
+
         }
+
         return tareaModificada;
     }
     public List<Tarea> ListarTareas()
@@ -90,6 +107,7 @@ public class TareaRepository : ITareaRepository
     public Tarea ObtenerTareaPorId(int idTarea)
     {
         var query = "SELECT * FROM Tarea WHERE id_tarea = @idTarea;";
+        Tarea tarea = new Tarea();
         using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
         {
             connection.Open();
@@ -100,30 +118,26 @@ public class TareaRepository : ITareaRepository
             {
                 while (reader.Read())
                 {
-                    var tarea = new Tarea();
                     tarea.IdTarea = Convert.ToInt32(reader["id_tarea"]);
                     tarea.IdTablero = Convert.ToInt32(reader["id_tablero"]);
                     tarea.NombreTarea = reader["nombre_tarea"].ToString();
                     tarea.DescripcionTarea = reader["descripcion_tarea"].ToString();
                     tarea.Color = reader["color_tarea"].ToString();
                     tarea.EstadoTarea = (EstadoTarea)Enum.Parse(typeof(EstadoTarea), reader["estado_tarea"].ToString());
-                    // Verificar si IdUsuarioAsignado es nulo en la base de datos
-                    if (reader.IsDBNull(reader.GetOrdinal("id_usuario_asignado")))
-                    {
-                        tarea.IdUsuarioAsignado = null; // Asignar null si es nulo en la base de datos
-                    }
-                    else
-                    {
-                        tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
-                    }
+                    tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
 
-                    return tarea;
                 }
             }
             connection.Close();
         }
-
-        return null;
+        if (tarea == null)
+        {
+            throw new Exception("La tarea no està creada");
+        }
+        else
+        {
+            return tarea;
+        }
     }
 
 
@@ -153,7 +167,14 @@ public class TareaRepository : ITareaRepository
             }
             connection.Close();
         }
-        return listaDeTareas;
+        if (listaDeTareas == null)
+        {
+            throw new Exception("El usuario proporcionado no tiene Tareas asignadas");
+        }
+        else
+        {
+            return listaDeTareas;
+        }
     }
 
     public List<Tarea> ListarTareasDeTablero(int idTablero)
@@ -182,7 +203,17 @@ public class TareaRepository : ITareaRepository
             }
             connection.Close();
         }
-        return listaDeTareas;
+        if (listaDeTareas == null)
+        {
+            throw new Exception("El tablero proporcionado no tiene tareas asignadas");
+
+        }
+        else
+        {
+            return listaDeTareas;
+
+        }
+
     }
 
 
@@ -194,9 +225,14 @@ public class TareaRepository : ITareaRepository
             connection.Open();
             var command = new SQLiteCommand(query, connection);
             command.Parameters.Add(new SQLiteParameter("@idTarea", idTarea));
-            command.ExecuteNonQuery();
+            int filaAfectada = command.ExecuteNonQuery();
             connection.Close();
+            if (filaAfectada == 0)
+            {
+                throw new Exception("No se encontrò ninguna Tarea con el ID solicitado");
+            }
         }
+
     }
 
     public void AsignarUsuarioATarea(int idUsuario, int idTarea)
@@ -210,9 +246,13 @@ public class TareaRepository : ITareaRepository
             {
                 command.Parameters.AddWithValue("@idUsuario", idUsuario);
                 command.Parameters.AddWithValue("@idTarea", idTarea);
-                command.ExecuteNonQuery();
+                int filaAfectada = command.ExecuteNonQuery();
+                connection.Close();
+                if (filaAfectada == 0)
+                {
+                    throw new Exception("No se encontro ninguna Tarea con el ID proporcionado");
+                }
             }
-            connection.Close();
         }
     }
 

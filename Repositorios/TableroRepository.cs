@@ -9,16 +9,21 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 
         public void CrearTablero(Tablero nuevoTablero)
         {
-            var query = "INSERT INTO Tablero (id_usuario_propietario, nombre_tablero, descripcion_tablero) VALUES (@idPropietario, @nombreTablero, @descripTablero);";
+            var query = "INSERT INTO Tablero (id,id_usuario_propietario, nombre_tablero, descripcion_tablero) VALUES (@idTablero,@idPropietario, @nombreTablero, @descripTablero);";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idTablero", nuevoTablero.IdTablero));
                 command.Parameters.Add(new SQLiteParameter("@idPropietario", nuevoTablero.IdUsuarioPropietario));
                 command.Parameters.Add(new SQLiteParameter("@nombreTablero", nuevoTablero.NombreDeTablero));
                 command.Parameters.Add(new SQLiteParameter("@descripTablero", nuevoTablero.DescripcionDeTablero));
                 command.ExecuteNonQuery();
                 connection.Close();
+            }
+            if (nuevoTablero == null)
+            {
+                throw new Exception("El Tablero no se pudo crear,revise los datos e intente nuevamente");
             }
         }
 
@@ -27,24 +32,19 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             var query = "DELETE FROM Tablero WHERE id_tablero = @idRecibe";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
-                try
-                {
-                    connection.Open();
-                    var command = new SQLiteCommand(query, connection);
-                    command.Parameters.Add(new SQLiteParameter("@idRecibe", idRecibe));
-                    command.ExecuteNonQuery();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error al eliminar el tablero: " + ex.Message);
 
-                }
-                finally
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idRecibe", idRecibe));
+                int filaAfectada = command.ExecuteNonQuery();
+                connection.Close();
+                if (filaAfectada == 0)
                 {
-                    connection.Close(); // Asegúrate de cerrar la conexión en el bloque finally
+                    throw new Exception("No se encontró ningun tablero con el ID proporcionado");
                 }
             }
         }
+
 
         public List<Tablero> ListarTablerosDeUsuarioEspecifico(int idUsuario)
         {
@@ -61,17 +61,20 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 {
                     while (reader.Read())
                     {
-                        var tablero = new Tablero
-                        {
-                            IdTablero = Convert.ToInt32(reader["id_tablero"]),
-                            NombreDeTablero = reader["nombre_tablero"].ToString(),
-                            DescripcionDeTablero = reader["descripcion_tablero"].ToString(),
-                            IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"])
-                        };
+                        var tablero = new Tablero();
+
+                        tablero.IdTablero = Convert.ToInt32(reader["id_tablero"]);
+                        tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
+                        tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
                         tableros.Add(tablero);
                     }
-                    return tableros;
+
                 }
+                if (tableros == null)
+                {
+                    throw new Exception("El usuario Solicitado no tiene Tableros asignados");
+                }
+                return tableros;
             }
 
         }
@@ -88,15 +91,19 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 {
                     while (reader.Read())
                     {
-                        var tabler = new Tablero();
-                        tabler.IdTablero = Convert.ToInt32(reader["id_tablero"]);
-                        tabler.NombreDeTablero = reader["nombre_tablero"].ToString();
-                        tabler.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
-                        tabler.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
-                        listaDeTablero.Add(tabler);
+                        var tablero = new Tablero();
+                        tablero.IdTablero = Convert.ToInt32(reader["id_tablero"]);
+                        tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
+                        tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
+                        tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                        listaDeTablero.Add(tablero);
                     }
                 }
                 connection.Close();
+            }
+            if (listaDeTablero == null)
+            {
+                throw new Exception("Lista de Tableros no encontrada o Vacìa");
             }
             return listaDeTablero;
         }
@@ -112,14 +119,19 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 command.Parameters.Add(new SQLiteParameter("@nombreTablero", modificarTablero.NombreDeTablero));
                 command.Parameters.Add(new SQLiteParameter("@descripTablero", modificarTablero.DescripcionDeTablero));
                 command.Parameters.Add(new SQLiteParameter("@idRecibe", idRecibe));
-                command.ExecuteNonQuery();
+                int filaAfectada = command.ExecuteNonQuery();
                 connection.Close();
+                if (filaAfectada == 0)
+                {
+                    throw new Exception("No se encontrò ningun tablero con el ID solicitado");
+                }
             }
         }
 
-        public Tablero TreaerTableroPorId(int idTablero)
+        public Tablero ObtenerTableroPorId(int idTablero)
         {
             var query = "SELECT * FROM Tablero WHERE id_tablero = @idTablero;";
+            Tablero tablero = new Tablero();
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
@@ -127,21 +139,24 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 command.Parameters.Add(new SQLiteParameter("@idTablero", idTablero));
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        var tablero = new Tablero
-                        {
-                            IdTablero = Convert.ToInt32(reader["id_tablero"]),
-                            NombreDeTablero = reader["nombre_tablero"].ToString(),
-                            DescripcionDeTablero = reader["descripcion_tablero"].ToString(),
-                            IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"])
-                        };
-                        return tablero;
+
+                        tablero.IdTablero = Convert.ToInt32(reader["id_tablero"]);
+                        tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
+                        tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
+                        tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
                     }
-                    connection.Close();
                 }
+                connection.Close();
             }
-            return null; // Devuelve null si no se encuentra el tablero con el ID especificado
+            if (tablero == null)
+            {
+                throw new Exception("El tablero no está creado");
+
+            }
+            return tablero;
         }
+
     }
 }

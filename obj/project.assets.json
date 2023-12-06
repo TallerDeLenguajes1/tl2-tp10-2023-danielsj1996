@@ -1960,23 +1960,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Sistemas10.SISTEMAS10\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\Usuariodgc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+      "projectUniqueName": "C:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
       "projectName": "tl2-tp10-2023-danielsj1996",
-      "projectPath": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
-      "packagesPath": "C:\\Users\\Sistemas10.SISTEMAS10\\.nuget\\packages\\",
-      "outputPath": "H:\\Documentos\\daniel\\tl2-tp10-2023-danielsj1996\\obj\\",
+      "projectPath": "C:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+      "packagesPath": "C:\\Users\\Usuariodgc\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Sistemas10.SISTEMAS10\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Usuariodgc\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -2020,24 +2016,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.14, 7.0.14]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"

@@ -9,107 +9,107 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = tl2-tp10-2023-danielsj1996
 build_property.RootNamespace = tl2-tp10-2023-danielsj1996
-build_property.ProjectDir = H:\Documentos\daniel\tl2-tp10-2023-danielsj1996\
+build_property.ProjectDir = C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = H:\Documentos\daniel\tl2-tp10-2023-danielsj1996
+build_property.MSBuildProjectDirectory = C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996
 build_property._RazorSourceGeneratorDebug = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Home/About.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Home/About.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBYm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Home/Contact.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Home/Contact.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb250YWN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Home/Index.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Home/Privacy.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Login/Index.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Shared/Error.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Shared/_CookieConsentPartial.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Shared/_CookieConsentPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Db29raWVDb25zZW50UGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tablero/AgregarTablero.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tablero/AgregarTablero.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xBZ3JlZ2FyVGFibGVyby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tablero/EliminarTablero.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tablero/EliminarTablero.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xFbGltaW5hclRhYmxlcm8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tablero/Index.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tablero/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tablero/ModificarTablero.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tablero/ModificarTablero.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVyb1xNb2RpZmljYXJUYWJsZXJvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/AsignarUsuarioaTarea.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/AsignarUsuarioaTarea.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcQXNpZ25hclVzdWFyaW9hVGFyZWEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/CrearTarea.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/CrearTarea.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcQ3JlYXJUYXJlYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/EliminarTarea.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/EliminarTarea.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcRWxpbWluYXJUYXJlYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/Index.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/ModificarTarea.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Tarea/ModificarTarea.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFyZWFcTW9kaWZpY2FyVGFyZWEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Usuario/AgregarUsuario.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Usuario/AgregarUsuario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xBZ3JlZ2FyVXN1YXJpby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Usuario/EliminarUsuario.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Usuario/EliminarUsuario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xFbGltaW5hclVzdWFyaW8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Usuario/Index.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Usuario/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Usuario/ModificarUsuario.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Usuario/ModificarUsuario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xNb2RpZmljYXJVc3VhcmlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/_ViewImports.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/_ViewStart.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[H:/Documentos/daniel/tl2-tp10-2023-danielsj1996/Views/Shared/_Layout.cshtml]
+[C:/Users/Usuariodgc/Documents/daniel/tl2-tp10-2023-danielsj1996/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-pmnzwpx0ll
