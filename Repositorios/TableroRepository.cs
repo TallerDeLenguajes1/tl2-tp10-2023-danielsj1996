@@ -27,58 +27,6 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             }
         }
 
-        public void EliminarTableroPorId(int idRecibe)
-        {
-            var query = "DELETE FROM Tablero WHERE id_tablero = @idRecibe";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
-            {
-
-                connection.Open();
-                var command = new SQLiteCommand(query, connection);
-                command.Parameters.Add(new SQLiteParameter("@idRecibe", idRecibe));
-                int filaAfectada = command.ExecuteNonQuery();
-                connection.Close();
-                if (filaAfectada == 0)
-                {
-                    throw new Exception("No se encontró ningun tablero con el ID proporcionado");
-                }
-            }
-        }
-
-
-        public List<Tablero> ListarTablerosDeUsuarioEspecifico(int idUsuario)
-        {
-            var query = "SELECT * FROM Tablero WHERE id_usuario_propietario = @idUsuario;";
-            List<Tablero> tableros = new List<Tablero>();
-
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
-            {
-                connection.Open();
-                var command = new SQLiteCommand(query, connection);
-                command.Parameters.Add(new SQLiteParameter("@idUsuario", idUsuario));
-
-                using (SQLiteDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        var tablero = new Tablero();
-
-                        tablero.IdTablero = Convert.ToInt32(reader["id_tablero"]);
-                        tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
-                        tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
-                        tableros.Add(tablero);
-                    }
-
-                }
-                if (tableros == null)
-                {
-                    throw new Exception("El usuario Solicitado no tiene Tableros asignados");
-                }
-                return tableros;
-            }
-
-        }
-
         public List<Tablero> ListarTodosTableros()
         {
             var query = "SELECT * FROM Tablero";
@@ -108,27 +56,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             return listaDeTablero;
         }
 
-        public void ModificarTablero(int idRecibe, Tablero modificarTablero)
-        {
-            var query = "UPDATE Tablero SET id_usuario_propietario = @idPropietario, nombre_tablero = @nombreTablero, descripcion_tablero = @descripTablero WHERE id_tablero = @idRecibe;";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
-            {
-                connection.Open();
-                var command = new SQLiteCommand(query, connection);
-                command.Parameters.Add(new SQLiteParameter("@idPropietario", modificarTablero.IdUsuarioPropietario));
-                command.Parameters.Add(new SQLiteParameter("@nombreTablero", modificarTablero.NombreDeTablero));
-                command.Parameters.Add(new SQLiteParameter("@descripTablero", modificarTablero.DescripcionDeTablero));
-                command.Parameters.Add(new SQLiteParameter("@idRecibe", idRecibe));
-                int filaAfectada = command.ExecuteNonQuery();
-                connection.Close();
-                if (filaAfectada == 0)
-                {
-                    throw new Exception("No se encontrò ningun tablero con el ID solicitado");
-                }
-            }
-        }
-
-        public Tablero ObtenerTableroPorId(int idTablero)
+        public Tablero ObtenerTableroPorId(int? idTablero)
         {
             var query = "SELECT * FROM Tablero WHERE id_tablero = @idTablero;";
             Tablero tablero = new Tablero();
@@ -157,6 +85,76 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             }
             return tablero;
         }
+        public void EliminarTableroPorId(int? idRecibe)
+        {
+            var query = "DELETE FROM Tablero WHERE id_tablero = @idRecibe";
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idRecibe", idRecibe));
+                int filaAfectada = command.ExecuteNonQuery();
+                connection.Close();
+                if (filaAfectada == 0)
+                {
+                    throw new Exception("No se encontró ningun tablero con el ID proporcionado");
+                }
+            }
+        }
+        public void ModificarTablero(Tablero modificarTablero)
+        {
+            var query = "UPDATE Tablero SET id_usuario_propietario = @idPropietario, nombre_tablero = @nombreTablero, descripcion_tablero = @descripTablero WHERE id_tablero = @idTablero;";
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idTablero", modificarTablero.IdTablero));
+                command.Parameters.Add(new SQLiteParameter("@idPropietario", modificarTablero.IdUsuarioPropietario));
+                command.Parameters.Add(new SQLiteParameter("@nombreTablero", modificarTablero.NombreDeTablero));
+                command.Parameters.Add(new SQLiteParameter("@descripTablero", modificarTablero.DescripcionDeTablero));
+                int filaAfectada = command.ExecuteNonQuery();
+                connection.Close();
+                if (filaAfectada == 0)
+                {
+                    throw new Exception("No se encontrò ningun tablero con el ID solicitado");
+                }
+            }
+        }
+        public List<Tablero> ListarTablerosDeUsuarioEspecifico(int? idUsuario)
+        {
+            var query = "SELECT * FROM Tablero WHERE id_usuario_propietario = @idUsuario;";
+            List<Tablero> tableros = new List<Tablero>();
+
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idUsuario", idUsuario));
+
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var tablero = new Tablero();
+
+                        tablero.IdTablero = Convert.ToInt32(reader["id_tablero"]);
+                        tablero.IdTablero = Convert.ToInt32(reader["id_usuario_propietario"]);
+                        tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
+                        tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
+                        tableros.Add(tablero);
+                    }
+
+                }
+                if (tableros == null)
+                {
+                    throw new Exception("El usuario Solicitado no tiene Tableros asignados");
+                }
+                return tableros;
+            }
+
+        }
+
 
     }
 }

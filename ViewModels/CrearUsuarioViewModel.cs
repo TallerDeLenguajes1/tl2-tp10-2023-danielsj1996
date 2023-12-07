@@ -14,10 +14,4 @@ public class CrearUsuarioViewModel
     [Display(Name = "Nombre")]
     public string? Nombre { get => nombre; set => nombre = value; }
 
-    private RolUsuario rol;
-    [Required(ErrorMessage = "Este Campo es Requerido")]
-    [Display(Name = "Rol")]
-    public RolUsuario Rol { get => rol; set => rol = value; }
-
-
-}
+   }

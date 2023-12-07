@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using tl2_tp10_2023_danielsj1996.Models;
 using tl2_tp10_2023_danielsj1996.Repositorios;
+using tl2_tp10_2023_danielsj1996.ViewModels;
 
 namespace tl2_tp10_2023_danielsj1996.Controllers
 {
@@ -16,76 +17,211 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             repo = tareaRepo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? idTablero)
         {
-            List<Tarea> tareas = null;
-            if (!isLogin()) return RedirectToAction("Index", "Login");
-            if (isAdmin())
+            try
             {
-                tareas = repo.ListarTareas();
+
+                List<Tarea> tareas = null;
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                if (isAdmin())
+                {
+                    tareas = repo.ListarTareas();
+                }
+                else if (idTablero.HasValue)
+                {
+                    tareas = repo.ListarTareasDeTablero(idTablero);
+                }
+                else
+                {
+                    return NotFound();
+                }
+                List<ListarTareaViewModel> listarTareasVM = ListarTareaViewModel.FromTarea(tareas);
+                return View(listarTareasVM);
             }
-            return View(todasLasTareas);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
         }
 
 
-        public IActionResult Crear()
+        [HttpGet]
+        public IActionResult CrearTarea()
         {
-            return View();
+            try
+            {
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                CrearTareaViewModel nuevaTareaVM = new CrearTareaViewModel();
+                return View(nuevaTareaVM);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+
         }
 
         [HttpPost]
-        public IActionResult Crear(Tarea nuevaTarea)
+        public IActionResult CrearTareaFromForm([FromForm] CrearTareaViewModel nuevaTareaVM)
         {
-            tareaRepository.CrearTarea(nuevaTarea.IdTablero, nuevaTarea);
-            return RedirectToAction("Index");
+            try
+            {
+                if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                Tarea nuevaTarea = Tarea.FromCrearTareaViewModel(nuevaTareaVM);
+                repo.CrearTarea(nuevaTarea);
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
         }
 
-        public IActionResult Modificar(int id)
+        [HttpGet]
+        public IActionResult EditarTarea(int? idTarea)
         {
-            Tarea tarea = tareaRepository.ObtenerTareaPorId(id);
-            return View(tarea);
+            try
+            {
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                Tarea tareaAEditar = repo.ObtenerTareaPorId(idTarea);
+                EditarTareaViewModel tareaAModificarVM = EditarTareaViewModel.FromTarea(tareaAEditar);
+
+                return View(tareaAModificarVM);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+
         }
 
         [HttpPost]
-        public IActionResult Modificar(int id, Tarea tareaModificada)
+        public IActionResult EditarTareaFromForm([FromForm] EditarTareaViewModel tareaAModificarVM)
         {
-            tareaRepository.ModificarTarea(id, tareaModificada);
-            return RedirectToAction("Index");
+            try
+            {
+                if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                Tarea tareaAModificar = Tarea.FromEditarTareaViewModel(tareaAModificarVM);
+                repo.ModificarTarea(tareaAModificar);
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
         }
 
-        public IActionResult Eliminar(int id)
+        [HttpGet]
+        public IActionResult EliminarTarea(int? idTarea)
         {
-            Tarea tarea = tareaRepository.ObtenerTareaPorId(id);
-            return View(tarea);
+            try
+            {
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                Tarea tareaAEliminar = repo.ObtenerTareaPorId(idTarea);
+                return View(tareaAEliminar);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+
         }
 
         [HttpPost]
-        public IActionResult Eliminar(int id, Tarea tareaEliminada)
+        public IActionResult EliminarTareaFromForm([FromForm] Tarea tareaAEliminar)
         {
-            tareaRepository.EliminarTarea(id);
-            return RedirectToAction("Index");
-        }
-        private bool isAdmin()
-        {
-            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
+            try
             {
-                return true;
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                repo.EliminarTarea(tareaAEliminar.IdTarea);
+                return RedirectToAction("Index");
+
             }
-            else
+            catch (Exception ex)
             {
-                return false;
-            }
-        }
-        private bool isLogin()
-        {
-            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
+                _logger.LogError(ex.ToString());
+                return BadRequest();
             }
         }
+        [HttpGet]
+        public IActionResult AsignarTareaAUsuario(int? idTarea)
+        {
+            try
+            {
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                Tarea tareaSeleccionada = repo.ObtenerTareaPorId(idTarea);
+                AsignarTareaViewModel tareaSeleccionadaVM = AsignarTareaViewModel.FromTarea(tareaSeleccionada);
+                return View(tareaSeleccionadaVM);
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult AsignarTareaAUsuarioFromForm([FromForm] AsignarTareaViewModel tareaASeleccionadaVM)
+        {
+            try
+            {
+                if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                Tarea TareaSeleccionada=Tarea.FromAsignarTareaViewModel(tareaASeleccionadaVM);
+                repo.EliminarTarea(tareaASeleccionadaVM.Id);
+                return RedirectToAction("Index");
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
+      private bool isAdmin()
+    {
+        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    private bool isLogin()
+    {
+        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+    }
+
     }
 }
