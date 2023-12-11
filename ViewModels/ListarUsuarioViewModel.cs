@@ -7,8 +7,6 @@ using tl2_tp10_2023_danielsj1996.Models;
 public class ListarUsuarioViewModel
 {
     private int? id;
-
-
     [Required(ErrorMessage = "Este Campo es requerido.")]
     [Display(Name = "Id")]
     public int? Id { get => id; set => id = value; }
@@ -23,12 +21,12 @@ public class ListarUsuarioViewModel
         List<ListarUsuarioViewModel> listaUsuariosVM = new List<ListarUsuarioViewModel>();
         foreach (var usuario in usuarios)
         {
-            ListarUsuarioViewModel newUVM = new ListarUsuarioViewModel();
-            newUVM.id = usuario.IdUsuario;
-            newUVM.nombre = usuario.NombreDeUsuario;
-            listaUsuariosVM.Add(newUVM);
+            ListarUsuarioViewModel nuevoUVM = new ListarUsuarioViewModel();
+            nuevoUVM.id = usuario.IdUsuario;
+            nuevoUVM.nombre = usuario.NombreDeUsuario;
+            listaUsuariosVM.Add(nuevoUVM);
         }
-        return (listaUsuariosVM);
+        return listaUsuariosVM;
 
     }
 

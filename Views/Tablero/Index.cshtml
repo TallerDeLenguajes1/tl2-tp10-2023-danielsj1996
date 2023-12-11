@@ -1,15 +1,16 @@
 @{
-    ViewData["Title"] = "Tablero";
+    ViewData["Title"] = "Tableros";
 }
 @model List<tl2_tp10_2023_danielsj1996.ViewModels.ListarTableroViewModel>
 
-<h2>Lista de Tableros</h2>
+<h2>@ViewData["Title"]</h2>
 
-<div class="text-start">
+<div class="table table-grey">
     <table>
         <thead>
             <tr>
-                <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero=null>Ver Tareas</a>
+                <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero=null>Ver Tareas de Todos los
+                    Tableros</a>
             </tr>
             <tr>
                 <th hidden>Id</th>
@@ -32,8 +33,7 @@
 
                         <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">Ver Tareas del
                             Tablero</a>
-                        <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Ver Tareas
-                            del Tablero</a>
+                        <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Editar</a>
                         <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id"
                             onclick="return confirm('¿Estas seguro de eliminar el Tablero?')">Eliminar Tablero</a>
                     </td>
@@ -42,7 +42,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <a asp-controller="Tablero" asp-action="AgregarTablero"> AgregarTablero
+                <a asp-controller="Tablero" asp-action="AgregarTablero"> AgregarTablero</a>
             </tr>
 
         </tfoot>
@@ -50,4 +50,6 @@
 
     </table>
 
-@section Scripts {<partial name="_ValidationScriptsPartial"/>}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

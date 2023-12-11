@@ -9,7 +9,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 
         public void CrearTablero(Tablero nuevoTablero)
         {
-            var query = "INSERT INTO Tablero (id,id_usuario_propietario, nombre_tablero, descripcion_tablero) VALUES (@idTablero,@idPropietario, @nombreTablero, @descripTablero);";
+            var query = "INSERT INTO Tablero (id,id_usuario_propietario, nombre_tablero, descripcion_tablero,estado_tablero) VALUES (@idTablero,@idPropietario, @nombreTablero, @descripTablero,@estado);";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
@@ -18,6 +18,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 command.Parameters.Add(new SQLiteParameter("@idPropietario", nuevoTablero.IdUsuarioPropietario));
                 command.Parameters.Add(new SQLiteParameter("@nombreTablero", nuevoTablero.NombreDeTablero));
                 command.Parameters.Add(new SQLiteParameter("@descripTablero", nuevoTablero.DescripcionDeTablero));
+                command.Parameters.Add(new SQLiteParameter("@estado", nuevoTablero.EstadoTablero));
                 command.ExecuteNonQuery();
                 connection.Close();
             }
@@ -29,8 +30,8 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 
         public List<Tablero> ListarTodosTableros()
         {
-            var query = "SELECT * FROM Tablero";
             List<Tablero> listaDeTablero = new List<Tablero>();
+            var query = "SELECT * FROM Tablero";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
@@ -44,6 +45,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
                         tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
                         tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado"]);
                         listaDeTablero.Add(tablero);
                     }
                 }
@@ -74,6 +76,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
                         tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
                         tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado"]);
                     }
                 }
                 connection.Close();
@@ -85,15 +88,17 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             }
             return tablero;
         }
-        public void EliminarTableroPorId(int? idRecibe)
+        public void EliminarTableroPorId(int? IdTablero)
         {
+            TareaRepository repoTar = new TareaRepository();
+            repoTar.InhabilitarDeTablero(IdTablero);
             var query = "DELETE FROM Tablero WHERE id_tablero = @idRecibe";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
 
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
-                command.Parameters.Add(new SQLiteParameter("@idRecibe", idRecibe));
+                command.Parameters.Add(new SQLiteParameter("@idRecibe", IdTablero));
                 int filaAfectada = command.ExecuteNonQuery();
                 connection.Close();
                 if (filaAfectada == 0)
@@ -104,7 +109,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         }
         public void ModificarTablero(Tablero modificarTablero)
         {
-            var query = "UPDATE Tablero SET id_usuario_propietario = @idPropietario, nombre_tablero = @nombreTablero, descripcion_tablero = @descripTablero WHERE id_tablero = @idTablero;";
+            var query = "UPDATE Tablero SET id_usuario_propietario = @idPropietario, nombre_tablero = @nombreTablero, descripcion_tablero = @descripTablero,estado_tablero = @estado WHERE id_tablero = @idTablero;";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
@@ -113,6 +118,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 command.Parameters.Add(new SQLiteParameter("@idPropietario", modificarTablero.IdUsuarioPropietario));
                 command.Parameters.Add(new SQLiteParameter("@nombreTablero", modificarTablero.NombreDeTablero));
                 command.Parameters.Add(new SQLiteParameter("@descripTablero", modificarTablero.DescripcionDeTablero));
+                command.Parameters.Add(new SQLiteParameter("@estado", modificarTablero.EstadoTablero));
                 int filaAfectada = command.ExecuteNonQuery();
                 connection.Close();
                 if (filaAfectada == 0)
@@ -139,9 +145,10 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         var tablero = new Tablero();
 
                         tablero.IdTablero = Convert.ToInt32(reader["id_tablero"]);
-                        tablero.IdTablero = Convert.ToInt32(reader["id_usuario_propietario"]);
+                        tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
                         tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
                         tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
+                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado"]);
                         tableros.Add(tablero);
                     }
 
@@ -151,6 +158,27 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                     throw new Exception("El usuario Solicitado no tiene Tableros asignados");
                 }
                 return tableros;
+            }
+
+        }
+        public void Inhabilitar(int? idUsuario)
+        {
+            TareaRepository repotar = new TareaRepository();
+            repotar.InhabilitarDeUsuario(idUsuario);
+            var query = "UPDATE Tablero SET estado=@estado WHERE id_usuario_propietario = @idUsuario";
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@idUsuario", idUsuario));
+                command.Parameters.Add(new SQLiteParameter("@estado", 2));
+                int filaAfectada = command.ExecuteNonQuery();
+                connection.Close();
+                if (filaAfectada == 0)
+                {
+                    throw new Exception("No se encontró ningun tablero con el ID proporcionado");
+                }
             }
 
         }

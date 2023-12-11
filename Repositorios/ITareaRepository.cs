@@ -5,7 +5,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 {
     public interface ITareaRepository
     {
-       public Tarea CrearTarea(Tarea nuevaTarea);
+        public Tarea CrearTarea(Tarea nuevaTarea);
         public List<Tarea> ListarTareas();
         public Tarea ObtenerTareaPorId(int? idTarea); //
         public void EliminarTarea(int? idTarea);
@@ -13,5 +13,8 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public List<Tarea> ListarTareasDeUsuario(int? idUsuario);
         public List<Tarea> ListarTareasDeTablero(int? idTablero);
         public void AsignarUsuarioATarea(Tarea tareaModificada);
+        public void InhabilitarDeUsuario(int? IdUsuario);
+
+        public void InhabilitarDeTablero(int? IdTablero);
     }
 }

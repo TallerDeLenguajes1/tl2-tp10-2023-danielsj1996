@@ -6,3 +6,12 @@ C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.csproj
 C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.MvcApplicationPartsAssemblyInfo.cache
 C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.RazorAssemblyInfo.cache
 C:\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.RazorAssemblyInfo.cs
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.csproj.AssemblyReference.cache
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.AssemblyInfoInputs.cache
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.AssemblyInfo.cs
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.csproj.CoreCompileInputs.cache
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.RazorAssemblyInfo.cache
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.RazorAssemblyInfo.cs
+C:\Users\Usuariodgc\Documents\daniel\tl2-tp10-2023-danielsj1996\obj\Debug\net7.0\tl2-tp10-2023-danielsj1996.sourcelink.json

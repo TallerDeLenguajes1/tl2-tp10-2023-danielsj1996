@@ -10,5 +10,6 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public void EliminarTableroPorId(int? idTablero);
         public void ModificarTablero(Tablero tablero);
         public List<Tablero> ListarTablerosDeUsuarioEspecifico(int? idUsuario);
+        public void Inhabilitar(int? idUsuario);
     }
 }

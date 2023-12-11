@@ -27,8 +27,17 @@
         <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
 
     </div>
+    <div>
+        <label asp-for="@Model.Estado"></label>
+        <select asp-for="@Model.Estado" asp-items="Html.GetEnumSelectList<EstadoTablero>()" class="form-control">
+            <option value="">Seleccionar Estado</option>
+        </select>
+        <span asp-validation-for="@Model.Estado" class="text-danger"></span>
+    </div>
     <button type="submit" class="btn btn-success">Agregar</button>
 
 </form>
 
-@section Scripts {<partial name="_ValidationScriptsPartial"/>}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

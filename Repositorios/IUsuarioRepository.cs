@@ -10,5 +10,6 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public List<Usuario> TraerTodosLosUsuarios();
         public Usuario TraerUsuarioPorId(int id);
         public void EliminarUsuarioPorId(int id);
+        
     }
 }

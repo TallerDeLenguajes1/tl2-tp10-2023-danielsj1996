@@ -3,11 +3,12 @@ using tl2_tp10_2023_danielsj1996.ViewModels;
 namespace tl2_tp10_2023_danielsj1996.Models;
 public enum EstadoTarea
 {
-    Ideas,
-    ToDo, //hacer
-    Doing, //haciendo
-    Review, //revisar
-    Done //hecho
+    Ideas=1,
+    ToDo=2, //hacer
+    Doing=3, //haciendo
+    Review=4, //revisar
+    Done=5, //hecho
+    Unnactive=6 //inactivo
 }
 
 public class Tarea
@@ -19,6 +20,7 @@ public class Tarea
     private string? color;
     private EstadoTarea estadoTarea;
     private int? idUsuarioAsignado;
+    private int? idUsuarioPropietario;
 
 
     public int? IdTarea { get => idTarea; set => idTarea = value; }
@@ -29,7 +31,10 @@ public class Tarea
     public int? IdUsuarioAsignado { get => idUsuarioAsignado; set => idUsuarioAsignado = value; }
     public string? DescripcionTarea { get => descripcionTarea; set => descripcionTarea = value; }
     public string? Color { get => color; set => color = value; }
-    public Tarea(int? idTarea, int? idTablero, string? nombreTarea, string? descripcionTarea, string? color, EstadoTarea estadoTarea, int? idUsuarioAsignado)
+    public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
+    public Tarea() { }
+
+    public Tarea(int? idTarea, int? idTablero, string? nombreTarea, string? descripcionTarea, string? color, EstadoTarea estadoTarea, int? idUsuarioAsignado, int? idUsuarioPropietario)
     {
         this.idTarea = idTarea;
         this.idTablero = idTablero;
@@ -38,12 +43,12 @@ public class Tarea
         this.color = color;
         this.estadoTarea = estadoTarea;
         this.idUsuarioAsignado = idUsuarioAsignado;
+        this.idUsuarioPropietario = idUsuarioPropietario;
     }
 
-    public Tarea() { }
 
 
-    public static Tarea FromEditarTareaViewModel(EditarTareaViewModel tareaVM)
+    public static Tarea FromTareaViewModel(TareaViewModel tareaVM)
     {
 
         return new Tarea
@@ -55,36 +60,11 @@ public class Tarea
             color = tareaVM.Color,
             estadoTarea = (tl2_tp10_2023_danielsj1996.Models.EstadoTarea)tareaVM.Estado,
             idUsuarioAsignado = tareaVM.IdUsuarioAsignado,
+            idUsuarioPropietario = tareaVM.IdUsuarioPropietario,
         };
     }
-    public static Tarea FromCrearTareaViewModel(CrearTareaViewModel tareaVM)
-    {
 
-        return new Tarea
-        {
-            idTarea = tareaVM.Id,
-            idTablero = tareaVM.IdTablero,
-            nombreTarea = tareaVM.Nombre,
-            descripcionTarea = tareaVM.Descripcion,
-            color = tareaVM.Color,
-            estadoTarea = (tl2_tp10_2023_danielsj1996.Models.EstadoTarea)tareaVM.Estado,
-            idUsuarioAsignado = tareaVM.IdUsuarioAsignado,
-        };
-    }
-    public static Tarea FromAsignarTareaViewModel(AsignarTareaViewModel tareaVM)
-    {
 
-        return new Tarea
-        {
-            idTarea = tareaVM.Id,
-            idTablero = tareaVM.IdTablero,
-            nombreTarea = tareaVM.Nombre,
-            descripcionTarea = tareaVM.Descripcion,
-            color = tareaVM.Color,
-            estadoTarea = (tl2_tp10_2023_danielsj1996.Models.EstadoTarea)tareaVM.Estado,
-            idUsuarioAsignado = tareaVM.IdUsuarioAsignado,
-        };
-    }
 }
 
 

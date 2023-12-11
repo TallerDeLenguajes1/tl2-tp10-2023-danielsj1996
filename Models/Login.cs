@@ -4,7 +4,6 @@ public enum NivelDeAcceso
 {
     invitado = 1,
     admin = 2
-
 }
 
 
