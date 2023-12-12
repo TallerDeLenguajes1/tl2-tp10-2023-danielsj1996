@@ -48,7 +48,37 @@ public class Tarea
 
 
 
-    public static Tarea FromTareaViewModel(TareaViewModel tareaVM)
+    public static Tarea FromCrearTareaViewModel(CrearTareaViewModel tareaVM)
+    {
+
+        return new Tarea
+        {
+            idTarea = tareaVM.Id,
+            idTablero = tareaVM.IdTablero,
+            nombreTarea = tareaVM.Nombre,
+            descripcionTarea = tareaVM.Descripcion,
+            color = tareaVM.Color,
+            estadoTarea = (tl2_tp10_2023_danielsj1996.Models.EstadoTarea)tareaVM.Estado,
+            idUsuarioAsignado = tareaVM.IdUsuarioAsignado,
+            idUsuarioPropietario = tareaVM.IdUsuarioPropietario,
+        };
+    }
+    public static Tarea FromEditarTareaViewModel(EditarTareaViewModel tareaVM)
+    {
+
+        return new Tarea
+        {
+            idTarea = tareaVM.Id,
+            idTablero = tareaVM.IdTablero,
+            nombreTarea = tareaVM.Nombre,
+            descripcionTarea = tareaVM.Descripcion,
+            color = tareaVM.Color,
+            estadoTarea = (tl2_tp10_2023_danielsj1996.Models.EstadoTarea)tareaVM.Estado,
+            idUsuarioAsignado = tareaVM.IdUsuarioAsignado,
+            idUsuarioPropietario = tareaVM.IdUsuarioPropietario,
+        };
+    }
+    public static Tarea FromAsignarTareaViewModel(AsignarTareaViewModel tareaVM)
     {
 
         return new Tarea

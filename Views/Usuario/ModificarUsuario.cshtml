@@ -21,8 +21,8 @@
     </div>
     <div class="form-group">
         <label asp-for="@Model.Rol"></label>
-        <select asp-for="@Model.Rol" asp-items="Html.GetEnumSelectList<RolUsuario>()" class="form-control" />
-        <option value="">Seleccionar Rol</option>
+        <select asp-for="@Model.Rol" asp-items="Html.GetEnumSelectList<NivelDeAcceso>()" class="form-control" />
+        <option value="">Seleccionar Nivel de Acceso</option>
         </select>
         <span asp-validation-for="@Model.Estado" class="text-danger"></span>
     </div>

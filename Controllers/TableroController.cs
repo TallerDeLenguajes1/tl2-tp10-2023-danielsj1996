@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SQLite;
+
 using tl2_tp10_2023_danielsj1996.Models;
 using tl2_tp10_2023_danielsj1996.Repositorios;
 using tl2_tp10_2023_danielsj1996.ViewModels;
@@ -9,6 +11,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
     public class TableroController : Controller
     {
         private readonly ITableroRepository repo;
+        private readonly string cadenaConexion = "Data Source = DataBase/kamban.db;Cache=Shared";
         private readonly ILogger<HomeController> _logger;
         public TableroController(ILogger<HomeController> logger, ITableroRepository TabRepo)
         {
@@ -20,21 +23,29 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         {
             try
             {
-                List<Tablero> tableros = null;
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+                List<Tablero> tableros = null;
                 if (isAdmin())
                 {
                     tableros = repo.ListarTodosTableros();
                 }
                 else if (idUsuario.HasValue)
                 {
-                    tableros = repo.ListarTablerosDeUsuarioEspecifico(idUsuario);
+                    int? ID = ObtenerIDDelUsuarioLogueado(cadenaConexion);
+                    if (ID == idUsuario)
+                    {
+                        tableros = repo.ListarTablerosDeUsuarioEspecifico(idUsuario);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 else
                 {
                     return NotFound();
                 }
-                List<ListarTableroViewModel> listarTablerosVM = ListarTableroViewModel.FromTarea(tableros);
+                List<ListarTableroViewModel> listarTablerosVM = ListarTableroViewModel.FromTablero(tableros);
                 return View(listarTablerosVM);
 
             }
@@ -51,6 +62,8 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+                if (!isAdmin()) return NotFound();
+
                 CrearTableroViewModel nuevoTableroVM = new CrearTableroViewModel();
                 return View(nuevoTableroVM);
             }
@@ -70,9 +83,12 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+                if (!isAdmin()) return NotFound();
+
                 Tablero nuevoTablero = Tablero.FromCrearTableroViewModel(nuevoTableroVM);
+                int? ID = nuevoTablero.IdUsuarioPropietario;
                 repo.CrearTablero(nuevoTablero);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { idUsuario = ID });
             }
             catch (Exception ex)
             {
@@ -80,14 +96,39 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return BadRequest();
             }
         }
+
+
         [HttpGet]
         public IActionResult EditarTablero(int? idTablero)
         {
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+
                 Tablero tableroAModificar = repo.ObtenerTableroPorId(idTablero);
-                EditarTableroViewModel tableroAModificarVM = EditarTableroViewModel.FromTablero(tableroAModificar);
+                EditarTableroViewModel tableroAModificarVM = null;
+
+                if (!isAdmin())
+                {
+                    tableroAModificarVM = EditarTableroViewModel.FromTablero(tableroAModificar);
+                }
+                else if (idTablero.HasValue)
+                {
+                    int? ID = ObtenerIDDeUsuarioLogueado(cadenaConexion);
+                    if (ID == tableroAModificar.IdUsuarioPropietario)
+                    {
+
+                        tableroAModificarVM = EditarTableroViewModel.FromTablero(tableroAModificar);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                else
+                {
+                    return NotFound();
+                }
                 return View(tableroAModificarVM);
             }
             catch (Exception ex)
@@ -106,9 +147,11 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+
                 Tablero tableroAModificar = Tablero.FromEditarTableroViewModel(editarTableroVM);
+                int? ID = tableroAModificar.IdUsuarioPropietario;
                 repo.ModificarTablero(tableroAModificar);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { idUsuario = ID });
             }
             catch (Exception ex)
             {
@@ -122,7 +165,26 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+
                 Tablero tableroAEliminar = repo.ObtenerTableroPorId(idTablero);
+                int? idUsuarioTablero = tableroAEliminar.IdUsuarioPropietario;
+                if (isAdmin())
+                {
+                    return View(tableroAEliminar);
+                }
+                else if (idTablero.HasValue)
+                {
+                    int? ID = ObtenerIDDeUsuarioLogueado(cadenaConexion);
+                    if (ID == idUsuarioTablero)
+                    {
+                        return View(tableroAEliminar);
+
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
                 return View(tableroAEliminar);
             }
             catch (Exception ex)
@@ -138,9 +200,11 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+
                 repo.EliminarTableroPorId(tableroAEliminar.IdTablero);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Usuario");
             }
             catch (Exception ex)
             {
@@ -149,28 +213,63 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return BadRequest();
             }
         }
-        private bool isAdmin()
-    {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin"){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    private bool isLogin()
-    {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple"){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+        private bool isAdmin()
+        {
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        private bool isLogin()
+        {
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        private int? ObtenerIDDelUsuarioLogueado(string? cadenaConexion)
+        {
+            int? ID = 0;
+            string query = "SELECT * FROM USuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
+            Usuario usuarioElegido = new Usuario();
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@nombre", HttpContext.Session.GetString("nombre")));
+                command.Parameters.Add(new SQLiteParameter("@contrasenia", HttpContext.Session.GetString("contrasenia")));
+
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ID = Convert.ToInt32(reader["id"]);
+                    }
+                }
+                connection.Close();
+            }
+            return (ID);
+
+
+        }
+
+      
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
 
 
     }

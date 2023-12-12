@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace tl2_tp10_2023_danielsj1996.ViewModels;
 using tl2_tp10_2023_danielsj1996.Models;
 
-public class UsuarioViewModel
+public class CrearUsuarioViewModel
 {
     private int? id;
     [Required(ErrorMessage = "Este Campo es requerido.")]
@@ -24,9 +24,9 @@ public class UsuarioViewModel
     [Display(Name = "Nombre")]
     public int Nivel { get => nivel; set => nivel = value; }
 
-    public static UsuarioViewModel FromUsuario(Usuario usuario)
+    public static CrearUsuarioViewModel FromUsuario(Usuario usuario)
     {
-        return new UsuarioViewModel
+        return new CrearUsuarioViewModel
         {
             id = usuario.IdUsuario,
             nombre = usuario.NombreDeUsuario,

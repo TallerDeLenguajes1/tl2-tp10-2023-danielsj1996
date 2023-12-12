@@ -7,7 +7,7 @@ public enum EstadoTablero{
   Active=1,
   Unnactive=2
 }
-public class TableroViewModel
+public class CrearTableroViewModel
 {
     private int? id;
     [Required(ErrorMessage = "Este campo es requerido.")]
@@ -34,33 +34,18 @@ public class TableroViewModel
     public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
 
 
-    public static TableroViewModel FromTarea(Tablero tablero)
+    public static CrearTableroViewModel FromTarea(Tablero tablero)
     {
 
-        return new TableroViewModel
+        return new CrearTableroViewModel
         {
             Id = tablero.IdTablero,
+            IdUsuarioPropietario = tablero.IdUsuarioPropietario,
             Nombre = tablero.NombreDeTablero,
             Descripcion = tablero.DescripcionDeTablero,
-            IdUsuarioPropietario = tablero.IdUsuarioPropietario,
-            EstadoTablero = (tl2_tp10_2023_danielsj1996.ViewModels.EstadoTablero)tablero.EstadoTablero,
+            EstadoTablero = (EstadoTablero)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTablero)tablero.EstadoTablero,
         };
     }
-    public static List<TableroViewModel> FromTarea(List<Tablero> tableros)
-    {
-        List<TableroViewModel> listaTablerosVM = new List<TableroViewModel>();
-
-        foreach (var tablero in tableros)
-        {
-            TableroViewModel newTVM = new TableroViewModel();
-            newTVM.id = tablero.IdTablero;
-            newTVM.IdUsuarioPropietario = tablero.IdUsuarioPropietario;
-            newTVM.nombre = tablero.NombreDeTablero;
-            newTVM.descripcion = tablero.DescripcionDeTablero;
-            newTVM.estadoTablero = (tl2_tp10_2023_danielsj1996.ViewModels.EstadoTablero)tablero.EstadoTablero;
-            listaTablerosVM.Add(newTVM);
-        }
-        return (listaTablerosVM);
-    }
+   
 
 }

@@ -1,21 +1,10 @@
-using System.ComponentModel;
+namespace tl2_tp10_2023_danielsj1996.ViewModels;
+
 using System.ComponentModel.DataAnnotations;
 
-namespace tl2_tp10_2023_danielsj1996.ViewModels;
 using tl2_tp10_2023_danielsj1996.Models;
 
-public enum EstadoTarea
-{
-    Ideas = 1,
-    ToDo = 2,
-    Doing = 3,
-    Review = 4,
-    Done = 5,
-    Unnactive = 6
-}
-
-public class TareaViewModel
-{
+public class CrearTareaViewModel{
     private int? id;
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id")]
@@ -46,41 +35,20 @@ public class TareaViewModel
     public int? IdUsuarioAsignado { get => idUsuarioAsignado; set => idUsuarioAsignado = value; }
     private int? idUsuarioPropietario;
     [Required(ErrorMessage = "Este campo es requerido.")]
-    [Display(Name = "Id Usuario Asignado")]
+    [Display(Name = "Id Usuario Propietario")]
     public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
 
-    public static TareaViewModel FromTarea(Tarea tareas)
+    public static CrearTareaViewModel FromTarea(Tarea newTarea)
     {
-        TareaViewModel newTVM = new TareaViewModel();
-        newTVM.id = tareas.IdTarea;
-        newTVM.idTablero = tareas.IdTablero;
-        newTVM.nombre = tareas.NombreTarea;
-        newTVM.estado = (tl2_tp10_2023_danielsj1996.ViewModels.EstadoTarea)tareas.EstadoTarea;
-        newTVM.descripcion = tareas.DescripcionTarea;
-        newTVM.color = tareas.Color;
-        newTVM.idUsuarioAsignado = tareas.IdUsuarioAsignado;
-        newTVM.idUsuarioPropietario = tareas.IdUsuarioPropietario;
-
-        return (newTVM);
+        CrearTareaViewModel newTVM = new CrearTareaViewModel();
+        newTVM.id = newTarea.IdTarea;
+        newTVM.idTablero = newTarea.IdTablero;
+        newTVM.nombre = newTarea.NombreTarea;
+        newTVM.estado = (EstadoTarea)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTarea)newTarea.EstadoTarea;
+        newTVM.descripcion = newTarea.DescripcionTarea;
+        newTVM.color = newTarea.Color;
+        newTVM.idUsuarioAsignado = newTarea.IdUsuarioAsignado;
+        newTVM.idUsuarioPropietario = newTarea.IdUsuarioPropietario;
+        return(newTVM);
     }
-    public static List<TareaViewModel> FromTarea(List<Tarea> tareas)
-    {
-        List<TareaViewModel> listadeTareasVM = new List<TareaViewModel>();
-
-        foreach (var tarea in tareas)
-        {
-            TareaViewModel newTVM = new TareaViewModel();
-            newTVM.id = tarea.IdTarea;
-            newTVM.idTablero = tarea.IdTablero;
-            newTVM.nombre = tarea.NombreTarea;
-            newTVM.estado = (tl2_tp10_2023_danielsj1996.ViewModels.EstadoTarea)tarea.EstadoTarea;
-            newTVM.descripcion = tarea.DescripcionTarea;
-            newTVM.color = tarea.Color;
-            newTVM.idUsuarioAsignado = tarea.IdUsuarioAsignado;
-            newTVM.idUsuarioPropietario = tarea.IdUsuarioPropietario;
-            listadeTareasVM.Add(newTVM);
-        }
-        return listadeTareasVM;
-    }
-
 }

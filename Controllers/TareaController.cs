@@ -1,5 +1,7 @@
+using System.Data.SQLite;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+
 using tl2_tp10_2023_danielsj1996.Models;
 using tl2_tp10_2023_danielsj1996.Repositorios;
 using tl2_tp10_2023_danielsj1996.ViewModels;
@@ -8,13 +10,17 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 {
     public class TareaController : Controller
     {
-        private readonly ITareaRepository repo;
+        private readonly string cadenadeconexion = "Data Source = DataBase/kanban.db;Cache=Shared";
+        private readonly ITareaRepository repoTar;
+        private readonly ITableroRepository repoTab;
+
         private readonly ILogger<HomeController> _logger;
 
-        public TareaController(ILogger<HomeController> logger, ITareaRepository tareaRepo)
+        public TareaController(ILogger<HomeController> logger, ITareaRepository tareaRepo, ITableroRepository TabRepo)
         {
             _logger = logger;
-            repo = tareaRepo;
+            repoTar = tareaRepo;
+            repoTab = TabRepo;
         }
 
         public IActionResult Index(int? idTablero)
@@ -22,15 +28,18 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
 
-                List<Tarea> tareas = null;
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+                List<Tarea> tareas = null;
                 if (isAdmin())
                 {
-                    tareas = repo.ListarTareas();
+                    tareas = repoTar.ListarTareas();
                 }
                 else if (idTablero.HasValue)
                 {
-                    tareas = repo.ListarTareasDeTablero(idTablero);
+                    Tablero tableroAct = repoTab.ObtenerTableroPorId(idTablero);
+                    int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
+
+                    tareas = repoTar.ListarTareasDeTablero(idTablero);
                 }
                 else
                 {
@@ -53,6 +62,8 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+                if (!isAdmin()) return NotFound();
+
                 CrearTareaViewModel nuevaTareaVM = new CrearTareaViewModel();
                 return View(nuevaTareaVM);
             }
@@ -72,9 +83,12 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+                if (!isAdmin()) return NotFound();
+
                 Tarea nuevaTarea = Tarea.FromCrearTareaViewModel(nuevaTareaVM);
-                repo.CrearTarea(nuevaTarea);
-                return RedirectToAction("Index");
+                int? ID = nuevaTarea.IdTablero;
+                repoTar.CrearTarea(nuevaTarea);
+                return RedirectToAction("Index", new { idTablero = ID });
 
             }
             catch (Exception ex)
@@ -90,10 +104,36 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                Tarea tareaAEditar = repo.ObtenerTareaPorId(idTarea);
-                EditarTareaViewModel tareaAModificarVM = EditarTareaViewModel.FromTarea(tareaAEditar);
 
-                return View(tareaAModificarVM);
+                Tarea tareaAModificar = repoTar.ObtenerTareaPorId(idTarea);
+                EditarTareaViewModel tareaAModificarVM = null;
+                int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
+
+                tareaAModificarVM = EditarTareaViewModel.FromTarea(tareaAModificar);
+                if (isAdmin())
+                {
+                    return View(tareaAModificar);
+                }
+                else if (idTarea.HasValue)
+                {
+                    if (ID == tareaAModificar.IdUsuarioPropietario)
+                    {
+                        return View(tareaAModificarVM);
+                    }
+                    else if (ID == tareaAModificar.IdUsuarioAsignado)
+                    {
+                        return View("EditarTareaSimple", tareaAModificarVM);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
             catch (Exception ex)
             {
@@ -111,9 +151,11 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+
                 Tarea tareaAModificar = Tarea.FromEditarTareaViewModel(tareaAModificarVM);
-                repo.ModificarTarea(tareaAModificar);
-                return RedirectToAction("Index");
+                int? ID = tareaAModificar.IdTablero;
+                repoTar.ModificarTarea(tareaAModificar);
+                return RedirectToAction("Index", new { idTablero = ID });
 
             }
             catch (Exception ex)
@@ -129,9 +171,34 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                Tarea tareaAEliminar = repo.ObtenerTareaPorId(idTarea);
-                return View(tareaAEliminar);
+
+                Tarea tareaAEliminar = repoTar.ObtenerTareaPorId(idTarea);
+                int? idUsuarioTarea = tareaAEliminar.IdUsuarioPropietario;
+
+                if (isAdmin())
+                {
+                    return View(tareaAEliminar);
+                }
+                else if (idTarea.HasValue)
+                {
+                    int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
+
+                    if (ID == idUsuarioTarea)
+                    {
+                        return View(tareaAEliminar);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                else
+                {
+                    return NotFound();
+                }
+
             }
+
             catch (Exception ex)
             {
 
@@ -147,7 +214,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                repo.EliminarTarea(tareaAEliminar.IdTarea);
+                repoTar.EliminarTarea(tareaAEliminar.IdTarea);
                 return RedirectToAction("Index");
 
             }
@@ -157,15 +224,37 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return BadRequest();
             }
         }
+
+
         [HttpGet]
         public IActionResult AsignarTareaAUsuario(int? idTarea)
         {
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                Tarea tareaSeleccionada = repo.ObtenerTareaPorId(idTarea);
+
+                Tarea tareaSeleccionada = repoTar.ObtenerTareaPorId(idTarea);
                 AsignarTareaViewModel tareaSeleccionadaVM = AsignarTareaViewModel.FromTarea(tareaSeleccionada);
-                return View(tareaSeleccionadaVM);
+                int? idUsuarioProp = tareaSeleccionada.IdUsuarioPropietario;
+                if (isAdmin())
+                {
+                    return View(tareaSeleccionada);
+
+                }
+                else if (idTarea.HasValue)
+                {
+                    int? ID = OBtenerIDDelUsuarioLogueado(cadenadeconexion);
+                    if (ID == idUsuarioProp)
+                    {
+                        return View(tareaSeleccionada);
+                    }
+                    else { return NotFound(); }
+                }
+                else
+                {
+                    return NotFound();
+                }
+
             }
             catch (Exception ex)
             {
@@ -183,8 +272,9 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                Tarea TareaSeleccionada=Tarea.FromAsignarTareaViewModel(tareaASeleccionadaVM);
-                repo.EliminarTarea(tareaASeleccionadaVM.Id);
+
+                Tarea TareaSeleccionada = Tarea.FromAsignarTareaViewModel(tareaASeleccionadaVM);
+                repoTar.AsignarUsuarioATarea(TareaSeleccionada);
                 return RedirectToAction("Index");
 
             }
@@ -194,34 +284,60 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return BadRequest();
             }
         }
-      private bool isAdmin()
-    {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
+        private bool isAdmin()
         {
-            return true;
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else
+        private bool isLogin()
         {
-            return false;
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-    }
-    private bool isLogin()
-    {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
+        private int? ObtenerIDDelUsuarioLogueado(string? cadenaConexion)
+        {
+            int? ID = 0;
+            string query = "SELECT * FROM USuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
+            Usuario usuarioElegido = new Usuario();
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+                connection.Open();
+                var command = new SQLiteCommand(query, connection);
+                command.Parameters.Add(new SQLiteParameter("@nombre", HttpContext.Session.GetString("nombre")));
+                command.Parameters.Add(new SQLiteParameter("@contrasenia", HttpContext.Session.GetString("contrasenia")));
+
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        ID = Convert.ToInt32(reader["id"]);
+                    }
+                }
+                connection.Close();
+            }
+            return (ID);
+
+
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
 
     }
 }

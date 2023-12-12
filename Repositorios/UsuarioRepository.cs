@@ -57,7 +57,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 
 
 
-        public Usuario TraerUsuarioPorId(int idRecibe)
+        public Usuario TraerUsuarioPorId(int? idRecibe)
         {
             var query = "SELECT * FROM Usuario WHERE id_usuario = @id_usuario";
             var usuario = new Usuario();
@@ -84,7 +84,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             return usuario;
         }
 
-        public void EliminarUsuarioPorId(int idRecibe)
+        public void EliminarUsuarioPorId(int? idRecibe)
         {
             TableroRepository repoTab = new TableroRepository();
             repoTab.Inhabilitar(idRecibe);
@@ -104,17 +104,18 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             }
         }
 
-        public void ModificarUsuario(int idRecibe, Usuario nuevoUsuario)
+        public void ModificarUsuario(Usuario nuevoUsuario)
         {
             var query = "UPDATE Usuario SET nombre_de_usuario = @nombre_de_usuario,contrasenia=@contrasenia,nivel_de_acceso=@nivel WHERE id_usuario = @id_usuario;";
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
-                command.Parameters.Add(new SQLiteParameter("@id_usuario", idRecibe));
+                command.Parameters.Add(new SQLiteParameter("@id_usuario", nuevoUsuario.IdUsuario));
                 command.Parameters.Add(new SQLiteParameter("@nombre_de_usuario", nuevoUsuario.NombreDeUsuario));
                 command.Parameters.Add(new SQLiteParameter("@contrasenia", nuevoUsuario.Contrasenia));
                 command.Parameters.Add(new SQLiteParameter("@nivel", nuevoUsuario.Nivel));
+                
                 int usuariobusc = command.ExecuteNonQuery();
                 connection.Close();
                 if (usuariobusc == 0)

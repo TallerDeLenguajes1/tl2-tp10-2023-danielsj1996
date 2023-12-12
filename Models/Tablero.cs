@@ -35,7 +35,19 @@ namespace tl2_tp10_2023_danielsj1996.Models
             this.estadoTablero = estadoTablero;
         }
 
-        public static Tablero FromTableroViewModel(TableroViewModel tableroVM)
+        public static Tablero FromCrearTableroViewModel(CrearTableroViewModel tableroVM)
+        {
+            return new Tablero
+            {
+                idTablero = tableroVM.Id,
+                idUsuarioPropietario = tableroVM.IdUsuarioPropietario,
+                nombreDeTablero = tableroVM.Nombre,
+                descripcionDeTablero = tableroVM.Descripcion,
+                estadoTablero = (tl2_tp10_2023_danielsj1996.Models.EstadoTablero)tableroVM.EstadoTablero
+            };
+
+        }
+        public static Tablero FromEditarTableroViewModel(EditarTableroViewModel tableroVM)
         {
             return new Tablero
             {
