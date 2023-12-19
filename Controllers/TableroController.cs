@@ -114,7 +114,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 }
                 else if (idTablero.HasValue)
                 {
-                    int? ID = ObtenerIDDeUsuarioLogueado(cadenaConexion);
+                    int? ID = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                     if (ID == tableroAModificar.IdUsuarioPropietario)
                     {
 
@@ -174,7 +174,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 }
                 else if (idTablero.HasValue)
                 {
-                    int? ID = ObtenerIDDeUsuarioLogueado(cadenaConexion);
+                    int? ID = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                     if (ID == idUsuarioTablero)
                     {
                         return View(tableroAEliminar);

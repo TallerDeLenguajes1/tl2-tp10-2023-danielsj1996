@@ -1,18 +1,18 @@
 @{
-    ViewData["Title"] = "Modificar Usuario"
+    ViewData["Title"] = "Modificar Usuario";
 
 }
 
-@model tl2_tp10_2023_danielsj1996.ViewModels.ModificarUsuarioViewModel
+@model tl2_tp10_2023_danielsj1996.ViewModels.EditarUsuarioViewModel
 <h1>@ViewData["Title"]</h1>
 
 <form asp-controller="Usuario" asp-action="ModificarUsuarioFromForm" method="post">
     <input hidden asp-for="@Model.Id" />
 
     <div class="form-gruop">
-        <label asp-for="@Model.NombreDeUsuario"></label>
-        <input asp-for="@Model.NombreDeUsuario" class="form-control" id="nombre" />
-        <span asp-validation-for="@Model.NombreDeUsuario" class="text-danger"></span>
+        <label asp-for="@Model.Nombre"></label>
+        <input asp-for="@Model.Nombre" class="form-control" id="nombre" />
+        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
     </div>
         <div class="form-group">
         <label asp-for="@Model.Contrasenia"></label>
@@ -20,11 +20,11 @@
         <span asp-validation for="@Model.Contrasenia" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Rol"></label>
-        <select asp-for="@Model.Rol" asp-items="Html.GetEnumSelectList<NivelDeAcceso>()" class="form-control" />
+        <label asp-for="@Model.Nivel"></label>
+        <select asp-for="@Model.Nivel" asp-items="Html.GetEnumSelectList<NivelDeAcceso>()" class="form-control" />
         <option value="">Seleccionar Nivel de Acceso</option>
         </select>
-        <span asp-validation-for="@Model.Estado" class="text-danger"></span>
+        <span asp-validation-for="@Model.Nivel" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-success">Actualizar</button>
 </form>

@@ -243,7 +243,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 }
                 else if (idTarea.HasValue)
                 {
-                    int? ID = OBtenerIDDelUsuarioLogueado(cadenadeconexion);
+                    int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
                     if (ID == idUsuarioProp)
                     {
                         return View(tareaSeleccionada);

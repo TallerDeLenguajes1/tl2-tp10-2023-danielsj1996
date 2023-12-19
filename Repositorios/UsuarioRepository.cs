@@ -5,12 +5,15 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        private readonly string cadenaConexion = "Data Source=DB/kanban.db;Cache=Shared";
-
+        private readonly string CadenaConexion;
+        public UsuarioRepository(string cadenaConexion)
+        {
+            CadenaConexion = cadenaConexion;
+        }
         public void CrearUsuario(Usuario nuevoUsuario)
         {
             var query = $"INSERT INTO Usuario (id,nombre_de_usuario,contrasenia,rol) VALUES(@Id,@nombre_de_usuario,@contrasenia,@rol)";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -31,8 +34,8 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public List<Usuario> TraerTodosLosUsuarios()
         {
             List<Usuario> listaDeUsuarios = new List<Usuario>();
-            var query = "SELECT * FROM usuario;";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            var query = @"SELECT * FROM usuario;";
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 SQLiteCommand command = new SQLiteCommand(query, connection);
@@ -43,6 +46,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         var nuevoUsuario = new Usuario();
                         nuevoUsuario.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
                         nuevoUsuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                        nuevoUsuario.NombreDeUsuario = reader["nivel_de_acceso"].ToString();
                         listaDeUsuarios.Add(nuevoUsuario);
                     }
                 }
@@ -61,7 +65,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         {
             var query = "SELECT * FROM Usuario WHERE id_usuario = @id_usuario";
             var usuario = new Usuario();
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -86,10 +90,10 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 
         public void EliminarUsuarioPorId(int? idRecibe)
         {
-            TableroRepository repoTab = new TableroRepository();
-            repoTab.Inhabilitar(idRecibe);
+            TableroRepository repoTab = new TableroRepository(CadenaConexion);
+            repoTab.InhabilitarDeUsuario(idRecibe);
             var query = "DELETE FROM Usuario WHERE id_usuario = @id_usuario";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -107,7 +111,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public void ModificarUsuario(Usuario nuevoUsuario)
         {
             var query = "UPDATE Usuario SET nombre_de_usuario = @nombre_de_usuario,contrasenia=@contrasenia,nivel_de_acceso=@nivel WHERE id_usuario = @id_usuario;";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -115,7 +119,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 command.Parameters.Add(new SQLiteParameter("@nombre_de_usuario", nuevoUsuario.NombreDeUsuario));
                 command.Parameters.Add(new SQLiteParameter("@contrasenia", nuevoUsuario.Contrasenia));
                 command.Parameters.Add(new SQLiteParameter("@nivel", nuevoUsuario.Nivel));
-                
+
                 int usuariobusc = command.ExecuteNonQuery();
                 connection.Close();
                 if (usuariobusc == 0)

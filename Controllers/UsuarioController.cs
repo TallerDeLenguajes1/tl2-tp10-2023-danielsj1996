@@ -23,25 +23,25 @@ public class UsuarioController : Controller
         CadenaDeConexion = cadenaDeConexion;
     }
 
-    public IActionResult Index()
-    {
+public IActionResult Index(){
         try
         {
-            if (!isLogin()) return RedirectToAction("Index", "Login");
-            {
+            /*var rutaARedireccionar = new { controller = "Login", action = "Index" };//el tipo de var es un tipo anonimo
+            return RedirectToRoute(rutaARedireccionar);*/ //tambien es valido para redireccionar
+            if(!isLogin()) return RedirectToAction("Index","Login");
 
-                List<Usuario> usuarios = usuarioRepository.TraerTodosLosUsuarios();
-                List<ListarUsuarioViewModel> listadeUsuariosVM = ListarUsuarioViewModel.FromUsuario(usuarios);
-                return View(listadeUsuariosVM);
-            }
+            List<Usuario> usuarios = usuarioRepository.TraerTodosLosUsuarios();
+            List<ListarUsuarioViewModel> listaUsuariosVM = ListarUsuarioViewModel.FromUsuario(usuarios);//convertir de List<Usuario> a List<listarUsuarioViewModel>
+            return View(listaUsuariosVM);
         }
         catch (Exception ex)
         {
-
+            
             _logger.LogError(ex.ToString());
             return BadRequest();
         }
     }
+
 
     [HttpGet]
     public IActionResult AgregarUsuario()
@@ -197,26 +197,21 @@ public class UsuarioController : Controller
     }
     private bool isAdmin()
     {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
-        {
+        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin"){
             return true;
-        }
-        else
-        {
+        }else{
             return false;
         }
     }
     private bool isLogin()
     {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
-        {
+        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple"){
             return true;
-        }
-        else
-        {
+        }else{
             return false;
         }
     }
+
     private int? ObtenerIDDelUsuarioLogueado(string? cadenaConexion)
     {
         int? ID = 0;

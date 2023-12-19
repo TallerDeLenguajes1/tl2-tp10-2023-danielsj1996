@@ -45,7 +45,7 @@ public class LoginController : Controller
             Login usuarioPorIngresar = new Login();
             var query = "SELECT * FROM Usuarioa WHERE contrasenia=@contraseña AND nombre_de_usuario=@usuario";
             SQLiteParameter parameterUser = new SQLiteParameter("@usuario", login.Nombre);
-            SQLiteParameter parameterPass = new SQLiteParameter("@usuario", login.Contrasenia);
+            SQLiteParameter parameterPass = new SQLiteParameter("@contraseña", login.Contrasenia);
 
 
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
@@ -61,8 +61,8 @@ public class LoginController : Controller
                     while (reader.Read())
                     {
                         validacion = true;
-                        usuarioPorIngresar.Contrasenia = Convert.ToString(reader["contrasenia"]);
                         usuarioPorIngresar.Nombre = Convert.ToString(reader["nombre_de_usuario"]);
+                        usuarioPorIngresar.Contrasenia = Convert.ToString(reader["contrasenia"]);
                         usuarioPorIngresar.Nivel = (NivelDeAcceso)Enum.Parse(typeof(NivelDeAcceso), Convert.ToString(reader["nivel_de_acceso"]), true);
                     }
                 }
@@ -70,7 +70,7 @@ public class LoginController : Controller
             }
             if (validacion == false)
             {
-                _logger.LogWarning($"Acceso invalido - Usuario o contrasenia incorrectos");
+                _logger.LogWarning($"Acceso invalido - Usuario:{login.Nombre} o contrasenia incorrectos {login.Contrasenia}");
                 return RedirectToAction("Index");
             }
             else

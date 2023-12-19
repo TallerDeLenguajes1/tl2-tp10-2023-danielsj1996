@@ -3,14 +3,20 @@ using tl2_tp10_2023_danielsj1996.Models;
 
 namespace tl2_tp10_2023_danielsj1996.Repositorios
 {
-    public class TableroRepository : ITableroRepository
+    public class TableroRepository : ITableroRepository{
+    private readonly string CadenaConexion;
+
+    public TableroRepository(string cadenaConexion)
     {
-        private string cadenaConexion = "Data Source=DB/kanban.db;Cache=Shared";
+        CadenaConexion = cadenaConexion;
+    }
+
+    
 
         public void CrearTablero(Tablero nuevoTablero)
         {
             var query = "INSERT INTO Tablero (id,id_usuario_propietario, nombre_tablero, descripcion_tablero,estado_tablero) VALUES (@idTablero,@idPropietario, @nombreTablero, @descripTablero,@estado);";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -32,7 +38,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         {
             List<Tablero> listaDeTablero = new List<Tablero>();
             var query = "SELECT * FROM Tablero";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -62,7 +68,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         {
             var query = "SELECT * FROM Tablero WHERE id_tablero = @idTablero;";
             Tablero tablero = new Tablero();
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -90,10 +96,11 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         }
         public void EliminarTableroPorId(int? IdTablero)
         {
-            TareaRepository repoTar = new TareaRepository();
-            repoTar.InhabilitarDeTablero(IdTablero);
+        TareaRepository repoT = new TareaRepository(CadenaConexion);
+        repoT.InhabilitarDeTablero(IdTablero);
+
             var query = "DELETE FROM Tablero WHERE id_tablero = @idRecibe";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
 
                 connection.Open();
@@ -110,7 +117,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public void ModificarTablero(Tablero modificarTablero)
         {
             var query = "UPDATE Tablero SET id_usuario_propietario = @idPropietario, nombre_tablero = @nombreTablero, descripcion_tablero = @descripTablero,estado_tablero = @estado WHERE id_tablero = @idTablero;";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -132,7 +139,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             var query = "SELECT * FROM Tablero WHERE id_usuario_propietario = @idUsuario;";
             List<Tablero> tableros = new List<Tablero>();
 
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
@@ -161,28 +168,38 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             }
 
         }
-        public void Inhabilitar(int? idUsuario)
-        {
-            TareaRepository repotar = new TareaRepository();
-            repotar.InhabilitarDeUsuario(idUsuario);
-            var query = "UPDATE Tablero SET estado=@estado WHERE id_usuario_propietario = @idUsuario";
-            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
-            {
+       public void InhabilitarDeUsuario(int? IdUsuario){
+        try{// se uso try-catch para poder lanzar la excepcion sin que se detenga el proceso ya que puede existir usuarios sin tableros
+            TareaRepository repoT = new TareaRepository(CadenaConexion);
+            repoT.InhabilitarDeUsuario(IdUsuario);
 
-                connection.Open();
-                var command = new SQLiteCommand(query, connection);
-                command.Parameters.Add(new SQLiteParameter("@idUsuario", idUsuario));
-                command.Parameters.Add(new SQLiteParameter("@estado", 2));
-                int filaAfectada = command.ExecuteNonQuery();
-                connection.Close();
-                if (filaAfectada == 0)
-                {
-                    throw new Exception("No se encontró ningun tablero con el ID proporcionado");
+            SQLiteConnection connectionC = new SQLiteConnection(CadenaConexion);
+            
+            string queryC = "UPDATE Tablero SET estado = @ESTADO WHERE id_usuario_propietario = @ID";
+            SQLiteParameter parameterId = new SQLiteParameter("@ID",IdUsuario);
+            SQLiteParameter parameterEstado = new SQLiteParameter("@ESTADO",2);
+
+            using (connectionC)
+            {
+                connectionC.Open();
+                SQLiteCommand commandC = new SQLiteCommand(queryC,connectionC);
+                commandC.Parameters.Add(parameterId);
+                commandC.Parameters.Add(parameterEstado);
+
+                int rowAffected =  commandC.ExecuteNonQuery();
+                connectionC.Close();
+                if (rowAffected == 0){
+                    throw new Exception("No hay tableros para inhabilitar.");
                 }
             }
-
         }
-
-
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Excepción: {ex.Message}");
+        }
     }
 }
+
+
+}
+

@@ -12,9 +12,17 @@ public class ListarUsuarioViewModel
     public int? Id { get => id; set => id = value; }
 
     private string? nombre;
-    [Required(ErrorMessage="Este Campo es Requerido.")]
+    [Required(ErrorMessage = "Este Campo es Requerido.")]
     [Display(Name = "Nombre")]
     public String? Nombre { get => nombre; set => nombre = value; }
+    private string? contrasenia;
+    [Required(ErrorMessage = "Este Campo es Requerido.")]
+    [Display(Name = "Nombre")]
+    public String? Contrasenia { get => contrasenia; set => contrasenia = value; }
+    private int nivel;
+    [Required(ErrorMessage = "Este Campo es Requerido.")]
+    [Display(Name = "Nombre")]
+    public int Nivel { get => nivel; set => nivel = value; }
 
     public static List<ListarUsuarioViewModel> FromUsuario(List<Usuario> usuarios)
     {
@@ -22,8 +30,10 @@ public class ListarUsuarioViewModel
         foreach (var usuario in usuarios)
         {
             ListarUsuarioViewModel nuevoUVM = new ListarUsuarioViewModel();
-            nuevoUVM.id = usuario.IdUsuario;
-            nuevoUVM.nombre = usuario.NombreDeUsuario;
+            nuevoUVM.Id = usuario.IdUsuario;
+            nuevoUVM.Nombre = usuario.NombreDeUsuario;
+            nuevoUVM.Contrasenia=usuario.Contrasenia;
+            nuevoUVM.Nivel=usuario.Nivel;
             listaUsuariosVM.Add(nuevoUVM);
         }
         return listaUsuariosVM;
