@@ -12,7 +12,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         }
         public void CrearUsuario(Usuario nuevoUsuario)
         {
-            var query = $"INSERT INTO Usuario (id,nombre_de_usuario,contrasenia,rol) VALUES(@Id,@nombre_de_usuario,@contrasenia,@rol)";
+            var query = $"INSERT INTO Usuario (id,nombre_de_usuario,contrasenia,nivel_de_acceso VALUES(@Id,@nombre_de_usuario,@contrasenia,@rol)";
             using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();
@@ -46,7 +46,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         var nuevoUsuario = new Usuario();
                         nuevoUsuario.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
                         nuevoUsuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
-                        nuevoUsuario.NombreDeUsuario = reader["nivel_de_acceso"].ToString();
+                        nuevoUsuario.Nivel = Convert.ToInt32(reader["nivel_de_acceso"]);
                         listaDeUsuarios.Add(nuevoUsuario);
                     }
                 }

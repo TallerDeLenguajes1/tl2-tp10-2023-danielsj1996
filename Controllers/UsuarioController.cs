@@ -1,6 +1,7 @@
 using System.Data.SQLite;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+
 using tl2_tp10_2023_danielsj1996.Models;
 using tl2_tp10_2023_danielsj1996.Repositorios;
 using tl2_tp10_2023_danielsj1996.ViewModels;
@@ -26,8 +27,6 @@ public class UsuarioController : Controller
 public IActionResult Index(){
         try
         {
-            /*var rutaARedireccionar = new { controller = "Login", action = "Index" };//el tipo de var es un tipo anonimo
-            return RedirectToRoute(rutaARedireccionar);*/ //tambien es valido para redireccionar
             if(!isLogin()) return RedirectToAction("Index","Login");
 
             List<Usuario> usuarios = usuarioRepository.TraerTodosLosUsuarios();

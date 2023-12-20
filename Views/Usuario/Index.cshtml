@@ -7,7 +7,7 @@
 
 <h2>Lista de Usuarios</h2>
 
-<table>
+<table class="table table-dark">
 
     <thead>
         <tr>
@@ -15,8 +15,10 @@
                 Usuarios</a>
         </tr>
         <tr>
-            <th hidden>ID</th>
+            <th>ID</th>
             <th>Nombre</th>
+            <th>Nivel de acceso</th>
+            <th></th>
             <th></th>
         </tr>
 
@@ -26,11 +28,12 @@
         @foreach (var usuario in Model)
         {
             <tr>
-                <td hidden>@usuario.Id</td>
+                <td>@usuario.Id</td>
                 <td>@usuario.Nombre</td>
+                <td>@usuario.Nivel</td>
+                <td></td>
                 <td>
-                    <a asp-controller="Tablero" asp-action="Index" asp-route-idUsuario="@usuario.Id">Ver Tableros del
-                        Usuario</a>
+                    <a asp-controller="Tablero" asp-action="Index" asp-route-idUsuario="@usuario.Id">Ver Tableros del Usuario</a>
                     <a asp-controller="Usuario" asp-action="ModificarUsuario">Modificar</a>
                     <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-idUsuario="@usuario.Id"
                         onclick="return confirm('¿Estas seguro de eliminar este Usuario?')">Eliminar</a>
@@ -41,7 +44,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <a asp-controller="Usuario" asp-action="AgregarUsuario">Agregar Usuario</a>
+            <a asp-controller="Usuario" asp-action="CrearUsuario">Crear nuevo Usuario</a>
         </tr>
     </tfoot>
 </table>

@@ -13,15 +13,15 @@ public class CrearUsuarioViewModel
 
     private string? nombre;
     [Required(ErrorMessage = "Este Campo es Requerido.")]
-    [Display(Name = "Nombre")]
+    [Display(Name = "Nuevo nombre de Usuario")]
     public String? Nombre { get => nombre; set => nombre = value; }
     private string? contrasenia;
     [Required(ErrorMessage = "Este Campo es Requerido.")]
-    [Display(Name = "Nombre")]
+    [Display(Name = "Nueva Contrasenia")]
     public String? Contrasenia { get => contrasenia; set => contrasenia = value; }
     private int nivel;
     [Required(ErrorMessage = "Este Campo es Requerido.")]
-    [Display(Name = "Nombre")]
+    [Display(Name = "Asignar Nivel de Acceso")]
     public int Nivel { get => nivel; set => nivel = value; }
 
     public static CrearUsuarioViewModel FromUsuario(Usuario usuario)

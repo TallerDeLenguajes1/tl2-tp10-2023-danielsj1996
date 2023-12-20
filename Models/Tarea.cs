@@ -34,19 +34,17 @@ public class Tarea
     public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
     public Tarea() { }
 
-    public Tarea(int? idTarea, int? idTablero, string? nombreTarea, string? descripcionTarea, string? color, EstadoTarea estadoTarea, int? idUsuarioAsignado, int? idUsuarioPropietario)
+    public Tarea(int? idTarea, int? idTablero, string? nombreTarea, EstadoTarea estadoTarea, int? idUsuarioAsignado, string? descripcionTarea, string? color, int? idUsuarioPropietario)
     {
-        this.idTarea = idTarea;
-        this.idTablero = idTablero;
-        this.nombreTarea = nombreTarea;
-        this.descripcionTarea = descripcionTarea;
-        this.color = color;
-        this.estadoTarea = estadoTarea;
-        this.idUsuarioAsignado = idUsuarioAsignado;
-        this.idUsuarioPropietario = idUsuarioPropietario;
+        IdTarea = idTarea;
+        IdTablero = idTablero;
+        NombreTarea = nombreTarea;
+        EstadoTarea = estadoTarea;
+        IdUsuarioAsignado = idUsuarioAsignado;
+        DescripcionTarea = descripcionTarea;
+        Color = color;
+        IdUsuarioPropietario = idUsuarioPropietario;
     }
-
-
 
     public static Tarea FromCrearTareaViewModel(CrearTareaViewModel tareaVM)
     {

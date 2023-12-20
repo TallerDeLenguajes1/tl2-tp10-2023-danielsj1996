@@ -11,7 +11,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers;
 
 public class LoginController : Controller
 {
-    private readonly string cadenaConexion = "Data Source=DataBase/kanban.db;Cache=Shared";
+    private readonly string cadenaConexion = "Data Source=DB/kanban.db;Cache=Shared";
 
     private readonly ILogger<LoginController> _logger;
     public LoginController(ILogger<LoginController> logger)
@@ -43,7 +43,7 @@ public class LoginController : Controller
         {
             bool validacion = false;
             Login usuarioPorIngresar = new Login();
-            var query = "SELECT * FROM Usuarioa WHERE contrasenia=@contraseña AND nombre_de_usuario=@usuario";
+            var query = "SELECT * FROM Usuario WHERE contrasenia=@contraseña AND nombre_de_usuario=@usuario";
             SQLiteParameter parameterUser = new SQLiteParameter("@usuario", login.Nombre);
             SQLiteParameter parameterPass = new SQLiteParameter("@contraseña", login.Contrasenia);
 
