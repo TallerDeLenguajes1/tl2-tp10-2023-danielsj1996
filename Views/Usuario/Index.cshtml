@@ -33,10 +33,9 @@
                 <td>@usuario.Nivel</td>
                 <td></td>
                 <td>
-                    <a asp-controller="Tablero" asp-action="Index" asp-route-idUsuario="@usuario.Id">Ver Tableros del Usuario</a>
-                    <a asp-controller="Usuario" asp-action="ModificarUsuario">Modificar</a>
-                    <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-idUsuario="@usuario.Id"
-                        onclick="return confirm('¿Estas seguro de eliminar este Usuario?')">Eliminar</a>
+                    <a asp-controller="Tablero" asp-action="Index" asp-route-idUsuario="@usuario.Id">Ver Tableros de este Usuario</a>
+                    <a asp-controller="Usuario" asp-action="ModificarUsuario" asp-route-idUsuario="@usuario.Id">Editar</a>
+                    <a asp-controller="Usuario" asp-action="EliminarUsuario" asp-route-idUsuario="@usuario.Id" onclick="return confirm('¿Estas seguro que quieres eliminar el elemento?')">Eliminar</a>                      
 
                 </td>
             </tr>

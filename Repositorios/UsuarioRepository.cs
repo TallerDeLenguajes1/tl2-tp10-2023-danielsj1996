@@ -12,7 +12,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         }
         public void CrearUsuario(Usuario nuevoUsuario)
         {
-            var query = $"INSERT INTO Usuario (id,nombre_de_usuario,contrasenia,nivel_de_acceso VALUES(@Id,@nombre_de_usuario,@contrasenia,@rol)";
+            var query = $"INSERT INTO Usuario (id_usuario,nombre_de_usuario,contrasenia,nivel_de_acceso VALUES(@Id,@nombre_de_usuario,@contrasenia,@rol)";
             using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();

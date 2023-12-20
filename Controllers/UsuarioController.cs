@@ -24,10 +24,11 @@ public class UsuarioController : Controller
         CadenaDeConexion = cadenaDeConexion;
     }
 
-public IActionResult Index(){
+    public IActionResult Index()
+    {
         try
         {
-            if(!isLogin()) return RedirectToAction("Index","Login");
+            if (!isLogin()) return RedirectToAction("Index", "Login");
 
             List<Usuario> usuarios = usuarioRepository.TraerTodosLosUsuarios();
             List<ListarUsuarioViewModel> listaUsuariosVM = ListarUsuarioViewModel.FromUsuario(usuarios);//convertir de List<Usuario> a List<listarUsuarioViewModel>
@@ -35,7 +36,7 @@ public IActionResult Index(){
         }
         catch (Exception ex)
         {
-            
+
             _logger.LogError(ex.ToString());
             return BadRequest();
         }
@@ -156,6 +157,7 @@ public IActionResult Index(){
             {
                 int? ID = ObtenerIDDelUsuarioLogueado(CadenaDeConexion);
 
+
                 if (ID == idUsuario)
                 {
                     return View(usuarioAEliminar);
@@ -169,7 +171,6 @@ public IActionResult Index(){
             {
                 return NotFound();
             }
-            return View(usuarioAEliminar);
         }
         catch (Exception ex)
         {
@@ -196,17 +197,23 @@ public IActionResult Index(){
     }
     private bool isAdmin()
     {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin"){
+        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
+        {
             return true;
-        }else{
+        }
+        else
+        {
             return false;
         }
     }
     private bool isLogin()
     {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple"){
+        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
+        {
             return true;
-        }else{
+        }
+        else
+        {
             return false;
         }
     }
