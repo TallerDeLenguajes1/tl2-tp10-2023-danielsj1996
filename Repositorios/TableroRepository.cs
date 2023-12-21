@@ -15,7 +15,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 
         public void CrearTablero(Tablero nuevoTablero)
         {
-            var query = "INSERT INTO Tablero (id_tablero,id_usuario_propietario, nombre_tablero, descripcion_tablero,estado_tablero) VALUES (@idTablero,@idPropietario, @nombreTablero, @descripTablero,@estado);";
+            var query = "INSERT INTO Tablero (id_tablero,id_usuario_propietario,nombre_tablero,descripcion_tablero,estado_tablero) VALUES (@idTablero,@idPropietario,@nombreTablero,@descripTablero,@estado);";
             using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();

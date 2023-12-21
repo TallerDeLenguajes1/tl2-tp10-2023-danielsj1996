@@ -33,10 +33,10 @@ public class CrearTableroViewModel
     [Display(Name = "Descripcion")]
     public EstadoTablero EstadoTablero { get => estadoTablero; set => estadoTablero = value; }
 
-    private List<int> idUsuarioPropietario;
+    private int? idUsuarioPropietario;
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id Usuario Asignado")]
-    public List<int> IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
+    public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
     
 
 
