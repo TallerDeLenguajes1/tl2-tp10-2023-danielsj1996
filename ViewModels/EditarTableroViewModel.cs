@@ -9,10 +9,10 @@ public class EditarTableroViewModel{
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id")]
     public int? Id { get => id; set => id = value; }
-    private int? idUsuarioPropietario;
+    private List<int> idUsuarioPropietario;
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id Usuario Propietario")]
-    public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
+    public List<int> IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
     private string? nombre;
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Nombre Tablero")]

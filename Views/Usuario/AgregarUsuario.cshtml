@@ -1,37 +1,34 @@
-@{
-
-    ViewData["Title"] = "Crear Nuevo Usuario";
+@{ 
+    ViewData["Title"] = "Agregar Usuario";
 }
 
 @model tl2_tp10_2023_danielsj1996.ViewModels.CrearUsuarioViewModel
 
 <h1>@ViewData["Title"]</h1>
-
 <form asp-controller="Usuario" asp-action="AgregarUsuarioFromForm" method="post">
     <div class="form-group">
         <label asp-for="@Model.Id"></label>
         <input asp-for="@Model.Id" class="form-control" id="id" />
-        <span asp-validation for="@Model.Id" class="text-danger"></span>
+        <span asp-validation-for="@Model.Id" class="text-danger"></span>   
     </div>
     <div class="form-group">
         <label asp-for="@Model.Nombre"></label>
         <input asp-for="@Model.Nombre" class="form-control" id="nombre" />
-        <span asp-validation for="@Model.Nombre" class="text-danger"></span>
+        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>   
     </div>
     <div class="form-group">
         <label asp-for="@Model.Contrasenia"></label>
         <input asp-for="@Model.Contrasenia" class="form-control" id="contrasenia" />
-        <span asp-validation for="@Model.Contrasenia" class="text-danger"></span>
+        <span asp-validation-for="@Model.Contrasenia" class="text-danger"></span>   
     </div>
-    <div>
-        <div class="form-group">
-            <label asp-for="@Model.Nivel"></label>
-            <select asp-for="@Model.Nivel" asp-items="Html.GetEnumSelectList<NivelDeAcceso>()" class="form-control" />
+    <div class="form-group">
+        <label asp-for="@Model.Nivel"></label>
+        <select asp-for="@Model.Nivel" asp-items="Html.GetEnumSelectList<NivelDeAcceso>()" class="form-control">
             <option value="">Seleccionar Nivel</option>
-            </select>
-            <span asp-validation-for="@Model.Nivel" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-success">Agregar</button>
+        </select>
+        <span asp-validation-for="@Model.Nivel" class="text-danger"></span> 
+    </div>
+    <button type="submit" class="btn btn-primary" >Enviar</button>
 </form>
 
 @section Scripts { <partial name="_ValidationScriptsPartial" /> }

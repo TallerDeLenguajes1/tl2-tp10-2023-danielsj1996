@@ -84,7 +84,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 if (!isAdmin()) return NotFound();
-
+                
                 Tablero nuevoTablero = Tablero.FromCrearTableroViewModel(nuevoTableroVM);
                 int? ID = nuevoTablero.IdUsuarioPropietario;
                 repo.CrearTablero(nuevoTablero);

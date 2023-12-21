@@ -10,11 +10,12 @@
 
     </div>
     <div class="form-group">
-        <label asp-for="@Model.IdUsuarioPropietario"></label>
-        <input asp-for="@Model.IdUsuarioPropietario" class="form-control" id="id" />
-        <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>
-
-    </div>
+    <label asp-for="@Model.IdUsuarioPropietario"></label>
+    <select asp-for="@Model.IdUsuarioPropietario" asp-items="@Model.IdUsuarioPropietario" class="form-control">
+        <option value="">Seleccionar Usuario Propietario</option>
+    </select>
+    <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>
+</div>
     <div class="form-group">
         <label asp-for="@Model.Nombre"></label>
         <input asp-for="@Model.Nombre" class="form-control" id="id" />

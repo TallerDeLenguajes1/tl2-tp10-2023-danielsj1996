@@ -87,19 +87,19 @@ public class UsuarioController : Controller
         {
             if (!isLogin()) return RedirectToAction("Index", "Login");
 
-            Usuario usuarioModificar = usuarioRepository.TraerUsuarioPorId(idUsuario);
+            Usuario editarUsuario = usuarioRepository.TraerUsuarioPorId(idUsuario);
             EditarUsuarioViewModel editarUsuarioVM = null;
 
             if (isAdmin())
             {
-                editarUsuarioVM = EditarUsuarioViewModel.FromUsuario(usuarioModificar);
+                editarUsuarioVM = EditarUsuarioViewModel.FromUsuario(editarUsuario);
             }
             else if (idUsuario.HasValue)
             {
                 int? ID = ObtenerIDDelUsuarioLogueado(CadenaDeConexion);
                 if (ID == idUsuario)
                 {
-                    editarUsuarioVM = EditarUsuarioViewModel.FromUsuario(usuarioModificar);
+                    editarUsuarioVM = EditarUsuarioViewModel.FromUsuario(editarUsuario);
                 }
                 else
                 {
@@ -129,8 +129,8 @@ public class UsuarioController : Controller
             //RedirectToRoute (new {}).....
             if (!isLogin()) return RedirectToAction("Index", "Login");
 
-            Usuario usuarioAModificar = Usuario.FromEditarUsuarioViewModel(usuarioAModificarVM);//convertir de EditarUsuarioViewModel a Usuario
-            usuarioRepository.ModificarUsuario(usuarioAModificar);
+            Usuario editarUsuario = Usuario.FromEditarUsuarioViewModel(usuarioAModificarVM);//convertir de EditarUsuarioViewModel a Usuario
+            usuarioRepository.ModificarUsuario(editarUsuario);
             return RedirectToAction("Index");
         }
         catch (Exception ex)

@@ -1,7 +1,7 @@
-using System.ComponentModel;
+namespace tl2_tp10_2023_danielsj1996.ViewModels;
+
 using System.ComponentModel.DataAnnotations;
 
-namespace tl2_tp10_2023_danielsj1996.ViewModels;
 using tl2_tp10_2023_danielsj1996.Models;
 
 public class EditarUsuarioViewModel
@@ -15,13 +15,13 @@ public class EditarUsuarioViewModel
     [Required(ErrorMessage = "Este Campo es Requerido.")]
     [Display(Name = "Nombre")]
     public String? Nombre { get => nombre; set => nombre = value; }
-    private string? contrasenia;
+    private string contrasenia;
     [Required(ErrorMessage = "Este Campo es Requerido.")]
-    [Display(Name = "Nombre")]
-    public String? Contrasenia { get => contrasenia; set => contrasenia = value; }
+    [Display(Name = "Nueva contraseña")]
+    public String Contrasenia { get => contrasenia; set => contrasenia = value; }
     private int nivel;
     [Required(ErrorMessage = "Este Campo es Requerido.")]
-    [Display(Name = "Nombre")]
+    [Display(Name = "Nuevo Nivel de Acceso")]
     public int Nivel { get => nivel; set => nivel = value; }
 
     public static EditarUsuarioViewModel FromUsuario(Usuario usuario)

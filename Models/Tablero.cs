@@ -1,3 +1,4 @@
+using System.Data.SQLite;
 using tl2_tp10_2023_danielsj1996.ViewModels;
 
 namespace tl2_tp10_2023_danielsj1996.Models
@@ -11,14 +12,14 @@ namespace tl2_tp10_2023_danielsj1996.Models
     public class Tablero
     {
         private int? idTablero;
-        private int? idUsuarioPropietario;
+        private List<int> idUsuarioPropietario;
         private string? nombreDeTablero;
         private string? descripcionDeTablero;
         private EstadoTablero estadoTablero;
 
 
         public int? IdTablero { get => idTablero; set => idTablero = value; }
-        public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
+        public List<int> IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
         public string? NombreDeTablero { get => nombreDeTablero; set => nombreDeTablero = value; }
         public string? DescripcionDeTablero { get => descripcionDeTablero; set => descripcionDeTablero = value; }
         public EstadoTablero EstadoTablero { get => estadoTablero; set => estadoTablero = value; }
@@ -26,7 +27,7 @@ namespace tl2_tp10_2023_danielsj1996.Models
 
         public Tablero() { }
 
-        public Tablero(int? idTablero, int? idUsuarioPropietario, string? nombreDeTablero, string? descripcionDeTablero, EstadoTablero estadoTablero)
+        public Tablero(int? idTablero, List<int> idUsuarioPropietario, string? nombreDeTablero, string? descripcionDeTablero, EstadoTablero estadoTablero)
         {
             this.idTablero = idTablero;
             this.idUsuarioPropietario = idUsuarioPropietario;
@@ -59,6 +60,8 @@ namespace tl2_tp10_2023_danielsj1996.Models
             };
 
         }
+        
+
 
     }
 }

@@ -1,13 +1,12 @@
-@{
-
-    ViewData["Title"]="Eliminar Usuario";
+@{ 
+    ViewData["Title"] = "Eliminar Usuario";
 }
 
 @model tl2_tp10_2023_danielsj1996.Models.Usuario
+
 <h2>Confirmar eliminación</h2>
 
-
-<form asp-controller="Usuario" asp-action="EliminarUsuario">
+<form asp-controller="Usuario" asp-action="EliminarFromForm">
     <input asp-for="@Model.IdUsuario" type="hidden" />
-    <button type="submit" class="btn btn-danger">Confirmar</button>
+    <button type="submit" class="btn btn-danger">Eliminar</button>
 </form>
