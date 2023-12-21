@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace tl2_tp10_2023_danielsj1996.ViewModels;
 
+using System.Collections.Generic;
 using System.Data.SQLite;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using tl2_tp10_2023_danielsj1996.Models;
@@ -37,10 +38,12 @@ public class CrearTableroViewModel
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id Usuario Asignado")]
     public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
-    
+    private List<Usuario> listaDeUsuario;
+    public List<Usuario> ListaDeUsuario { get => listaDeUsuario; set => listaDeUsuario = value; }
 
 
-    public static CrearTableroViewModel FromTablero(Tablero tablero)
+
+    public static CrearTableroViewModel FromTablero(Tablero tablero, List<Usuario> listadeUsuarios)
     {
 
         return new CrearTableroViewModel
@@ -48,6 +51,7 @@ public class CrearTableroViewModel
             Id = tablero.IdTablero,
             IdUsuarioPropietario = tablero.IdUsuarioPropietario,
             Nombre = tablero.NombreDeTablero,
+            listaDeUsuario=listadeUsuarios,
             Descripcion = tablero.DescripcionDeTablero,
             EstadoTablero = (EstadoTablero)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTablero)tablero.EstadoTablero,
         };

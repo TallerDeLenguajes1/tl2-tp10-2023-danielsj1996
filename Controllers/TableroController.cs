@@ -63,7 +63,6 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 if (!isAdmin()) return NotFound();
-
                 CrearTableroViewModel nuevoTableroVM = new CrearTableroViewModel();
                 return View(nuevoTableroVM);
             }
@@ -77,15 +76,33 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
         [HttpPost]
-        public IActionResult AgregarTableroFromForm([FromForm] CrearTableroViewModel nuevoTableroVM)
+        public IActionResult AgregarTableroFromForm([FromForm] CrearTableroViewModel nuevoTableroVM,ListarUsuarioViewModel listadeUsuariosVM)
         {
             try
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 if (!isAdmin()) return NotFound();
-                
-                Tablero nuevoTablero = Tablero.FromCrearTableroViewModel(nuevoTableroVM);
+
+            List<Usuario> listaDeUsuarios = new List<Usuario>();
+            var query = "SELECT * FROM usuario;";
+            using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var nuevoUsuario = new Usuario();
+                        nuevoUsuario.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
+                        nuevoUsuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                        listaDeUsuarios.Add(nuevoUsuario);
+                    }
+                }
+                connection.Close();
+            }
+                Tablero nuevoTablero = Tablero.FromCrearTableroViewModel(nuevoTableroVM,listaDeUsuarios);
                 int? ID = nuevoTablero.IdUsuarioPropietario;
                 repo.CrearTablero(nuevoTablero);
                 return RedirectToAction("Index", new { idUsuario = ID });

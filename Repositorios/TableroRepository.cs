@@ -198,6 +198,34 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             Console.WriteLine($"Excepción: {ex.Message}");
         }
     }
+    public List<Usuario> TraerTodosLosUsuarios()
+        {
+            List<Usuario> listaDeUsuarios = new List<Usuario>();
+            var query = "SELECT * FROM usuario;";
+            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
+            {
+                connection.Open();
+                SQLiteCommand command = new SQLiteCommand(query, connection);
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var nuevoUsuario = new Usuario();
+                        nuevoUsuario.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
+                        nuevoUsuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                        nuevoUsuario.Nivel = Convert.ToInt32(reader["nivel_de_acceso"]);
+                        listaDeUsuarios.Add(nuevoUsuario);
+                    }
+                }
+                connection.Close();
+            }
+            if (listaDeUsuarios == null)
+            {
+                throw new Exception("Lista de Usuarios no encontrada.");
+            }
+            return listaDeUsuarios;
+        }
+
 }
 
 
