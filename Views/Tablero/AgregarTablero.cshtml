@@ -1,6 +1,26 @@
 @model tl2_tp10_2023_danielsj1996.ViewModels.CrearTableroViewModel
 
-
+@{
+    List<Usuario> listaDeUsuarios = new List<Usuario>();
+    string cadenaConexion= "Data Source = DB/kanban.db;Cache=Shared";
+    var query = "SELECT * FROM usuario;";
+    using (System.Data.SQLite.SQLiteConnection connection = new System.Data.SQLite.SQLiteConnection(cadenaConexion))
+    {
+        connection.Open();
+        System.Data.SQLite.SQLiteCommand command = new System.Data.SQLite.SQLiteCommand(query, connection);
+        using (System.Data.SQLite.SQLiteDataReader reader = command.ExecuteReader())
+        {
+                    while (reader.Read())
+                    {
+                        var nuevoUsuario = new Usuario();
+                        nuevoUsuario.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
+                        nuevoUsuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                        listaDeUsuarios.Add(nuevoUsuario);
+                    }
+                }
+                connection.Close();
+            }
+    }
 <h1>@ViewData["Title"]</h1>
 <form asp-controller="Tablero" asp-action="AgregarTableroFromForm" method="post">
     <div class="form-group">
@@ -13,7 +33,7 @@
     <label asp-for="IdUsuarioPropietario"></label>
     <select asp-for="IdUsuarioPropietario" class="form-control">
         <option value="">Seleccionar Usuario</option>
-        @foreach (var usuario in Model.ListaDeUsuario)
+        @foreach (var usuario in listaDeUsuarios)
         {
             <option value="@usuario.IdUsuario">@usuario.NombreDeUsuario</option>
         }

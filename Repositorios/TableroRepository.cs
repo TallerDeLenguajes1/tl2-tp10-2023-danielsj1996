@@ -51,7 +51,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
                         tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
                         tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
-                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado"]);
+                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado_tablero"]);
                         listaDeTablero.Add(tablero);
                     }
                 }
@@ -82,7 +82,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
                         tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
                         tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
-                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado"]);
+                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado_tablero"]);
                     }
                 }
                 connection.Close();
@@ -155,7 +155,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                         tablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
                         tablero.NombreDeTablero = reader["nombre_tablero"].ToString();
                         tablero.DescripcionDeTablero = reader["descripcion_tablero"].ToString();
-                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado"]);
+                        tablero.EstadoTablero = (EstadoTablero)Convert.ToInt32(reader["estado_tablero"]);
                         tableros.Add(tablero);
                     }
 
@@ -175,7 +175,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 
             SQLiteConnection connectionC = new SQLiteConnection(CadenaConexion);
             
-            string queryC = "UPDATE Tablero SET estado = @ESTADO WHERE id_usuario_propietario = @ID";
+            string queryC = "UPDATE Tablero SET estado_tablero = @ESTADO WHERE id_usuario_propietario = @ID";
             SQLiteParameter parameterId = new SQLiteParameter("@ID",IdUsuario);
             SQLiteParameter parameterEstado = new SQLiteParameter("@ESTADO",2);
 

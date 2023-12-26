@@ -38,14 +38,13 @@ namespace tl2_tp10_2023_danielsj1996.Models
             ListadeUsuarios = listadeUsuarios;
         }
 
-        public static Tablero FromCrearTableroViewModel(CrearTableroViewModel tableroVM, List<Usuario> listadeUsusarios)
+        public static Tablero FromCrearTableroViewModel(CrearTableroViewModel tableroVM)
         {
             return new Tablero
             {
                 idTablero = tableroVM.Id,
                 idUsuarioPropietario = tableroVM.IdUsuarioPropietario,
                 nombreDeTablero = tableroVM.Nombre,
-                listadeUsuarios=listadeUsusarios,
                 descripcionDeTablero = tableroVM.Descripcion,
                 estadoTablero = (tl2_tp10_2023_danielsj1996.Models.EstadoTablero)tableroVM.EstadoTablero
             };
