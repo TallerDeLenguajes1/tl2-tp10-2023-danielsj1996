@@ -87,7 +87,8 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
            
                 Tablero nuevoTablero = Tablero.FromCrearTableroViewModel(nuevoTableroVM);
                 repo.CrearTablero(nuevoTablero);
-                return RedirectToAction("Index");
+                int? ID = nuevoTablero.IdTablero;
+                return RedirectToAction("Index", new { idTablero = ID });
             }
             catch (Exception ex)
             {
@@ -264,11 +265,12 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
       
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+      [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
 
 
     }

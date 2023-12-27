@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {}
+    "C:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {
+    "C:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+        "projectUniqueName": "C:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
         "projectName": "tl2-tp10-2023-danielsj1996",
-        "projectPath": "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+        "projectPath": "C:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
         "packagesPath": "C:\\Users\\Usuariodgc\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\obj\\",
+        "outputPath": "C:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuariodgc\\AppData\\Roaming\\NuGet\\NuGet.Config"

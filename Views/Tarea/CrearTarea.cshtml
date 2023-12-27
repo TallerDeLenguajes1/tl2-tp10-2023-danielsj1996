@@ -3,7 +3,49 @@
 }
 
 @model tl2_tp10_2023_danielsj1996.ViewModels.CrearTareaViewModel
-
+@{
+    List<Usuario> listaDeUsuarios = new List<Usuario>();
+    string cadenaConexion= "Data Source = DB/kanban.db;Cache=Shared";
+    var query = "SELECT * FROM usuario;";
+    using (System.Data.SQLite.SQLiteConnection connection = new System.Data.SQLite.SQLiteConnection(cadenaConexion))
+    {
+        connection.Open();
+        System.Data.SQLite.SQLiteCommand command = new System.Data.SQLite.SQLiteCommand(query, connection);
+        using (System.Data.SQLite.SQLiteDataReader reader = command.ExecuteReader())
+        {
+                    while (reader.Read())
+                    {
+                        var nuevoUsuario = new Usuario();
+                        nuevoUsuario.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
+                        nuevoUsuario.NombreDeUsuario = reader["nombre_de_usuario"].ToString();
+                        listaDeUsuarios.Add(nuevoUsuario);
+                    }
+                }
+                connection.Close();
+            }
+    }
+@{
+    List<Tablero> listaDeTableros = new List<Tablero>();
+    string cadenaConexion2= "Data Source = DB/kanban.db;Cache=Shared";
+    var query2 = "SELECT * FROM tablero;";
+    using (System.Data.SQLite.SQLiteConnection connection = new System.Data.SQLite.SQLiteConnection(cadenaConexion2))
+    {
+        connection.Open();
+        System.Data.SQLite.SQLiteCommand command = new System.Data.SQLite.SQLiteCommand(query2, connection);
+        using (System.Data.SQLite.SQLiteDataReader reader = command.ExecuteReader())
+        {
+                    while (reader.Read())
+                    {
+                        var nuevoTablero = new Tablero();
+                        nuevoTablero.IdTablero = Convert.ToInt32(reader["id_tablero"]);
+                        nuevoTablero.NombreDeTablero = reader["nombre_tablero"].ToString();
+                        nuevoTablero.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
+                        listaDeTableros.Add(nuevoTablero);
+                    }
+                }
+                connection.Close();
+            }
+    }
 <h1>@ViewData["Title"]</h1>
 
 <form asp-controller="Tarea" asp-action="CrearTareaFromForm" method="post">
@@ -15,7 +57,13 @@
 
     <div class="form-group">
         <label asp-for="@Model.IdTablero"></label>
-        <input asp-for="@Model.IdTablero" class="form-control" id="idTablero" />
+            <select asp-for="@Model.IdTablero" class="form-control">
+        <option value="">Seleccionar Usuario</option>
+        @foreach (var tablero in listaDeTableros)
+        {
+            <option value="@tablero.IdTablero">@tablero.NombreDeTablero</option>
+        }
+    </select>
         <span asp-validation-for="@Model.IdTablero" class="text-danger"></span>
     </div>
 
@@ -46,18 +94,30 @@
         <input asp-for="@Model.Color" class="form-control" id="color" />
         <span asp-validation-for="@Model.Color" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="@Model.IdUsuarioAsignado"></label>
-        <input asp-for="@Model.IdUsuarioAsignado" class="form-control" id="idUsuarioAsignado" />
-        <span asp-validation-for="@Model.IdUsuarioAsignado" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.IdUsuarioPropietario"></label>
-        <input asp-for="@Model.IdUsuarioPropietario" class="form-control" id="idUsuarioPropietario" />
-        <span asp-validation-for="@Model.IdUsuarioPropietario" class="text-danger"></span>
-    </div>
+<div class="form-group">
+    <label asp-for="IdUsuarioAsignado"></label>
+    <select asp-for="IdUsuarioAsignado" class="form-control">
+        <option value="">Seleccione el Usuario a Asignar la Tarea</option>
+        @foreach (var usuario in listaDeUsuarios)
+        {
+            <option value="@usuario.IdUsuario">@usuario.NombreDeUsuario</option>
+            }
+    </select>
+    <span asp-validation-for="IdUsuarioAsignado" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label asp-for="IdUsuarioPropietario"></label>
+    <select asp-for="IdUsuarioPropietario" class="form-control">
+        <option value="">Seleccione el propietario del Tablero</option>
+        @foreach (var tablero in listaDeTableros)
+        {
+            <option value="@tablero.IdUsuarioPropietario">@tablero.NombreDeTablero</option>
+        }
+    </select>
+    <span asp-validation-for="IdUsuarioPropietario" class="text-danger"></span>
+</div>
 
-    <button type="submit" class="btn btn-primary">Crear</button>
+    <button type="submit" class="btn btn-primary">Crear Tarea</button>
 </form>
 
 
