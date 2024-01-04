@@ -239,7 +239,7 @@ public class UsuarioController : Controller
             }
             connection.Close();
         }
-        return (ID);
+        return ID;
 
 
     }

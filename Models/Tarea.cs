@@ -3,12 +3,12 @@ using tl2_tp10_2023_danielsj1996.ViewModels;
 namespace tl2_tp10_2023_danielsj1996.Models;
 public enum EstadoTarea
 {
-    Ideas=1,
-    ToDo=2, //hacer
-    Doing=3, //haciendo
-    Review=4, //revisar
-    Done=5, //hecho
-    Unnactive=6 //inactivo
+    Ideas = 1,
+    ToDo = 2,
+    Doing = 3,
+    Review = 4,
+    Done = 5,
+    Unnactive = 6
 }
 
 public class Tarea
@@ -51,7 +51,6 @@ public class Tarea
 
         return new Tarea
         {
-            idTarea = tareaVM.Id,
             idTablero = tareaVM.IdTablero,
             nombreTarea = tareaVM.Nombre,
             descripcionTarea = tareaVM.Descripcion,

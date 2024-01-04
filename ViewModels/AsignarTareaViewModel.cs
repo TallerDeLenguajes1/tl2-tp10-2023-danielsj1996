@@ -43,7 +43,7 @@ public class AsignarTareaViewModel{
         newTVM.id = newTarea.IdTarea;
         newTVM.idTablero = newTarea.IdTablero;
         newTVM.nombre = newTarea.NombreTarea;
-        newTVM.estado = (EstadoTarea)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTarea)newTarea.EstadoTarea;
+        newTVM.estado = newTarea.EstadoTarea;
         newTVM.descripcion = newTarea.DescripcionTarea;
         newTVM.color = newTarea.Color;
         newTVM.idUsuarioAsignado = newTarea.IdUsuarioAsignado;

@@ -30,7 +30,6 @@ public class Usuario{
     {
         return new Usuario
         {
-            idUsuario = usuarioVM.Id,
             nombreDeUsuario = usuarioVM.Nombre,
             Contrasenia = usuarioVM.Contrasenia,
             Nivel = usuarioVM.Nivel

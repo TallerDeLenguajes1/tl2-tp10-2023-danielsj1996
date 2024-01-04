@@ -6,16 +6,17 @@
 
 <h1>Lista de Tareas</h1>
 
-<table class="table table-grey">
+<table class="table table">
     <thead>
         <tr>
-            <th hidden>Id</th>
+            <th>Id</th>
             <th>Id Tablero</th>
             <th>Nombre</th>
             <th>Estado</th>
             <th>Descripción</th>
             <th>Color</th>
             <th>Id Usuario Asignado</th>
+            <th>Id Usuario Propietario</th>
         </tr>
     </thead>
     <tbody>
@@ -23,16 +24,17 @@
 
         {
             <tr>
-                <td hidden>@tarea.Id</td>
+                <td>@tarea.Id</td>
                 <td>@tarea.IdTablero</td>
                 <td>@tarea.Nombre</td>
                 <td>@tarea.Estado</td>
                 <td>@tarea.Descripcion</td>
                 <td>@tarea.Color</td>
                 <td>@tarea.IdUsuarioAsignado</td>
+                <td>@tarea.IdUsuarioPropietario</td>
                 <td>
                     <a asp-controller="Tarea" asp-action="EditarTarea" asp-route-idTarea="@tarea.Id">Editar</a>
-                    <a asp-controller="Tarea" asp-action="AsignarTareaUsuario" asp-route-idTarea="@tarea.Id">Asignar Usuario
+                    <a asp-controller="Tarea" asp-action="AsignarUsuarioaTarea" asp-route-idTarea="@tarea.Id">Asignar Usuario
                         a Tarea</a>
                     <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id"
                         onclick=" return confirm('¿Estas seguro que quieres eliminar la Tarea?')">Eliminar</a>
@@ -43,7 +45,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <a asp-controller="Tarea" asp-action="AgregarTarea">Agregar Tarea</a>
+            <a asp-controller="Tarea" asp-action="CrearTarea">Agregar Tarea</a>
         </tr>
     </tfoot>
 </table>

@@ -12,7 +12,7 @@
                 <a asp-controller="Tablero" asp-action="Index" asp-route-idUsuario=null>Ver Tableros de Todos los Usuarios</a>
             </tr>
         <tr>
-            <th hidden>ID</th>
+            <th>ID #</th>
             <th>Nombre</th>
             <th></th>
         </tr>
@@ -21,7 +21,7 @@
         @foreach (var usuario in Model)
         {
             <tr>
-                <td hidden>@usuario.Id</td>
+                <td>@usuario.Id</td>
                 <td>@usuario.Nombre</td>
                 <td>
                     <a asp-controller="Tablero" asp-action="Index" asp-route-idUsuario="@usuario.Id">Ver Tableros de este Usuario</a>

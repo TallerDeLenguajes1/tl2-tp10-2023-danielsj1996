@@ -3,9 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace tl2_tp10_2023_danielsj1996.ViewModels;
 
-using System.Collections.Generic;
-using System.Data.SQLite;
-using Microsoft.AspNetCore.Mvc.Rendering;
+
 using tl2_tp10_2023_danielsj1996.Models;
 using tl2_tp10_2023_danielsj1996.Repositorios;
 public enum EstadoTablero
@@ -15,14 +13,9 @@ public enum EstadoTablero
 }
 public class CrearTableroViewModel
 {
-    private int? id;
-    [Required(ErrorMessage = "Este campo es requerido.")]
-    [Display(Name = "Id")]
-    public int? Id { get => id; set => id = value; }
-
     private string? nombre;
     [Required(ErrorMessage = "Este campo es requerido.")]
-    [Display(Name = "Nombre Tarea")]
+    [Display(Name = "Nombre Tablero")]
     public string? Nombre { get => nombre; set => nombre = value; }
 
     private string? descripcion;
@@ -31,29 +24,22 @@ public class CrearTableroViewModel
     public string? Descripcion { get => descripcion; set => descripcion = value; }
     private EstadoTablero estadoTablero;
     [Required(ErrorMessage = "Este campo es requerido.")]
-    [Display(Name = "Descripcion")]
+    [Display(Name = "Estado del tablero")]
     public EstadoTablero EstadoTablero { get => estadoTablero; set => estadoTablero = value; }
 
     private int? idUsuarioPropietario;
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id Usuario Asignado")]
     public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
-    private List<Usuario> listaDeUsuario;
-    public List<Usuario> ListaDeUsuario { get => listaDeUsuario; set => listaDeUsuario = value; }
-
-
-
-    public static CrearTableroViewModel FromTablero(Tablero tablero, List<Usuario> listadeUsuarios)
+       public static CrearTableroViewModel FromTablero(Tablero tablero, List<Usuario> listadeUsuarios)
     {
 
         return new CrearTableroViewModel
         {
-            Id = tablero.IdTablero,
-            IdUsuarioPropietario = tablero.IdUsuarioPropietario,
             Nombre = tablero.NombreDeTablero,
-            listaDeUsuario=listadeUsuarios,
             Descripcion = tablero.DescripcionDeTablero,
             EstadoTablero = (EstadoTablero)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTablero)tablero.EstadoTablero,
+            IdUsuarioPropietario = tablero.IdUsuarioPropietario,
         };
     }
 

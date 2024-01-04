@@ -46,7 +46,7 @@ public class EditarTareaViewModel
         newTVM.id = tareas.IdTarea;
         newTVM.idTablero = tareas.IdTablero;
         newTVM.nombre = tareas.NombreTarea;
-        newTVM.estado = (EstadoTarea)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTarea)tareas.EstadoTarea;
+        newTVM.estado = tareas.EstadoTarea;
         newTVM.descripcion = tareas.DescripcionTarea;
         newTVM.color = tareas.Color;
         newTVM.idUsuarioAsignado = tareas.IdUsuarioAsignado;

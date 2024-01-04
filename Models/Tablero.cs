@@ -42,7 +42,6 @@ namespace tl2_tp10_2023_danielsj1996.Models
         {
             return new Tablero
             {
-                idTablero = tableroVM.Id,
                 idUsuarioPropietario = tableroVM.IdUsuarioPropietario,
                 nombreDeTablero = tableroVM.Nombre,
                 descripcionDeTablero = tableroVM.Descripcion,

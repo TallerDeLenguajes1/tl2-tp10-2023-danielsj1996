@@ -87,8 +87,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
            
                 Tablero nuevoTablero = Tablero.FromCrearTableroViewModel(nuevoTableroVM);
                 repo.CrearTablero(nuevoTablero);
-                int? ID = nuevoTablero.IdTablero;
-                return RedirectToAction("Index", new { idTablero = ID });
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
@@ -99,7 +98,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 
 
         [HttpGet]
-        public IActionResult EditarTablero(int? idTablero)
+        public IActionResult ModificarTablero(int? idTablero)
         {
             try
             {
@@ -141,7 +140,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditarTableroFromForm([FromForm] EditarTableroViewModel editarTableroVM)
+        public IActionResult ModificarTableroFromForm([FromForm] EditarTableroViewModel editarTableroVM)
         {
             try
             {

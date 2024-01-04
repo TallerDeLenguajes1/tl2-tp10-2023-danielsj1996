@@ -44,7 +44,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public List<Usuario> TraerTodosLosUsuarios()
         {
             List<Usuario> listaDeUsuarios = new List<Usuario>();
-            var query = "SELECT * FROM usuario;";
+            var query = "SELECT * FROM Usuario;";
             using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
             {
                 connection.Open();

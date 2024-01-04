@@ -4,16 +4,6 @@ using System.ComponentModel.DataAnnotations;
 namespace tl2_tp10_2023_danielsj1996.ViewModels;
 using tl2_tp10_2023_danielsj1996.Models;
 
-public enum EstadoTarea
-{
-    Ideas = 1,
-    ToDo = 2,
-    Doing = 3,
-    Review = 4,
-    Done = 5,
-    Unnactive = 6
-}
-
 public class ListarTareaViewModel
 {
     private int? id;
@@ -60,7 +50,7 @@ public class ListarTareaViewModel
             newTVM.id = tarea.IdTarea;
             newTVM.idTablero = tarea.IdTablero;
             newTVM.nombre = tarea.NombreTarea;
-            newTVM.estado = (tl2_tp10_2023_danielsj1996.ViewModels.EstadoTarea)tarea.EstadoTarea;
+            newTVM.estado = tarea.EstadoTarea;
             newTVM.descripcion = tarea.DescripcionTarea;
             newTVM.color = tarea.Color;
             newTVM.idUsuarioAsignado = tarea.IdUsuarioAsignado;

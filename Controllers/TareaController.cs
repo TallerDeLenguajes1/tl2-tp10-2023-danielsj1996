@@ -23,28 +23,28 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             repoTab = TabRepo;
         }
 
-        public IActionResult Index(int? idTablero)
+        public IActionResult Index()
         {
             try
             {
 
-                if (!isLogin()) return RedirectToAction("Index", "Login");
+                // if (!isLogin()) return RedirectToAction("Index", "Login");
                 List<Tarea> tareas = null;
-                if (isAdmin())
-                {
-                    tareas = repoTar.ListarTareas();
-                }
-                else if (idTablero.HasValue)
-                {
-                    Tablero tableroAct = repoTab.ObtenerTableroPorId(idTablero);
-                    int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
+                tareas = repoTar.ListarTareas();
+                // if (isAdmin())
+                // {
+                // }
+                // //else if (idTablero.HasValue)
+                // {
+                //     Tablero tableroAct = repoTab.ObtenerTableroPorId(idTablero);
+                //     int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
 
-                    tareas = repoTar.ListarTareasDeTablero(idTablero);
-                }
-                else
-                {
-                    return NotFound();
-                }
+                //     tareas = repoTar.ListarTareasDeTablero(idTablero);
+                // }
+                // //else
+                // {
+                //     return NotFound();
+                // }
                 List<ListarTareaViewModel> listarTareasVM = ListarTareaViewModel.FromTarea(tareas);
                 return View(listarTareasVM);
             }
@@ -86,9 +86,8 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (!isAdmin()) return NotFound();
 
                 Tarea nuevaTarea = Tarea.FromCrearTareaViewModel(nuevaTareaVM);
-                int? ID = nuevaTarea.IdTablero;
                 repoTar.CrearTarea(nuevaTarea);
-                return RedirectToAction("Index", new { idTablero = ID });
+                return RedirectToAction("Index");
 
             }
             catch (Exception ex)
