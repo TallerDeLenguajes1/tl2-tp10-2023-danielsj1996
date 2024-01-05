@@ -65,7 +65,8 @@ public class Tarea
 
         return new Tarea
         {
-            idTarea = tareaVM.Id,
+            
+            idTarea = tareaVM.IdTarea,
             idTablero = tareaVM.IdTablero,
             nombreTarea = tareaVM.Nombre,
             descripcionTarea = tareaVM.Descripcion,

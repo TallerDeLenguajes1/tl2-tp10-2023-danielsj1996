@@ -16,7 +16,7 @@ namespace tl2_tp10_2023_danielsj1996.Models
         private string? nombreDeTablero;
         private string? descripcionDeTablero;
         private EstadoTablero estadoTablero;
-        private List<Usuario> listadeUsuarios;
+
 
 
         public int? IdTablero { get => idTablero; set => idTablero = value; }
@@ -24,18 +24,17 @@ namespace tl2_tp10_2023_danielsj1996.Models
         public string? NombreDeTablero { get => nombreDeTablero; set => nombreDeTablero = value; }
         public string? DescripcionDeTablero { get => descripcionDeTablero; set => descripcionDeTablero = value; }
         public EstadoTablero EstadoTablero { get => estadoTablero; set => estadoTablero = value; }
-        public List<Usuario> ListadeUsuarios { get => listadeUsuarios; set => listadeUsuarios = value; }
+        
 
         public Tablero() { }
 
-        public Tablero(int? idTablero, int? idUsuarioPropietario, string? nombreDeTablero, string? descripcionDeTablero, EstadoTablero estadoTablero, List<Usuario> listadeUsuarios)
+        public Tablero(int? idTablero, int? idUsuarioPropietario, string? nombreDeTablero, string? descripcionDeTablero, EstadoTablero estadoTablero)
         {
             IdTablero = idTablero;
             IdUsuarioPropietario = idUsuarioPropietario;
             NombreDeTablero = nombreDeTablero;
             DescripcionDeTablero = descripcionDeTablero;
             EstadoTablero = estadoTablero;
-            ListadeUsuarios = listadeUsuarios;
         }
 
         public static Tablero FromCrearTableroViewModel(CrearTableroViewModel tableroVM)

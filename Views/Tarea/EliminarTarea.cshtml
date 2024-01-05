@@ -1,12 +1,22 @@
-@{
-    ViewData["Title"] = "Eiminar Tarea";
+@{ 
+    ViewData["Title"] = "Eliminar Tarea";
 }
 
 @model tl2_tp10_2023_danielsj1996.Models.Tarea
 
-<h1>Eliminar Tarea</h1>
+<h2>Eliminar Tarea</h2>
 
-<form asp-controller="Tarea" asp-action="EliminarTarea" method="post">
-    <input type="hidden" asp-for="@Model.IdTarea" />
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-</form>
+<div>
+    <p>¿Está seguro de que desea eliminar la siguiente Tarea?</p>
+    <dl>
+        <dt>Id Tarea:</dt>
+        <dd>@Model.IdTarea</dd>
+        <dt>Nombre de la Tarea:</dt>
+        <dd>@Model.NombreTarea</dd>
+    </dl>
+    <form asp-controller="Tarea"asp-action="ConfirmarEliminacionTarea" method="post">
+        <input type="hidden" asp-for="@Model.IdTarea" />
+        <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+        <a asp-controller="Tarea"asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

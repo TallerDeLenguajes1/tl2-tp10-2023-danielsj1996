@@ -10,7 +10,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 {
     public class TareaController : Controller
     {
-        private readonly string cadenadeconexion = "Data Source = DataBase/kanban.db;Cache=Shared";
+        private readonly string cadenadeconexion = "Data Source = DB/kanban.db;Cache=Shared";
         private readonly ITareaRepository repoTar;
         private readonly ITableroRepository repoTab;
 
@@ -23,28 +23,27 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             repoTab = TabRepo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? idTablero)
         {
             try
             {
 
-                // if (!isLogin()) return RedirectToAction("Index", "Login");
+                if (!isLogin()) return RedirectToAction("Index", "Login");
                 List<Tarea> tareas = null;
                 tareas = repoTar.ListarTareas();
-                // if (isAdmin())
-                // {
-                // }
-                // //else if (idTablero.HasValue)
-                // {
-                //     Tablero tableroAct = repoTab.ObtenerTableroPorId(idTablero);
-                //     int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
-
-                //     tareas = repoTar.ListarTareasDeTablero(idTablero);
-                // }
-                // //else
-                // {
-                //     return NotFound();
-                // }
+                if (isAdmin())
+                {
+                }
+                else if (idTablero.HasValue)
+                {
+                    Tablero tableroAct = repoTab.ObtenerTableroPorId(idTablero);
+                    int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
+                    tareas = repoTar.ListarTareasDeTablero(idTablero);
+                }
+                else
+                {
+                    return NotFound();
+                }
                 List<ListarTareaViewModel> listarTareasVM = ListarTareaViewModel.FromTarea(tareas);
                 return View(listarTareasVM);
             }
@@ -104,31 +103,14 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
 
-                Tarea tareaAModificar = repoTar.ObtenerTareaPorId(idTarea);
-                EditarTareaViewModel tareaAModificarVM = null;
-                int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
-
-                tareaAModificarVM = EditarTareaViewModel.FromTarea(tareaAModificar);
+                Tarea editarTarea = repoTar.ObtenerTareaPorId(idTarea);
+                EditarTareaViewModel editarTareaVM = null;
+                editarTareaVM = EditarTareaViewModel.FromTarea(editarTarea);
                 if (isAdmin())
                 {
-                    return View(tareaAModificar);
+                    return View(editarTareaVM);
                 }
-                else if (idTarea.HasValue)
-                {
-                    if (ID == tareaAModificar.IdUsuarioPropietario)
-                    {
-                        return View(tareaAModificarVM);
-                    }
-                    else if (ID == tareaAModificar.IdUsuarioAsignado)
-                    {
-                        return View("EditarTareaSimple", tareaAModificarVM);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
 
-                }
                 else
                 {
                     return NotFound();
@@ -144,22 +126,22 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditarTareaFromForm([FromForm] EditarTareaViewModel tareaAModificarVM)
+        public IActionResult EditarTareaFromForm([FromForm] EditarTareaViewModel editarTareaVM)
         {
             try
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
 
-                Tarea tareaAModificar = Tarea.FromEditarTareaViewModel(tareaAModificarVM);
-                int? ID = tareaAModificar.IdTablero;
-                repoTar.ModificarTarea(tareaAModificar);
-                return RedirectToAction("Index", new { idTablero = ID });
+                Tarea editarTarea = Tarea.FromEditarTareaViewModel(editarTareaVM);
+                repoTar.ModificarTarea(editarTarea);
+                return RedirectToAction("Index");
 
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
+                Console.WriteLine(ex.Message);
                 return BadRequest();
             }
         }
@@ -208,13 +190,13 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
         [HttpPost]
-        public IActionResult EliminarTareaFromForm([FromForm] Tarea tareaAEliminar)
+        public IActionResult ConfirmarEliminacionTarea(Tarea tareaAEliminar)
         {
             try
             {
-                if (!isLogin()) return RedirectToAction("Index", "Login");
                 repoTar.EliminarTarea(tareaAEliminar.IdTarea);
                 return RedirectToAction("Index");
+
 
             }
             catch (Exception ex)
@@ -223,7 +205,6 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return BadRequest();
             }
         }
-
 
         [HttpGet]
         public IActionResult AsignarTareaAUsuario(int? idTarea)
@@ -306,10 +287,10 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             }
         }
 
-        private int? ObtenerIDDelUsuarioLogueado(string? cadenaConexion)
+        private int ObtenerIDDelUsuarioLogueado(string? cadenaConexion)
         {
-            int? ID = 0;
-            string query = "SELECT * FROM USuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
+            int ID = 0;
+            string query = "SELECT * FROM Usuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
             Usuario usuarioElegido = new Usuario();
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
@@ -322,7 +303,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 {
                     while (reader.Read())
                     {
-                        ID = Convert.ToInt32(reader["id"]);
+                        ID = Convert.ToInt32(reader["id_usuario"]);
                     }
                 }
                 connection.Close();

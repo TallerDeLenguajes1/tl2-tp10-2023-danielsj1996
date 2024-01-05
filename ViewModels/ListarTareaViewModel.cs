@@ -1,7 +1,7 @@
-using System.ComponentModel;
+namespace tl2_tp10_2023_danielsj1996.ViewModels;
+
 using System.ComponentModel.DataAnnotations;
 
-namespace tl2_tp10_2023_danielsj1996.ViewModels;
 using tl2_tp10_2023_danielsj1996.Models;
 
 public class ListarTareaViewModel
@@ -50,7 +50,7 @@ public class ListarTareaViewModel
             newTVM.id = tarea.IdTarea;
             newTVM.idTablero = tarea.IdTablero;
             newTVM.nombre = tarea.NombreTarea;
-            newTVM.estado = tarea.EstadoTarea;
+            newTVM.estado =(EstadoTarea)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTarea)tarea.EstadoTarea;
             newTVM.descripcion = tarea.DescripcionTarea;
             newTVM.color = tarea.Color;
             newTVM.idUsuarioAsignado = tarea.IdUsuarioAsignado;

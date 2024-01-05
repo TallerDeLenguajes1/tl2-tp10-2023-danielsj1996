@@ -240,7 +240,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         private int? ObtenerIDDelUsuarioLogueado(string? cadenaConexion)
         {
             int? ID = 0;
-            string query = "SELECT * FROM USuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
+            string query = "SELECT * FROM Usuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
             Usuario usuarioElegido = new Usuario();
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {

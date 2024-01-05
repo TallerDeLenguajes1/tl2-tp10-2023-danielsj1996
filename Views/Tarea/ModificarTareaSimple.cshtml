@@ -1,11 +1,11 @@
 @{ 
-    ViewData["Title"] = "Eliminar Tarea";
+    ViewData["Title"] = "Modificar Estado de la Tarea ";
 }
 
 @model tl2_tp10_2023_danielsj1996.ViewModels.ListarTareaViewModel
 
 <h1>@ViewData["Title"]</h1>
-<form asp-controller="Tarea" asp-action="EliminarTareaFromForm" method="post">
+<form asp-controller="Tarea" asp-action="ModificarTareaFromForm" method="post">
     <input hidden asp-for="@Model.Id">
     <input hidden asp-for="@Model.IdUsuarioPropietario">
     <input hidden asp-for="@Model.IdUsuarioAsignado">
