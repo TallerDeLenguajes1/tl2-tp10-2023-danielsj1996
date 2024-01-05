@@ -11,7 +11,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
     public class TableroController : Controller
     {
         private readonly ITableroRepository repo;
-        private readonly string cadenaConexion = "Data Source = DataBase/kamban.db;Cache=Shared";
+        private readonly string cadenaConexion = "Data Source = DB/kamban.db;Cache=Shared";
         private readonly ILogger<HomeController> _logger;
         public TableroController(ILogger<HomeController> logger, ITableroRepository TabRepo)
         {
@@ -57,14 +57,15 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
         [HttpGet]
-        public IActionResult AgregarTablero()
+        public IActionResult CrearTablero()
         {
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 if (!isAdmin()) return NotFound();
-                CrearTableroViewModel nuevoTableroVM = new CrearTableroViewModel();
-                return View(nuevoTableroVM);
+
+                CrearTableroViewModel nuevaTableroVM = new CrearTableroViewModel();
+                return View(nuevaTableroVM);
             }
             catch (Exception ex)
             {
@@ -76,7 +77,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
         [HttpPost]
-        public IActionResult AgregarTableroFromForm([FromForm] CrearTableroViewModel nuevoTableroVM,ListarUsuarioViewModel listadeUsuariosVM)
+        public IActionResult CrearTableroFromForm([FromForm] CrearTableroViewModel nuevaTableroVM)
         {
             try
             {
@@ -84,10 +85,10 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 if (!isAdmin()) return NotFound();
 
-           
-                Tablero nuevoTablero = Tablero.FromCrearTableroViewModel(nuevoTableroVM);
-                repo.CrearTablero(nuevoTablero);
+                Tablero nuevaTablero= Tablero.FromCrearTableroViewModel(nuevaTableroVM);
+                repo.CrearTablero(nuevaTablero);
                 return RedirectToAction("Index");
+
             }
             catch (Exception ex)
             {

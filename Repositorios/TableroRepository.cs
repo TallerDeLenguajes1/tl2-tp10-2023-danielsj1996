@@ -13,26 +13,40 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
 
     
 
-        public void CrearTablero(Tablero nuevoTablero)
+    public Tablero CrearTablero(Tablero nuevoTablero)
+    {
+        var query = "INSERT INTO Tablero (nombre_tablero, descripcion_tablero, estado_tablero,id_usuario_propietario) VALUES (@nombreTablero, @descripcionTablero, @estadoTablero,@idUsuarioProp);";
+        Console.WriteLine("Consulta SQL: " + query);
+        using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
         {
-            var query = "INSERT INTO Tablero (id_tablero,id_usuario_propietario,nombre_tablero,descripcion_tablero,estado_tablero) VALUES (@idTablero,@idPropietario,@nombreTablero,@descripTablero,@estado);";
-            using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
+            try
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
-                command.Parameters.Add(new SQLiteParameter("@idTablero", nuevoTablero.IdTablero));
-                command.Parameters.Add(new SQLiteParameter("@idPropietario", nuevoTablero.IdUsuarioPropietario));
                 command.Parameters.Add(new SQLiteParameter("@nombreTablero", nuevoTablero.NombreDeTablero));
-                command.Parameters.Add(new SQLiteParameter("@descripTablero", nuevoTablero.DescripcionDeTablero));
-                command.Parameters.Add(new SQLiteParameter("@estado", nuevoTablero.EstadoTablero));
+                command.Parameters.Add(new SQLiteParameter("@descripcionTablero", nuevoTablero.DescripcionDeTablero));
+                command.Parameters.Add(new SQLiteParameter("@estadoTablero", nuevoTablero.EstadoTablero));
+                command.Parameters.Add(new SQLiteParameter("@idUsuarioProp", nuevoTablero.IdUsuarioPropietario));
                 command.ExecuteNonQuery();
                 connection.Close();
             }
-            if (nuevoTablero == null)
+            catch (SQLiteException ex)
             {
-                throw new Exception("El Tablero no se pudo crear,revise los datos e intente nuevamente");
+                Console.WriteLine("Error al ejecutar la consulta: " + ex.Message);
+                throw;
             }
+
         }
+        if (nuevoTablero == null)
+        {
+            throw new Exception("La Tarea no pudo ser Creada correctamente");
+        }
+        else
+        {
+            return nuevoTablero;
+
+        }
+    }
 
         public List<Tablero> ListarTodosTableros()
         {
@@ -114,7 +128,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                 }
             }
         }
-        public void ModificarTablero(Tablero modificarTablero)
+        public Tablero ModificarTablero(Tablero modificarTablero)
         {
             var query = "UPDATE Tablero SET id_usuario_propietario = @idPropietario, nombre_tablero = @nombreTablero, descripcion_tablero = @descripTablero,estado_tablero = @estado WHERE id_tablero = @idTablero;";
             using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
@@ -133,6 +147,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
                     throw new Exception("No se encontrò ningun tablero con el ID solicitado");
                 }
             }
+            return modificarTablero;
         }
         public List<Tablero> ListarTablerosDeUsuarioEspecifico(int? idUsuario)
         {

@@ -5,7 +5,6 @@ namespace tl2_tp10_2023_danielsj1996.ViewModels;
 
 
 using tl2_tp10_2023_danielsj1996.Models;
-using tl2_tp10_2023_danielsj1996.Repositorios;
 public enum EstadoTablero
 {
     Active = 1,
@@ -31,14 +30,14 @@ public class CrearTableroViewModel
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id Usuario Asignado")]
     public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
-       public static CrearTableroViewModel FromTablero(Tablero tablero, List<Usuario> listadeUsuarios)
+       public static CrearTableroViewModel FromTablero(Tablero tablero)
     {
 
         return new CrearTableroViewModel
         {
             Nombre = tablero.NombreDeTablero,
             Descripcion = tablero.DescripcionDeTablero,
-            EstadoTablero = (EstadoTablero)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTablero)tablero.EstadoTablero,
+            EstadoTablero = (EstadoTablero)tablero.EstadoTablero,
             IdUsuarioPropietario = tablero.IdUsuarioPropietario,
         };
     }

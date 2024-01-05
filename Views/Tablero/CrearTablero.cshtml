@@ -22,7 +22,7 @@
             }
     }
 <h1>@ViewData["Title"]</h1>
-<form asp-controller="Tablero" asp-action="AgregarTableroFromForm" method="post">
+<form asp-controller="Tablero" asp-action="CrearTableroFromForm" method="post">
 <div class="form-group">
     <label asp-for="IdUsuarioPropietario"></label>
     <select asp-for="IdUsuarioPropietario" class="form-control">
@@ -53,9 +53,9 @@
         </select>
         <span asp-validation-for="@Model.EstadoTablero" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-success">Enviar</button>
-
+    <button type="submit" class="btn btn-primary">Generar Tablero</button>
 </form>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
