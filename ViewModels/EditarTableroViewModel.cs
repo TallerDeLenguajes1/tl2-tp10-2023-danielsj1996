@@ -34,7 +34,7 @@ public class EditarTableroViewModel{
             idUsuarioPropietario = tablero.IdUsuarioPropietario,
             nombre = tablero.NombreDeTablero,
             descripcion=tablero.DescripcionDeTablero,
-            estadoTablero = (EstadoTablero)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTablero)tablero.EstadoTablero
+            estadoTablero = (EstadoTablero)tablero.EstadoTablero
         };
     }
 }

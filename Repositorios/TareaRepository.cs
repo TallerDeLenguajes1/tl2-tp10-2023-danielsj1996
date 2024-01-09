@@ -306,7 +306,7 @@ public class TareaRepository : ITareaRepository
                 connection.Close();
                 if (filaAfectada == 0)
                 {
-                    throw new Exception("No se encontro ninguna Tarea con el usuario Indicado");
+                    throw new Exception("No se encontro ningun Tablero con el id Indicado");
                 }
             }
         }

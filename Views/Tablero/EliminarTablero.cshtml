@@ -4,10 +4,19 @@
 
 @model tl2_tp10_2023_danielsj1996.Models.Tablero
 
-<h2>Confirmar Eliminación</h2>
+<h2>Eliminar Tablero</h2>
 
-<form asp-controller="Tablero" asp-action="ConfirmarEliminar">
-    <input asp-for="@Model.IdTablero" type="hidden" />
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-
-</form>
+<div>
+    <p>¿Está seguro de que desea eliminar la siguiente Tarea?</p>
+    <dl>
+        <dt>Id Tablero:</dt>
+        <dd>@Model.IdTablero</dd>
+        <dt>Nombre del Tablero:</dt>
+        <dd>@Model.NombreDeTablero</dd>
+    </dl>
+    <form asp-controller="Tablero"asp-action="ConfirmarEliminacionTablero" method="post">
+        <input type="hidden" asp-for="@Model.IdTablero" />
+        <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
+        <a asp-controller="Tablero"asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

@@ -11,7 +11,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
     public class TableroController : Controller
     {
         private readonly ITableroRepository repo;
-        private readonly string cadenaConexion = "Data Source = DB/kamban.db;Cache=Shared";
+        private readonly string cadenaConexion = "Data Source = DB/kanban.db;Cache=Shared";
         private readonly ILogger<HomeController> _logger;
         public TableroController(ILogger<HomeController> logger, ITableroRepository TabRepo)
         {
@@ -99,7 +99,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 
 
         [HttpGet]
-        public IActionResult ModificarTablero(int? idTablero)
+        public IActionResult EditarTablero(int? idTablero)
         {
             try
             {
@@ -141,7 +141,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
         [HttpPost]
-        public IActionResult ModificarTableroFromForm([FromForm] EditarTableroViewModel editarTableroVM)
+        public IActionResult EditarTableroFromForm([FromForm] EditarTableroViewModel editarTableroVM)
         {
             try
             {
@@ -196,7 +196,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 
         }
 
-        public IActionResult EliminarFromForm(Tablero tableroAEliminar)
+        public IActionResult ConfirmarEliminacionTablero(Tablero tableroAEliminar)
         {
             try
             {
@@ -204,7 +204,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (!isLogin()) return RedirectToAction("Index", "Login");
 
                 repo.EliminarTableroPorId(tableroAEliminar.IdTablero);
-                return RedirectToAction("Index", "Usuario");
+                return RedirectToAction("Index", "Tablero");
             }
             catch (Exception ex)
             {

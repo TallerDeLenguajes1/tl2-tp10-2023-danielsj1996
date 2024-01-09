@@ -8,7 +8,7 @@ public enum EstadoTarea
     Doing = 3,
     Review = 4,
     Done = 5,
-    Unnactive = 6
+    inactive = 6
 }
 
 public class Tarea
