@@ -19,7 +19,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             repo = TabRepo;
         }
 
-        public IActionResult Index(int? idUsuario)
+        public IActionResult Index()
         {
             try
             {
@@ -28,18 +28,6 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (isAdmin())
                 {
                     tableros = repo.ListarTodosTableros();
-                }
-                else if (idUsuario.HasValue)
-                {
-                    int? ID = ObtenerIDDelUsuarioLogueado(cadenaConexion);
-                    if (ID == idUsuario)
-                    {
-                        tableros = repo.ListarTablerosDeUsuarioEspecifico(idUsuario);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
                 }
                 else
                 {
@@ -55,7 +43,30 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return BadRequest();
             }
         }
+        public IActionResult MostrarTablerosDeUsuarioEspecificos(int idUsuario)
+        {
+            try
+            {
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                List<Tablero> tableros = null;
+                if (isAdmin())
+                {
+                    tableros = repo.ListarTablerosDeUsuarioEspecifico(idUsuario);
+                }
+                else
+                {
+                    return NotFound();
+                }
+                List<ListarTableroViewModel> listarTablerosVM = ListarTableroViewModel.FromTablero(tableros);
+                return View(listarTablerosVM);
 
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
         [HttpGet]
         public IActionResult CrearTablero()
         {
@@ -85,7 +96,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 if (!isAdmin()) return NotFound();
 
-                Tablero nuevaTablero= Tablero.FromCrearTableroViewModel(nuevaTableroVM);
+                Tablero nuevaTablero = Tablero.FromCrearTableroViewModel(nuevaTableroVM);
                 repo.CrearTablero(nuevaTablero);
                 return RedirectToAction("Index");
 
@@ -98,38 +109,24 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
 
-        [HttpGet]
         public IActionResult EditarTablero(int? idTablero)
         {
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
 
-                Tablero tableroAModificar = repo.ObtenerTableroPorId(idTablero);
-                EditarTableroViewModel tableroAModificarVM = null;
-
-                if (!isAdmin())
+                Tablero editarTablero = repo.ObtenerTableroPorId(idTablero);
+                EditarTableroViewModel editarTareaVM = null;
+                editarTareaVM = EditarTableroViewModel.FromTablero(editarTablero);
+                if (isAdmin())
                 {
-                    tableroAModificarVM = EditarTableroViewModel.FromTablero(tableroAModificar);
+                    return View(editarTareaVM);
                 }
-                else if (idTablero.HasValue)
-                {
-                    int? ID = ObtenerIDDelUsuarioLogueado(cadenaConexion);
-                    if (ID == tableroAModificar.IdUsuarioPropietario)
-                    {
 
-                        tableroAModificarVM = EditarTableroViewModel.FromTablero(tableroAModificar);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
                 else
                 {
                     return NotFound();
                 }
-                return View(tableroAModificarVM);
             }
             catch (Exception ex)
             {
@@ -148,19 +145,19 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
 
-                Tablero tableroAModificar = Tablero.FromEditarTableroViewModel(editarTableroVM);
-                int? ID = tableroAModificar.IdUsuarioPropietario;
-                repo.ModificarTablero(tableroAModificar);
-                return RedirectToAction("Index", new { idUsuario = ID });
+                Tablero editarTarea = Tablero.FromEditarTableroViewModel(editarTableroVM);
+                repo.ModificarTablero(editarTarea);
+                return RedirectToAction("Index");
+
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.ToString());
+                Console.WriteLine(ex.Message);
                 return BadRequest();
             }
         }
-
-        public IActionResult EliminarTablero(int? idTablero)
+        public IActionResult EliminarTablero(int idTablero)
         {
             try
             {
@@ -172,7 +169,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 {
                     return View(tableroAEliminar);
                 }
-                else if (idTablero.HasValue)
+                else if (idTablero != null)
                 {
                     int? ID = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                     if (ID == idUsuarioTablero)
@@ -196,23 +193,23 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 
         }
 
+        [HttpPost]
         public IActionResult ConfirmarEliminacionTablero(Tablero tableroAEliminar)
         {
             try
             {
-                if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
-                if (!isLogin()) return RedirectToAction("Index", "Login");
-
                 repo.EliminarTableroPorId(tableroAEliminar.IdTablero);
-                return RedirectToAction("Index", "Tablero");
+                return RedirectToAction("Index");
+
+
             }
             catch (Exception ex)
             {
-
                 _logger.LogError(ex.ToString());
                 return BadRequest();
             }
         }
+
 
         private bool isAdmin()
         {
@@ -264,8 +261,8 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 
         }
 
-      
-      [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

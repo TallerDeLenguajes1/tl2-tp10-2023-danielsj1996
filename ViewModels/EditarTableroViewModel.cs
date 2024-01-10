@@ -5,10 +5,10 @@ using System.ComponentModel.DataAnnotations;
 using tl2_tp10_2023_danielsj1996.Models;
 
 public class EditarTableroViewModel{
-    private int? id;
+    private int id;
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id")]
-    public int? Id { get => id; set => id = value; }
+    public int Id { get => id; set => id = value; }
     private int? idUsuarioPropietario;
     [Required(ErrorMessage = "Este campo es requerido.")]
     [Display(Name = "Id Usuario Propietario")]

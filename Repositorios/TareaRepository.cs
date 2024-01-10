@@ -175,7 +175,7 @@ public class TareaRepository : ITareaRepository
 
     public List<Tarea> ListarTareasDeUsuario(int? idUsuario)
     {
-        var query = "SELECT * FROM Tarea WHERE id_usuario_asignado = @id_usuario OR id_usuario_asignado=@id_usuario";
+        var query = "SELECT * FROM Tarea WHERE id_usuario_asignado = @id_usuario OR id_usuario_propietario=@id_usuario;";
         List<Tarea> listaDeTareas = new List<Tarea>();
         using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
         {
@@ -212,7 +212,7 @@ public class TareaRepository : ITareaRepository
 
     public List<Tarea> ListarTareasDeTablero(int? idTablero)
     {
-        var query = "SELECT * FROM Tarea WHERE id_tablero = @idTablero";
+        var query = "SELECT * FROM Tarea WHERE id_tablero = @idTablero;";
         List<Tarea> listaDeTareas = new List<Tarea>();
         using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
         {
@@ -251,7 +251,7 @@ public class TareaRepository : ITareaRepository
     }
     public void AsignarUsuarioATarea(Tarea tareaModificada)
     {
-        var query = "UPDATE Tarea SET id_usuario_asignado = @idUsuario WHERE id_tarea = @idTarea";
+        var query = "UPDATE Tarea SET id_usuario_asignado = @idUsuario WHERE id_tarea = @idTarea;";
 
         using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
         {
@@ -272,7 +272,7 @@ public class TareaRepository : ITareaRepository
 
     public void InhabilitarDeUsuario(int? IdUsuario)
     {
-        var query = "UPDATE Tarea SET estado_tarea = @estado WHERE id_usuario_propietario = @idUsaurioPropietario";
+        var query = "UPDATE Tarea SET estado_tarea = @estado WHERE id_usuario_propietario = @idUsaurioPropietario;";
 
         using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
         {
@@ -292,16 +292,15 @@ public class TareaRepository : ITareaRepository
     }
     public void InhabilitarDeTablero(int? IdTablero)
     {
-        var query = "UPDATE Tarea SET estado_tarea = @estado WHERE id_tablero = @idTablero";
-        SQLiteParameter parametroId = new SQLiteParameter("idTabero", IdTablero);
-        SQLiteParameter parametroEstado = new SQLiteParameter("@Estado", 6);
+        var query = "UPDATE Tarea SET estado_tarea=@estado WHERE id_tablero=@idTablero;";
+        Console.WriteLine("Consulta SQL: " + query);
         using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
         {
             connection.Open();
             using (SQLiteCommand command = new SQLiteCommand(query, connection))
             {
-                command.Parameters.Add(parametroId);
-                command.Parameters.Add(parametroEstado);
+                command.Parameters.Add(new SQLiteParameter("@idTablero", IdTablero));
+                command.Parameters.Add(new SQLiteParameter("@estadoTarea", 6));
                 int filaAfectada = command.ExecuteNonQuery();
                 connection.Close();
                 if (filaAfectada == 0)

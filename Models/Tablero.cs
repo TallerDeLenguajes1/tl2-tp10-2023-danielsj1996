@@ -11,7 +11,7 @@ namespace tl2_tp10_2023_danielsj1996.Models
     }
     public class Tablero
     {
-        private int? idTablero;
+        private int idTablero;
         private int? idUsuarioPropietario;
         private string? nombreDeTablero;
         private string? descripcionDeTablero;
@@ -19,7 +19,7 @@ namespace tl2_tp10_2023_danielsj1996.Models
 
 
 
-        public int? IdTablero { get => idTablero; set => idTablero = value; }
+        public int IdTablero { get => idTablero; set => idTablero = value; }
         public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
         public string? NombreDeTablero { get => nombreDeTablero; set => nombreDeTablero = value; }
         public string? DescripcionDeTablero { get => descripcionDeTablero; set => descripcionDeTablero = value; }
@@ -28,7 +28,7 @@ namespace tl2_tp10_2023_danielsj1996.Models
 
         public Tablero() { }
 
-        public Tablero(int? idTablero, int? idUsuarioPropietario, string? nombreDeTablero, string? descripcionDeTablero, EstadoTablero estadoTablero)
+        public Tablero(int idTablero, int? idUsuarioPropietario, string? nombreDeTablero, string? descripcionDeTablero, EstadoTablero estadoTablero)
         {
             IdTablero = idTablero;
             IdUsuarioPropietario = idUsuarioPropietario;

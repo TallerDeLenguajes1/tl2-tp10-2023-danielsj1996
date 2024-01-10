@@ -5,15 +5,12 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<div class="table table-grey">
+<div class="table table">
     <table>
         <thead>
+
             <tr>
-                <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero=null>Ver Tareas de Todos los
-                    Tableros</a>
-            </tr>
-            <tr>
-                <th hidden>Id</th>
+                <th>Id</th>
                 <th>IdUsuarioPropietario</th>
                 <th>Nombre</th>
                 <th>Descripcion</th>
@@ -26,27 +23,19 @@
             {
 
                 <tr>
-                    <td hidden>@tablero.Id</td>
+                    <td>@tablero.Id</td>
                     <td>@tablero.IdUsuarioPropietario</td>
                     <td>@tablero.Nombre</td>
                     <td>@tablero.Descripcion</td>
                     <td>@tablero.Estado</td>
                     <td>
-
                         <a asp-controller="Tarea" asp-action="MostrarTareaDeTablero" asp-route-idTablero="@tablero.Id">Ver Tareas del
                             Tablero</a>
-                        <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Editar</a>
-                        <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id">Eliminar Tablero</a>
                     </td>
                 </tr>
             }
         </tbody>
-        <tfoot>
-            <tr>
-                <a asp-controller="Tablero" asp-action="CrearTablero">AgregarTablero</a>
-            </tr>
 
-        </tfoot>
 
 
     </table>

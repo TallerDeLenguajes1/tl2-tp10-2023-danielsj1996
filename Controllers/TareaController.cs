@@ -23,22 +23,17 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             repoTab = TabRepo;
         }
 
-        public IActionResult Index(int? idTablero)
+        public IActionResult Index()
         {
             try
             {
 
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 List<Tarea> tareas = null;
-                tareas = repoTar.ListarTareas();
                 if (isAdmin())
                 {
-                }
-                else if (idTablero.HasValue)
-                {
-                    Tablero tableroAct = repoTab.ObtenerTableroPorId(idTablero);
-                    int? ID = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
-                    tareas = repoTar.ListarTareasDeTablero(idTablero);
+                    tareas = repoTar.ListarTareas();
+
                 }
                 else
                 {
@@ -53,7 +48,31 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return BadRequest();
             }
         }
+        public IActionResult MostrarTareaDeTablero(int idTablero)
+        {
+            try
+            {
 
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                List<Tarea> tareas = null;
+                if (isAdmin())
+                {
+                    tareas = repoTar.ListarTareasDeTablero(idTablero);
+
+                }
+                else
+                {
+                    return NotFound();
+                }
+                List<ListarTareaViewModel> listarTareasVM = ListarTareaViewModel.FromTarea(tareas);
+                return View(listarTareasVM);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
 
         [HttpGet]
         public IActionResult CrearTarea()
