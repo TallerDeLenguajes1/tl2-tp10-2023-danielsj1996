@@ -317,28 +317,30 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             }
         }
 
-        private int ObtenerIDDelUsuarioLogueado(string? cadenaConexion)
+        private int ObtenerIDDelUsuarioLogueado(string cadenaConexion)
         {
-            int ID = 0;
+
             string query = "SELECT * FROM Usuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
+            Console.WriteLine("Consulta SQL: " + query);
             Usuario usuarioElegido = new Usuario();
+            
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
-                command.Parameters.Add(new SQLiteParameter("@nombre", HttpContext.Session.GetString("nombre")));
-                command.Parameters.Add(new SQLiteParameter("@contrasenia", HttpContext.Session.GetString("contrasenia")));
-
+                command.Parameters.Add(new SQLiteParameter("@nombre", HttpContext.Session.GetString("Nombre")));
+                command.Parameters.Add(new SQLiteParameter("@contrasenia", HttpContext.Session.GetString("Contrasenia")));
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        ID = Convert.ToInt32(reader["id_usuario"]);
+                        usuarioElegido.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
+                        Console.WriteLine($"IdUsuario obtenido: {usuarioElegido.IdUsuario}");
                     }
                 }
                 connection.Close();
             }
-            return (ID);
+            return usuarioElegido.IdUsuario;
 
 
         }
