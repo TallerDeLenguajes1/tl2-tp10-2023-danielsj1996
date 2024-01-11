@@ -149,7 +149,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             }
             return modificarTablero;
         }
-        public List<Tablero> ListarTablerosDeUsuarioEspecifico(int? idUsuario)
+        public List<Tablero> ListarTablerosDeUsuarioEspecifico(int idUsuario)
         {
             var query = "SELECT * FROM Tablero WHERE id_usuario_propietario = @idUsuario;";
             List<Tablero> tableros = new List<Tablero>();

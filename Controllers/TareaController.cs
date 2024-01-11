@@ -294,9 +294,20 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return false;
             }
         }
+        private bool isOperario()
+        {
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         private bool isLogin()
         {
-            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "operario")
             {
                 return true;
             }

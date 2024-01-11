@@ -11,15 +11,18 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
     public class TableroController : Controller
     {
         private readonly ITableroRepository repo;
+        private readonly ITareaRepository repoTar;
         private readonly string cadenaConexion = "Data Source = DB/kanban.db;Cache=Shared";
         private readonly ILogger<HomeController> _logger;
-        public TableroController(ILogger<HomeController> logger, ITableroRepository TabRepo)
+        public TableroController(ILogger<HomeController> logger, ITableroRepository TabRepo, ITareaRepository TarRepo)
         {
             _logger = logger;
             repo = TabRepo;
+            repoTar = TarRepo;
+
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int idUsuario)
         {
             try
             {
@@ -29,6 +32,21 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 {
                     tableros = repo.ListarTodosTableros();
                 }
+                else if (isOperario())
+                {
+
+                    int idObtenido = ObtenerIDDelUsuarioLogueado(cadenaConexion);
+                    if (idUsuario == idObtenido)
+                    {
+
+                        tableros = repo.ListarTablerosDeUsuarioEspecifico(idObtenido);
+                    }
+                    else
+                    {
+                        return NotFound("No tienes permisos para acceder a los tableros de otro usuario.");
+                    }
+                }
+
                 else
                 {
                     return NotFound();
@@ -43,30 +61,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return BadRequest();
             }
         }
-        public IActionResult MostrarTablerosDeUsuarioEspecificos(int idUsuario)
-        {
-            try
-            {
-                if (!isLogin()) return RedirectToAction("Index", "Login");
-                List<Tablero> tableros = null;
-                if (isAdmin())
-                {
-                    tableros = repo.ListarTablerosDeUsuarioEspecifico(idUsuario);
-                }
-                else
-                {
-                    return NotFound();
-                }
-                List<ListarTableroViewModel> listarTablerosVM = ListarTableroViewModel.FromTablero(tableros);
-                return View(listarTablerosVM);
 
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return BadRequest();
-            }
-        }
         [HttpGet]
         public IActionResult CrearTablero()
         {
@@ -114,7 +109,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-
+                Tarea DatosTar = new Tarea();
                 Tablero editarTablero = repo.ObtenerTableroPorId(idTablero);
                 EditarTableroViewModel editarTareaVM = null;
                 editarTareaVM = EditarTableroViewModel.FromTablero(editarTablero);
@@ -222,9 +217,20 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 return false;
             }
         }
+        private bool isOperario()
+        {
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "operario")
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         private bool isLogin()
         {
-            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "operario")
             {
                 return true;
             }
@@ -235,28 +241,28 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
 
-        private int? ObtenerIDDelUsuarioLogueado(string? cadenaConexion)
+        private int ObtenerIDDelUsuarioLogueado(string cadenaConexion)
         {
-            int? ID = 0;
+
             string query = "SELECT * FROM Usuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
             Usuario usuarioElegido = new Usuario();
+            
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();
                 var command = new SQLiteCommand(query, connection);
                 command.Parameters.Add(new SQLiteParameter("@nombre", HttpContext.Session.GetString("nombre")));
                 command.Parameters.Add(new SQLiteParameter("@contrasenia", HttpContext.Session.GetString("contrasenia")));
-
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        ID = Convert.ToInt32(reader["id"]);
+                        usuarioElegido.IdUsuario = Convert.ToInt32(reader["id_usuario"]);
                     }
                 }
                 connection.Close();
             }
-            return (ID);
+            return usuarioElegido.IdUsuario;
 
 
         }

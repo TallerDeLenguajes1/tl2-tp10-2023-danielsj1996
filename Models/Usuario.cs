@@ -3,7 +3,7 @@ namespace tl2_tp10_2023_danielsj1996.Models;
 using tl2_tp10_2023_danielsj1996.ViewModels;
 
 public class Usuario{
-    private int? idUsuario;
+    private int idUsuario;
     private string? nombreDeUsuario;
     private string contrasenia;
     private int nivel;
@@ -13,7 +13,7 @@ public class Usuario{
 
     }
 
-    public Usuario(int? idUsuario, string? nombreDeUsuario, string contrasenia, int nivel)
+    public Usuario(int idUsuario, string? nombreDeUsuario, string contrasenia, int nivel)
     {
         this.idUsuario = idUsuario;
         this.nombreDeUsuario = nombreDeUsuario;
@@ -21,7 +21,7 @@ public class Usuario{
         this.nivel = nivel;
     }
 
-    public int? IdUsuario { get => idUsuario; set => idUsuario = value; }
+    public int IdUsuario { get => idUsuario; set => idUsuario = value; }
     public string? NombreDeUsuario { get => nombreDeUsuario; set => nombreDeUsuario = value; }
     public string Contrasenia { get => contrasenia; set => contrasenia = value; }
     public int Nivel { get => nivel; set => nivel = value; }

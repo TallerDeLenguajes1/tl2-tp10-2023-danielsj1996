@@ -208,7 +208,7 @@ public class UsuarioController : Controller
     }
     private bool isLogin()
     {
-        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "simple")
+        if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin" || HttpContext.Session.GetString("NivelDeAcceso") == "operario")
         {
             return true;
         }
@@ -243,7 +243,14 @@ public class UsuarioController : Controller
 
 
     }
+    public IActionResult Logout()
+    {
+        // Realizar las tareas de deslogueo aquí
+        HttpContext.Session.Clear(); // Limpiar la sesión
 
+        // Redirigir al usuario a la página de inicio de sesión u otra página deseada
+        return RedirectToAction("Index", "Login");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

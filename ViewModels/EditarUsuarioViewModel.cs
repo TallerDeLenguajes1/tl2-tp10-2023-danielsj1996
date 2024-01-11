@@ -6,10 +6,10 @@ using tl2_tp10_2023_danielsj1996.Models;
 
 public class EditarUsuarioViewModel
 {
-    private int? id;
+    private int id;
     [Required(ErrorMessage = "Este Campo es requerido.")]
     [Display(Name = "Id")]
-    public int? Id { get => id; set => id = value; }
+    public int Id { get => id; set => id = value; }
 
     private string? nombre;
     [Required(ErrorMessage = "Este Campo es Requerido.")]

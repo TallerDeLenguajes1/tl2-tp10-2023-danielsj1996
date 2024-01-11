@@ -2,8 +2,8 @@ using tl2_tp10_2023_danielsj1996.ViewModels;
 namespace tl2_tp10_2023_danielsj1996.Models;
 public enum NivelDeAcceso
 {
-    invitado = 1,
-    admin = 2
+    admin = 1,
+    operario = 2
 }
 
 
