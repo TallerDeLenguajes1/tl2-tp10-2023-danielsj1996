@@ -173,7 +173,7 @@ public class TareaRepository : ITareaRepository
 
 
 
-    public List<Tarea> ListarTareasDeUsuario(int? idUsuario)
+    public List<Tarea> ListarTareasDeUsuario(int idUsuario)
     {
         var query = "SELECT * FROM Tarea WHERE id_usuario_asignado = @id_usuario OR id_usuario_propietario=@id_usuario;";
         List<Tarea> listaDeTareas = new List<Tarea>();
@@ -210,10 +210,10 @@ public class TareaRepository : ITareaRepository
         }
     }
 
-    public List<Tarea> ListarTareasDeTablero(int? idTablero)
+    public List<Tarea> ListarTareasDeTablero(int idTablero)
     {
-        var query = "SELECT * FROM Tarea WHERE id_tablero = @idTablero;";
         List<Tarea> listaDeTareas = new List<Tarea>();
+        var query = "SELECT * FROM Tarea WHERE id_tablero=@idTablero;";
         using (SQLiteConnection connection = new SQLiteConnection(CadenaConexion))
         {
             connection.Open();
@@ -229,7 +229,7 @@ public class TareaRepository : ITareaRepository
                     tarea.NombreTarea = reader["nombre_tarea"].ToString();
                     tarea.DescripcionTarea = reader["descripcion_tarea"].ToString();
                     tarea.Color = reader["color_tarea"].ToString();
-                    tarea.EstadoTarea = (EstadoTarea)Enum.Parse(typeof(EstadoTarea), reader["estado_tarea"].ToString());
+                    tarea.EstadoTarea = (EstadoTarea)Convert.ToInt32(reader["estado_tarea"].ToString());
                     tarea.IdUsuarioAsignado = Convert.ToInt32(reader["id_usuario_asignado"]);
                     tarea.IdUsuarioPropietario = Convert.ToInt32(reader["id_usuario_propietario"]);
                     listaDeTareas.Add(tarea);
@@ -239,15 +239,9 @@ public class TareaRepository : ITareaRepository
         }
         if (listaDeTareas == null)
         {
-            throw new Exception("El tablero proporcionado no tiene tareas asignadas");
-
+            throw new Exception("Lista de Tareas no encontrada o Vacìa");
         }
-        else
-        {
-            return listaDeTareas;
-
-        }
-
+        return listaDeTareas;
     }
     public void AsignarUsuarioATarea(Tarea tareaModificada)
     {

@@ -109,15 +109,13 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                Tarea DatosTar = new Tarea();
                 Tablero editarTablero = repo.ObtenerTableroPorId(idTablero);
                 EditarTableroViewModel editarTareaVM = null;
                 editarTareaVM = EditarTableroViewModel.FromTablero(editarTablero);
-                if (isAdmin())
+                if (isAdmin() || isOperario())
                 {
                     return View(editarTareaVM);
                 }
-
                 else
                 {
                     return NotFound();
@@ -139,10 +137,10 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-
-                Tablero editarTarea = Tablero.FromEditarTableroViewModel(editarTableroVM);
-                repo.ModificarTablero(editarTarea);
-                return RedirectToAction("Index");
+                int userId = ObtenerIDDelUsuarioLogueado(cadenaConexion);
+                Tablero editarTablero = Tablero.FromEditarTableroViewModel(editarTableroVM);
+                repo.ModificarTablero(editarTablero);
+                return RedirectToAction("Index", new { userId = userId });
 
             }
             catch (Exception ex)
@@ -160,24 +158,15 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 
                 Tablero tableroAEliminar = repo.ObtenerTableroPorId(idTablero);
                 int? idUsuarioTablero = tableroAEliminar.IdUsuarioPropietario;
-                if (isAdmin())
+                if (isAdmin() || isOperario())
                 {
                     return View(tableroAEliminar);
                 }
-                else if (idTablero != null)
+                else
                 {
-                    int? ID = ObtenerIDDelUsuarioLogueado(cadenaConexion);
-                    if (ID == idUsuarioTablero)
-                    {
-                        return View(tableroAEliminar);
-
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
+                    return NotFound();
                 }
-                return View(tableroAEliminar);
+
             }
             catch (Exception ex)
             {
@@ -247,7 +236,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             string query = "SELECT * FROM Usuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
             Console.WriteLine("Consulta SQL: " + query);
             Usuario usuarioElegido = new Usuario();
-            
+
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();

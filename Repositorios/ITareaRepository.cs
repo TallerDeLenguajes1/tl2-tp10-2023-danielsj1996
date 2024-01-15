@@ -10,8 +10,8 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
         public Tarea ObtenerTareaPorId(int? idTarea); //
         public void EliminarTarea(int? idTarea);
         public Tarea ModificarTarea(Tarea tareaModificada);
-        public List<Tarea> ListarTareasDeUsuario(int? idUsuario);
-        public List<Tarea> ListarTareasDeTablero(int? idTablero);
+        public List<Tarea> ListarTareasDeUsuario(int idUsuario);
+        public List<Tarea> ListarTareasDeTablero(int idTablero);
         public void AsignarUsuarioATarea(Tarea tareaModificada);
         public void InhabilitarDeUsuario(int? IdUsuario);
 

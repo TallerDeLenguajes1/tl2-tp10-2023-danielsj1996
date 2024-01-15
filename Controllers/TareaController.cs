@@ -23,17 +23,17 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             repoTab = TabRepo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int idTablero)
         {
             try
             {
 
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 List<Tarea> tareas = null;
+                int idUsuario = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
                 if (isAdmin())
                 {
                     tareas = repoTar.ListarTareas();
-
                 }
                 else
                 {
@@ -41,6 +41,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 }
                 List<ListarTareaViewModel> listarTareasVM = ListarTareaViewModel.FromTarea(tareas);
                 return View(listarTareasVM);
+
             }
             catch (Exception ex)
             {
@@ -58,12 +59,13 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (isAdmin())
                 {
                     tareas = repoTar.ListarTareasDeTablero(idTablero);
-
                 }
-                else
+                if (isOperario())
                 {
-                    return NotFound();
+                    tareas = repoTar.ListarTareasDeTablero(idTablero);
                 }
+
+
                 List<ListarTareaViewModel> listarTareasVM = ListarTareaViewModel.FromTarea(tareas);
                 return View(listarTareasVM);
             }
@@ -296,7 +298,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
         private bool isOperario()
         {
-            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "admin")
+            if (HttpContext.Session != null && HttpContext.Session.GetString("NivelDeAcceso") == "operario")
             {
                 return true;
             }
@@ -323,7 +325,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             string query = "SELECT * FROM Usuario WHERE nombre_de_usuario=@nombre AND contrasenia=@contrasenia";
             Console.WriteLine("Consulta SQL: " + query);
             Usuario usuarioElegido = new Usuario();
-            
+
             using (SQLiteConnection connection = new SQLiteConnection(cadenaConexion))
             {
                 connection.Open();

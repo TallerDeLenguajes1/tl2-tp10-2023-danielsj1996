@@ -50,7 +50,7 @@ public class ListarTareaViewModel
             newTVM.id = tarea.IdTarea;
             newTVM.idTablero = tarea.IdTablero;
             newTVM.nombre = tarea.NombreTarea;
-            newTVM.estado =(EstadoTarea)(tl2_tp10_2023_danielsj1996.ViewModels.EstadoTarea)tarea.EstadoTarea;
+            newTVM.estado =(EstadoTarea)tarea.EstadoTarea;
             newTVM.descripcion = tarea.DescripcionTarea;
             newTVM.color = tarea.Color;
             newTVM.idUsuarioAsignado = tarea.IdUsuarioAsignado;
