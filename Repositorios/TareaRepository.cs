@@ -264,7 +264,7 @@ public class TareaRepository : ITareaRepository
         }
     }
 
-    public void InhabilitarDeUsuario(int? IdUsuario)
+    public void InhabilitarDeUsuario(int IdUsuario)
     {
         var query = "UPDATE Tarea SET estado_tarea = @estado WHERE id_usuario_propietario = @idUsaurioPropietario;";
 
@@ -284,7 +284,7 @@ public class TareaRepository : ITareaRepository
             }
         }
     }
-    public void InhabilitarDeTablero(int? IdTablero)
+    public void InhabilitarDeTablero(int IdTablero)
     {
         var query = "UPDATE Tarea SET estado_tarea=@estado WHERE id_tablero=@idTablero;";
         Console.WriteLine("Consulta SQL: " + query);

@@ -183,7 +183,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             }
 
         }
-       public void InhabilitarDeUsuario(int? IdUsuario){
+       public void InhabilitarDeUsuario(int IdUsuario){
         try{// se uso try-catch para poder lanzar la excepcion sin que se detenga el proceso ya que puede existir usuarios sin tableros
             TareaRepository repoT = new TareaRepository(CadenaConexion);
             repoT.InhabilitarDeUsuario(IdUsuario);

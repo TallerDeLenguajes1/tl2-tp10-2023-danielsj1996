@@ -26,6 +26,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         {
             try
             {
+                int idObtenido = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 List<Tablero> tableros = null;
                 if (isAdmin())
@@ -35,7 +36,6 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 else if (isOperario())
                 {
 
-                    int idObtenido = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                     if (idUsuario == idObtenido)
                     {
 
@@ -104,7 +104,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         }
 
 
-        public IActionResult EditarTablero(int? idTablero)
+        public IActionResult EditarTablero(int idTablero)
         {
             try
             {
@@ -135,12 +135,12 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         {
             try
             {
+                int userId = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                int userId = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                 Tablero editarTablero = Tablero.FromEditarTableroViewModel(editarTableroVM);
                 repo.ModificarTablero(editarTablero);
-                return RedirectToAction("Index", new { userId = userId });
+                return RedirectToAction("Index", new { idUsuario = userId });
 
             }
             catch (Exception ex)
