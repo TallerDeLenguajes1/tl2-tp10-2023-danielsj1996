@@ -98,7 +98,7 @@ namespace tl2_tp10_2023_danielsj1996.Repositorios
             return usuario;
         }
 
-        public void EliminarUsuarioPorId(int? idRecibe)
+        public void EliminarUsuarioPorId(int idRecibe)
         {
             TableroRepository repoTab = new TableroRepository(CadenaConexion);
             repoTab.InhabilitarDeUsuario(idRecibe);

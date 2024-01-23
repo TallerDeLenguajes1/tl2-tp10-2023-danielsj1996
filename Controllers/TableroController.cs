@@ -32,27 +32,52 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 if (isAdmin())
                 {
                     tableros = repo.ListarTodosTableros();
+                    List<ListarTableroEspecificoViewModel> listarTablerosVM = ListarTableroEspecificoViewModel.FromTablero(tableros);
+                    return View(listarTablerosVM);
                 }
                 else if (isOperario())
                 {
+                    return RedirectToAction("MostrarTablerosDeUsuarioEspecificos", new { idUsuario = idObtenido });
+                }
+                else
+                {
+                    return NotFound();
+                }
 
+
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.ToString());
+                return BadRequest();
+            }
+        }
+        public IActionResult MostrarTablerosDeUsuarioEspecificos(int idUsuario)
+        {
+            try
+            {
+                int idObtenido = ObtenerIDDelUsuarioLogueado(cadenaConexion);
+                if (!isLogin()) return RedirectToAction("Index", "Login");
+                List<Tablero> tableros = null;
+                if (isOperario())
+                {
                     if (idUsuario == idObtenido)
                     {
-
                         tableros = repo.ListarTablerosDeUsuarioEspecifico(idObtenido);
+                        List<ListarTableroEspecificoViewModel> listarTablerosVM2 = ListarTableroEspecificoViewModel.FromTablero(tableros);
+                        return View(listarTablerosVM2);
                     }
                     else
                     {
                         return NotFound("No tienes permisos para acceder a los tableros de otro usuario.");
                     }
                 }
-
                 else
                 {
                     return NotFound();
                 }
-                List<ListarTableroViewModel> listarTablerosVM = ListarTableroViewModel.FromTablero(tableros);
-                return View(listarTablerosVM);
+
 
             }
             catch (Exception ex)

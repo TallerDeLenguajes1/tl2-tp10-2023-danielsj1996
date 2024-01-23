@@ -31,7 +31,7 @@
                     <td>@tablero.Descripcion</td>
                     <td>@tablero.Estado</td>
                     <td>
-                        <a asp-controller="Tarea" asp-action="MostrarTareaDeTablero" asp-route-idTablero="@tablero.Id">Ver Tareas del Tablero</a>
+                        <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">Ver Tareas del Tablero</a>
                     </td>
                     <td> <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Editar</a>
                     </td>

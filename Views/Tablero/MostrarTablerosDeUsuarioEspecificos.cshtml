@@ -1,14 +1,12 @@
 @{
     ViewData["Title"] = "Tableros";
 }
-@model List<tl2_tp10_2023_danielsj1996.ViewModels.ListarTableroViewModel>
+@model List<tl2_tp10_2023_danielsj1996.ViewModels.ListarTableroEspecificoViewModel>
 
 <h2>@ViewData["Title"]</h2>
 
-<div class="table">
-    <table>
+    <table class="table">
         <thead>
-
             <tr>
                 <th>Id</th>
                 <th>IdUsuarioPropietario</th>
@@ -28,14 +26,12 @@
                     <td>@tablero.Nombre</td>
                     <td>@tablero.Descripcion</td>
                     <td>@tablero.Estado</td>
-                    <td>
-                        <a asp-controller="Tarea" asp-action="MostrarTareaDeTablero" asp-route-idTablero="@tablero.Id">Ver Tareas del
-                            Tablero</a>
+
+                    <td> <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Editar</a>
                     </td>
                 </tr>
             }
         </tbody>
-
 
 
     </table>

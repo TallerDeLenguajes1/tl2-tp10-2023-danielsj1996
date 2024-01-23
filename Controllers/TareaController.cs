@@ -30,32 +30,6 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
 
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 List<Tarea> tareas = null;
-                int idUsuario = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
-                if (isAdmin())
-                {
-                    tareas = repoTar.ListarTareas();
-                }
-                else
-                {
-                    return NotFound();
-                }
-                List<ListarTareaViewModel> listarTareasVM = ListarTareaViewModel.FromTarea(tareas);
-                return View(listarTareasVM);
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return BadRequest();
-            }
-        }
-        public IActionResult MostrarTareaDeTablero(int idTablero)
-        {
-            try
-            {
-
-                if (!isLogin()) return RedirectToAction("Index", "Login");
-                List<Tarea> tareas = null;
                 if (isAdmin())
                 {
                     tareas = repoTar.ListarTareasDeTablero(idTablero);
@@ -82,8 +56,6 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             try
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                if (!isAdmin()) return NotFound();
-
                 CrearTareaViewModel nuevaTareaVM = new CrearTareaViewModel();
                 return View(nuevaTareaVM);
             }
@@ -103,8 +75,6 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
-                if (!isAdmin()) return NotFound();
-
                 Tarea nuevaTarea = Tarea.FromCrearTareaViewModel(nuevaTareaVM);
                 repoTar.CrearTarea(nuevaTarea);
                 return RedirectToAction("Index");
@@ -127,11 +97,10 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 Tarea editarTarea = repoTar.ObtenerTareaPorId(idTarea);
                 EditarTareaViewModel editarTareaVM = null;
                 editarTareaVM = EditarTareaViewModel.FromTarea(editarTarea);
-                if (isAdmin())
+                if (isAdmin() || isOperario())
                 {
                     return View(editarTareaVM);
                 }
-
                 else
                 {
                     return NotFound();
@@ -151,6 +120,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         {
             try
             {
+                
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
 
@@ -177,7 +147,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 Tarea tareaAEliminar = repoTar.ObtenerTareaPorId(idTarea);
                 int? idUsuarioTarea = tareaAEliminar.IdUsuarioPropietario;
 
-                if (isAdmin())
+                if (isAdmin() || isOperario())
                 {
                     return View(tareaAEliminar);
                 }
