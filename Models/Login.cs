@@ -24,6 +24,7 @@ public class Login
 
         nombre = login.Nombre;
         contrasenia = login.Contrasenia;
+        nivel = login.Nivel;
     }
 
 

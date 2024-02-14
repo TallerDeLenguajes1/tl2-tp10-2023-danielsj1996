@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using tl2_tp10_2023_danielsj1996.Models;
 
 namespace tl2_tp10_2023_danielsj1996.ViewModels;
 public class LoginViewModel
@@ -16,8 +17,13 @@ public class LoginViewModel
     [PasswordPropertyText]
     [Display(Name = "Contraseña")]
     public string Contrasenia { get => contrasenia; set => contrasenia = value; }
+    private NivelDeAcceso nivel;
+    [Required(ErrorMessage = "Este campo es requerido")]
+    [PasswordPropertyText]
+    [Display(Name = "Contraseña")]
+    public NivelDeAcceso Nivel { get => nivel; set => nivel = value; }
 
-    
+
 
 
 }

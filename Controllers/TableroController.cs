@@ -12,13 +12,15 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
     {
         private readonly ITableroRepository repo;
         private readonly ITareaRepository repoTar;
+        private readonly IUsuarioRepository repoUsu;
         private readonly string cadenaConexion = "Data Source = DB/kanban.db;Cache=Shared";
         private readonly ILogger<HomeController> _logger;
-        public TableroController(ILogger<HomeController> logger, ITableroRepository TabRepo, ITareaRepository TarRepo)
+        public TableroController(ILogger<HomeController> logger, ITableroRepository TabRepo, ITareaRepository TarRepo, IUsuarioRepository UsuRepo)
         {
             _logger = logger;
             repo = TabRepo;
             repoTar = TarRepo;
+            repoUsu = UsuRepo;
 
         }
 
@@ -28,44 +30,20 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 int idObtenido = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                 if (!isLogin()) return RedirectToAction("Index", "Login");
+                ViewData["IdUsuarioLogueado"] = idObtenido;
                 List<Tablero> tableros = null;
                 if (isAdmin())
                 {
-                    tableros = repo.ListarTodosTableros();
-                    List<ListarTableroEspecificoViewModel> listarTablerosVM = ListarTableroEspecificoViewModel.FromTablero(tableros);
+                    tableros = repo.ListarTodosTableros(idObtenido);
+                    List<ListarTableroViewModel> listarTablerosVM = ListarTableroViewModel.FromTablero(tableros);
                     return View(listarTablerosVM);
                 }
                 else if (isOperario())
                 {
-                    return RedirectToAction("MostrarTablerosDeUsuarioEspecificos", new { idUsuario = idObtenido });
-                }
-                else
-                {
-                    return NotFound();
-                }
-
-
-
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.ToString());
-                return BadRequest();
-            }
-        }
-        public IActionResult MostrarTablerosDeUsuarioEspecificos(int idUsuario)
-        {
-            try
-            {
-                int idObtenido = ObtenerIDDelUsuarioLogueado(cadenaConexion);
-                if (!isLogin()) return RedirectToAction("Index", "Login");
-                List<Tablero> tableros = null;
-                if (isOperario())
-                {
                     if (idUsuario == idObtenido)
                     {
-                        tableros = repo.ListarTablerosDeUsuarioEspecifico(idObtenido);
-                        List<ListarTableroEspecificoViewModel> listarTablerosVM2 = ListarTableroEspecificoViewModel.FromTablero(tableros);
+                        tableros = repo.ListarTodosTableros(idObtenido);
+                        List<ListarTableroViewModel> listarTablerosVM2 = ListarTableroViewModel.FromTablero(tableros);
                         return View(listarTablerosVM2);
                     }
                     else
@@ -79,6 +57,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
                 }
 
 
+
             }
             catch (Exception ex)
             {
@@ -87,6 +66,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             }
         }
 
+
         [HttpGet]
         public IActionResult CrearTablero()
         {
@@ -94,8 +74,11 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
             {
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 if (!isAdmin()) return NotFound();
-
-                CrearTableroViewModel nuevaTableroVM = new CrearTableroViewModel();
+                List<Usuario> listaDeUsuarios = repoUsu.TraerTodosLosUsuarios();
+                CrearTableroViewModel nuevaTableroVM = new CrearTableroViewModel()
+                {
+                    ListaDeUsuarios = listaDeUsuarios
+                };
                 return View(nuevaTableroVM);
             }
             catch (Exception ex)
@@ -112,13 +95,13 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         {
             try
             {
+                int idObtenido = ObtenerIDDelUsuarioLogueado(cadenaConexion);
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 if (!isAdmin()) return NotFound();
-
                 Tablero nuevaTablero = Tablero.FromCrearTableroViewModel(nuevaTableroVM);
                 repo.CrearTablero(nuevaTablero);
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { idUsuario = idObtenido });
 
             }
             catch (Exception ex)

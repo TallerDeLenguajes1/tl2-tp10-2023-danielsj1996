@@ -31,13 +31,19 @@
                     <td>@tablero.Descripcion</td>
                     <td>@tablero.Estado</td>
                     <td>
-                        <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">Ver Tareas del Tablero</a>
+                        @if ((int)ViewData["IdUsuarioLogueado"] == tablero.IdUsuarioPropietario){
+                            <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">Ver Tareas del Tablero</a>
+                        }
                     </td>
-                    <td> <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Editar</a>
+                    <td> 
+                        @if ((int)ViewData["IdUsuarioLogueado"] == tablero.IdUsuarioPropietario){
+                                   <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Editar</a>
+                                   }
                     </td>
-                    <td> <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id">Eliminar
-                            Tablero</a>
-                    </td>
+                    <td>
+                         @if ((int)ViewData["IdUsuarioLogueado"] == tablero.IdUsuarioPropietario){
+                            <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id">Eliminar Tablero</a>
+                            }               </td>
                 </tr>
             }
         </tbody>

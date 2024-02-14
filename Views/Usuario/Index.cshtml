@@ -14,6 +14,7 @@
         <tr>
             <th>ID #</th>
             <th>Nombre</th>
+            <th>Nivel de Acceso</th>
             <th></th>
         </tr>
     </thead>
@@ -23,6 +24,7 @@
             <tr>
                 <td>@usuario.Id</td>
                 <td>@usuario.Nombre</td>
+                <td>@usuario.Nivel.ToString()</td>
                 <td>
                     <a asp-controller="Tablero" asp-action="Index" asp-route-idUsuario="@usuario.Id">Ver Tableros de este Usuario</a>
                     <a asp-controller="Usuario" asp-action="EditarUsuario" asp-route-idUsuario="@usuario.Id">Editar</a>
