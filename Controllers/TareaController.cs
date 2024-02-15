@@ -27,16 +27,17 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         {
             try
             {
-
+                int idObtenido = ObtenerIDDelUsuarioLogueado(cadenadeconexion);
                 if (!isLogin()) return RedirectToAction("Index", "Login");
                 List<Tarea> tareas = null;
+                ViewData["IdUsuarioLogueado"] = idObtenido;
                 if (isAdmin())
                 {
-                    tareas = repoTar.ListarTareasDeTablero(idTablero);
+                    tareas = repoTar.ListarTareasDeUsuario(idObtenido);
                 }
                 if (isOperario())
                 {
-                    tareas = repoTar.ListarTareasDeTablero(idTablero);
+                    tareas = repoTar.ListarTareasDeUsuario(idObtenido);
                 }
 
 
@@ -120,7 +121,7 @@ namespace tl2_tp10_2023_danielsj1996.Controllers
         {
             try
             {
-                
+
                 if (!ModelState.IsValid) return RedirectToAction("Index", "Login");
                 if (!isLogin()) return RedirectToAction("Index", "Login");
 

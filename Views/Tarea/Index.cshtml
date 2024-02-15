@@ -32,13 +32,17 @@
                 <td>@tarea.Color</td>
                 <td>@tarea.IdUsuarioAsignado</td>
                 <td>@tarea.IdUsuarioPropietario</td>
-                <td>
-                    <a asp-controller="Tarea" asp-action="EditarTarea" asp-route-idTarea="@tarea.Id">Editar</a>
+                
+                <td>@if ((int)ViewData["IdUsuarioLogueado"] == tarea.IdUsuarioAsignado){ <a asp-controller="Tarea" asp-action="EditarTarea" asp-route-idTarea="@tarea.Id">Editar</a>
+                }
                 </td>
-                <td> <a asp-controller="Tarea" asp-action="AsignarUsuarioATarea" asp-route-idTarea="@tarea.Id">Asignar Usuario a Tarea</a>
-                </td>
-                <td><a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id">Eliminar</a>
-                </td>
+
+                <td>@if ((int)ViewData["IdUsuarioLogueado"] == tarea.IdUsuarioPropietario)
+                    {
+                        <a asp-controller="Tarea" asp-action="AsignarUsuarioATarea" asp-route-idTarea="@tarea.Id">Asignar Usuario a Tarea</a>
+                    }</td>
+                <td>@if ((int)ViewData["IdUsuarioLogueado"] == tarea.IdUsuarioPropietario){ <a asp-controller="Tarea" asp-action="EliminarTarea" asp-route-idTarea="@tarea.Id">Eliminar</a>
+                }</td>
 
             </tr>
         }
