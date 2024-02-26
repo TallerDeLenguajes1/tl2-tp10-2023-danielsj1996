@@ -1,62 +1,30 @@
+@using tl2_tp10_2023_danielsj1996.Repositorios
 @{
-    ViewData["Title"] = "Tableros";
+    ViewData["Title"] = "Index Tablero";
 }
-@model List<tl2_tp10_2023_danielsj1996.ViewModels.ListarTableroViewModel>
+<h1>Opciones de Tablero</h1>
 
-<h2>@ViewData["Title"]</h2>
+<div class="table-responsive">
+    @if (Autorizacion.EsAdmin(ViewContext.HttpContext))
+    {
+        <form asp-controller="Tablero" asp-action="BuscarTableroPorNombre" method="get" class="w-100">
+            <div class="input-group mb-3">
+                <input type="text" name="nombre" class="form-control " placeholder="Nombre del tablero"
+                    aria-label="Nombre del tablero" aria-describedby="button-addon2">
+                <button class="btn btn-primary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
+            </div>
+        </form>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero=null>Ver Tareas de Todos los
-                    Tableros</a>
-            </tr>
-            <tr>
-                <th>Id</th>
-                <th>IdUsuarioPropietario</th>
-                <th>Nombre</th>
-                <th>Descripcion</th>
-                <th>Estado</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var tablero in Model)
-            {
+        <a asp-controller="Tablero" asp-action="CrearTablero"
+            class="list-group-item list-group-item-action bg-success text-white mb-3"><i class="fas fa-plus me-2"></i>Crear
+            Tablero</a>
 
-                <tr>
-                    <td>@tablero.Id</td>
-                    <td>@tablero.IdUsuarioPropietario</td>
-                    <td>@tablero.Nombre</td>
-                    <td>@tablero.Descripcion</td>
-                    <td>@tablero.Estado</td>
-                    <td>
-                        @if ((int)ViewData["IdUsuarioLogueado"] == tablero.IdUsuarioPropietario){
-                            <a asp-controller="Tarea" asp-action="Index" asp-route-idTablero="@tablero.Id">Ver Tareas del Tablero</a>
-                        }
-                    </td>
-                    <td> 
-                        @if ((int)ViewData["IdUsuarioLogueado"] == tablero.IdUsuarioPropietario){
-                                   <a asp-controller="Tablero" asp-action="EditarTablero" asp-route-idTablero="@tablero.Id">Editar</a>
-                                   }
-                    </td>
-                    <td>
-                         @if ((int)ViewData["IdUsuarioLogueado"] == tablero.IdUsuarioPropietario){
-                            <a asp-controller="Tablero" asp-action="EliminarTablero" asp-route-idTablero="@tablero.Id">Eliminar Tablero</a>
-                            }               </td>
-                </tr>
-            }
-        </tbody>
-        <tfoot>
-            <tr>
-                <a asp-controller="Tablero" asp-action="CrearTablero">AgregarTablero</a>
-            </tr>
-
-        </tfoot>
-
-
-    </table>
-
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+        <a asp-controller="Tablero" asp-action="MostrarTodosLosTableros"
+            class="list-group-item list-group-item-action bg-primary text-white mb-3"><i
+                class="fas fa-list me-2"></i>Mostrar todas las Tableros</a>
     }
+    <a asp-controller="Tablero" asp-action="ListarTablerosDeUsuarioEspecifico"
+        asp-route-idUsuario="@Autorizacion.ObtenerIdUsuario(ViewContext.HttpContext)"
+        class="list-group-item list-group-item-action bg-primary text-white">
+        <i class="fas fa-tasks me-2"></i>Mostrar Mis Tableros</a>
+</div>

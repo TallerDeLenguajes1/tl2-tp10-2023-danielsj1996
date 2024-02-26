@@ -1,0 +1,63 @@
+@{
+    ViewData["Title"] = "Tareas de Tablero por ID";
+}
+
+@using tl2_tp10_2023_danielsj1996.Repositorios
+@model tl2_tp10_2023_danielsj1996.ViewModels.ListarTareaViewModel
+
+<h1>Lista de Tareas del Tablero</h1>
+
+<table class="table table">
+    <thead>
+        <tr>
+            <th scope="col">Nro</th>
+            <th scope="col">Nombre de la tarea</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Color</th>
+            <th scope="col">Usuario Asignado</th>
+            <th scope="col">Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListaTareasVM!.Count > 0)
+        {
+            @foreach (var tarea in Model.ListaTareasVM!)
+            {
+                <tr>
+                    <td>@(Model.ListaTareasVM.IndexOf(tarea) + 1)</td>
+                    <td>@tarea.NombreTareaVM</td>
+                    <td>@tarea.DescripcionTareaVM</td>
+                    <td>@tarea.EstadoTareaVM</td>
+                    <td><input type="color" value="@tarea.ColorVM" disabled /></td>
+                    <td>@if (tarea.IdUsuarioAsignadoVM == 0)
+                        {
+                            <span class="text-danger"><strong>No asignado</strong></span>
+                        }
+                        else
+                        {
+                            <span>@tarea.NombreUsuarioAsignadoVM</span>
+                        }
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Opciones">
+                            <a asp-controller="Tarea" asp-action="ModificarTarea" class="btn btn-primary"
+                                asp-route-idTarea="@tarea.IdTareaVM"><i class="fas fa-edit me-1"></i>Editar</a>
+                            <a asp-controller="Tarea" asp-action="EliminarTarea" class="btn btn-danger"
+                                asp-route-idTarea="@tarea.IdTareaVM"><i class="fas fa-trash-alt me-1"></i>Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8">El Tablero no tiene tareas disponibles.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

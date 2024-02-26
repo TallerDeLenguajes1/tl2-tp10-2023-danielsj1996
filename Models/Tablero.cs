@@ -4,64 +4,32 @@ using tl2_tp10_2023_danielsj1996.ViewModels;
 namespace tl2_tp10_2023_danielsj1996.Models
 {
 
-    public enum EstadoTablero
-    {
-        Active = 1,
-        Unnactive = 2
-    }
     public class Tablero
     {
         private int idTablero;
-        private int? idUsuarioPropietario;
+        private int idUsuarioPropietario;
         private string? nombreDeTablero;
         private string? descripcionDeTablero;
-        private EstadoTablero estadoTablero;
+        private string? nombreDePropietario;
+
 
 
 
         public int IdTablero { get => idTablero; set => idTablero = value; }
-        public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
+        public int IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
         public string? NombreDeTablero { get => nombreDeTablero; set => nombreDeTablero = value; }
         public string? DescripcionDeTablero { get => descripcionDeTablero; set => descripcionDeTablero = value; }
-        public EstadoTablero EstadoTablero { get => estadoTablero; set => estadoTablero = value; }
-        
+        public string? NombreDePropietario { get => nombreDePropietario; set => nombreDePropietario = value; }
 
         public Tablero() { }
 
-        public Tablero(int idTablero, int? idUsuarioPropietario, string? nombreDeTablero, string? descripcionDeTablero, EstadoTablero estadoTablero)
+        public Tablero(TableroViewModel tableroViewModel)
         {
-            IdTablero = idTablero;
-            IdUsuarioPropietario = idUsuarioPropietario;
-            NombreDeTablero = nombreDeTablero;
-            DescripcionDeTablero = descripcionDeTablero;
-            EstadoTablero = estadoTablero;
+            IdTablero = tableroViewModel.IdTableroVM;
+            IdUsuarioPropietario = tableroViewModel.IdUsuarioPropietarioVM;
+            NombreDeTablero = tableroViewModel.NombreTableroVM;
+            DescripcionDeTablero = tableroViewModel.DescripcionVM;
+            NombreDePropietario=tableroViewModel.NombrePropietarioVM;
         }
-
-        public static Tablero FromCrearTableroViewModel(CrearTableroViewModel tableroVM)
-        {
-            return new Tablero
-            {
-                idUsuarioPropietario = tableroVM.IdUsuarioPropietario,
-                nombreDeTablero = tableroVM.Nombre,
-                descripcionDeTablero = tableroVM.Descripcion,
-                estadoTablero = (tl2_tp10_2023_danielsj1996.Models.EstadoTablero)tableroVM.EstadoTablero
-            };
-
-        }
-        public static Tablero FromEditarTableroViewModel(EditarTableroViewModel tableroVM)
-        {
-            return new Tablero
-            {
-                idTablero = tableroVM.Id,
-                idUsuarioPropietario = tableroVM.IdUsuarioPropietario,
-                nombreDeTablero = tableroVM.Nombre,
-                descripcionDeTablero = tableroVM.Descripcion,
-                estadoTablero = (tl2_tp10_2023_danielsj1996.Models.EstadoTablero)tableroVM.EstadoTablero
-            };
-
-        }
-
-
-
     }
 }

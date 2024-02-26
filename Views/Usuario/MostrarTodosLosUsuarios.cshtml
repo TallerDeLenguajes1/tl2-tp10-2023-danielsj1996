@@ -1,0 +1,68 @@
+@model ListarUsuariosViewModel
+@using tl2_tp10_2023_danielsj1996.ViewModels
+@{
+    ViewData["Title"] = "Mostrar Todos Usuario";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div>
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                <h1>Listado de Usuarios</h1>
+            </div>
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <a asp-controller="Usuario" asp-action="CrearUsuario" class="btn btn-success">
+                        <i class="fas fa-user-plus me-1"></i> Crear Usuario
+                    </a>
+                </div>
+                <div>
+                    <a asp-controller="Usuario" asp-action="MostrarTodosLosUsuarios" class="btn btn-secondary">
+                        <i class="fas fa-list me-1"></i> Mostrar Todos los Usuarios
+                    </a>
+                </div>
+                <div class="input-group w-50">
+                    <form asp-controller="Usuario" asp-action="BuscarUsuarioPorNombre" method="get">
+                        <div class="input-group">
+                            <input type="text" name="nombre" class="form-control" placeholder="Nombre de usuario"
+                                aria-label="Nombre de usuario" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" type="submit" id="button-addon2"><i
+                                    class="fas fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Rol</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var usuario in Model.ListaUsuariosVM)
+                        {
+                            <tr>
+                                <td>@usuario.IdUsuarioVM</td>
+                                <td>@usuario.NombreDeUsuarioVM</td>
+                                <td>@usuario.NivelVM</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Opciones">
+                                        <a asp-controller="Usuario" asp-action="ModificarUsuario" class="btn btn-info"
+                                            asp-route-idUsuario="@usuario.IdUsuarioVM">
+                                            <i class="fas fa-edit me-1"></i>Editar</a>
+                                        <a asp-controller="Usuario" asp-action="EliminarUsuario" class="btn btn-danger"
+                                            asp-route-idUsuario="@usuario.IdUsuarioVM">
+                                            <i class="fas fa-trash-alt me-1"></i>Eliminar</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

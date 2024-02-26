@@ -4,96 +4,41 @@ namespace tl2_tp10_2023_danielsj1996.Models;
 public enum EstadoTarea
 {
     Ideas = 1,
-    ToDo = 2,
-    Doing = 3,
-    Review = 4,
-    Done = 5,
-    inactive = 6
+    Pendiente = 2,
+    EnProceso = 3,
+    Revisar = 4,
+    Realizada = 5,
+    
 }
 
-public class Tarea
-{
-    private int? idTarea;
-    private int? idTablero;  // Agregar el campo idTablero
-    private string? nombreTarea;
-    private string? descripcionTarea;
-    private string? color;
-    private EstadoTarea estadoTarea;
-    private int? idUsuarioAsignado;
-    private int? idUsuarioPropietario;
-
-
-    public int? IdTarea { get => idTarea; set => idTarea = value; }
-    public int? IdTablero { get => idTablero; set => idTablero = value; } // Propiedad para el idTablero
-    public string? NombreTarea { get => nombreTarea; set => nombreTarea = value; }
-
-    public EstadoTarea EstadoTarea { get => estadoTarea; set => estadoTarea = value; }
-    public int? IdUsuarioAsignado { get => idUsuarioAsignado; set => idUsuarioAsignado = value; }
-    public string? DescripcionTarea { get => descripcionTarea; set => descripcionTarea = value; }
-    public string? Color { get => color; set => color = value; }
-    public int? IdUsuarioPropietario { get => idUsuarioPropietario; set => idUsuarioPropietario = value; }
-    public Tarea() { }
-
-    public Tarea(int? idTarea, int? idTablero, string? nombreTarea, EstadoTarea estadoTarea, int? idUsuarioAsignado, string? descripcionTarea, string? color, int? idUsuarioPropietario)
+    public class Tarea
     {
-        IdTarea = idTarea;
-        IdTablero = idTablero;
-        NombreTarea = nombreTarea;
-        EstadoTarea = estadoTarea;
-        IdUsuarioAsignado = idUsuarioAsignado;
-        DescripcionTarea = descripcionTarea;
-        Color = color;
-        IdUsuarioPropietario = idUsuarioPropietario;
-    }
+        public int IdTarea { get; set; }
+        public int IdTablero { get; set; }
+        public string? NombreTarea { get; set; }
+        public EstadoTarea EstadoTarea { get; set; }
+        public int? IdUsuarioAsignado { get; set; }
+        public string? DescripcionTarea { get; set; }
+        public string? Color { get; set; }
+        public string? NombreUsuarioAsignado { get; set; }
+        public string? NombreDelTableroPertenece { get; set; }
 
-    public static Tarea FromCrearTareaViewModel(CrearTareaViewModel tareaVM)
-    {
+        public Tarea() { }
 
-        return new Tarea
+        public Tarea(TareaViewModel tareaViewModel)
         {
-            idTablero = tareaVM.IdTablero,
-            nombreTarea = tareaVM.Nombre,
-            descripcionTarea = tareaVM.Descripcion,
-            color = tareaVM.Color,
-            estadoTarea = (tl2_tp10_2023_danielsj1996.Models.EstadoTarea)tareaVM.Estado,
-            idUsuarioAsignado = tareaVM.IdUsuarioAsignado,
-            idUsuarioPropietario = tareaVM.IdUsuarioPropietario,
-        };
-    }
-    public static Tarea FromEditarTareaViewModel(EditarTareaViewModel tareaVM)
-    {
-
-        return new Tarea
-        {
-            
-            idTarea = tareaVM.IdTarea,
-            idTablero = tareaVM.IdTablero,
-            nombreTarea = tareaVM.Nombre,
-            descripcionTarea = tareaVM.Descripcion,
-            color = tareaVM.Color,
-            estadoTarea = (tl2_tp10_2023_danielsj1996.Models.EstadoTarea)tareaVM.Estado,
-            idUsuarioAsignado = tareaVM.IdUsuarioAsignado,
-            idUsuarioPropietario = tareaVM.IdUsuarioPropietario,
-        };
-    }
-    public static Tarea FromAsignarTareaViewModel(AsignarTareaViewModel tareaVM)
-    {
-
-        return new Tarea
-        {
-            idTarea = tareaVM.Id,
-            idTablero = tareaVM.IdTablero,
-            nombreTarea = tareaVM.Nombre,
-            descripcionTarea = tareaVM.Descripcion,
-            color = tareaVM.Color,
-            estadoTarea = (tl2_tp10_2023_danielsj1996.Models.EstadoTarea)tareaVM.Estado,
-            idUsuarioAsignado = tareaVM.IdUsuarioAsignado,
-            idUsuarioPropietario = tareaVM.IdUsuarioPropietario,
-        };
+            IdTarea = tareaViewModel.IdTareaVM;
+            IdTablero = tareaViewModel.IdTableroVM;
+            NombreTarea = tareaViewModel.NombreTareaVM;
+            EstadoTarea = tareaViewModel.EstadoTareaVM;
+            IdUsuarioAsignado = tareaViewModel.IdUsuarioAsignadoVM;
+            DescripcionTarea = tareaViewModel.DescripcionTareaVM;
+            Color = tareaViewModel.ColorVM;
+            NombreUsuarioAsignado = tareaViewModel.NombreUsuarioAsignadoVM;
+            NombreDelTableroPertenece = tareaViewModel.NombreDelTableroPerteneceVM;
+        }
     }
 
-
-}
 
 
 

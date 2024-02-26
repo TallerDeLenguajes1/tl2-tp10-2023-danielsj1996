@@ -1,0 +1,44 @@
+@using tl2_tp10_2023_danielsj1996.Repositorios
+@model tl2_tp10_2023_danielsj1996.ViewModels.TableroViewModel
+@{
+    ViewData["Title"] = "Tablero Espesifico";
+}
+<h1>Tablero <strong>"@Model.NombreTableroVM"</strong></h1>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nombre de Tablero</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.NombreTableroVM</td>
+                <td>@Model.DescripcionVM</td>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Opciones">
+                        @if (Autorizacion.ObtenerRol(ViewContext.HttpContext) == "admin")
+                        {
+                            <a asp-controller="Tablero" asp-action="ModificarTablero" class="btn btn-primary"
+                                asp-route-idTablero="@Model.IdTableroVM">
+                                <i class="fas fa-edit me-1"></i>Editar</a>
+
+                            <a asp-controller="Tablero" asp-action="EliminarTablero" class="btn btn-danger"
+                                asp-route-idTablero="@Model.IdTableroVM">
+                                <i class="fas fa-trash-alt me-1"></i>Eliminar</a>
+                        }
+                        <a asp-controller="Tarea" asp-action="MostrarTareasTableroIdEspecifico" class="btn btn-info"
+                            asp-route-idTablero="@Model.IdTableroVM">
+                            <i class="bi bi-eye me-1"></i>Ver tareas</a>
+
+                        <a asp-controller="Tarea" asp-action="CrearTareaPorId" class="btn btn-secondary"
+                            asp-route-idTablero="@Model.IdTableroVM">
+                            <i class="fas fa-user-plus me-1"></i>Agregar tarea</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {}
+    "c:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {
+    "c:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+        "projectUniqueName": "c:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
         "projectName": "tl2-tp10-2023-danielsj1996",
-        "projectPath": "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
-        "packagesPath": "C:\\Users\\Usuariodgc\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Usuariodgc\\Documents\\daniel\\tl2-tp10-2023-danielsj1996\\obj\\",
+        "projectPath": "c:\\tl2-tp10-2023-danielsj1996\\tl2-tp10-2023-danielsj1996.csproj",
+        "packagesPath": "C:\\Users\\Daniels\\.nuget\\packages\\",
+        "outputPath": "c:\\tl2-tp10-2023-danielsj1996\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Usuariodgc\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Daniels\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -66,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.405\\RuntimeIdentifierGraph.json"
         }
       }
     }

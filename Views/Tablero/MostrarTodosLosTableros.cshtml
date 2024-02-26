@@ -1,0 +1,88 @@
+@using tl2_tp10_2023_danielsj1996.ViewModels
+@model tl2_tp10_2023_danielsj1996.ViewModels.ListarTablerosViewModel
+@{
+    ViewData["Title"] = "Mostrar Todos Tableros";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div>
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                <h1>Listado de todo los Tableros</h1>
+            </div>
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <a asp-controller="Tablero" asp-action="CrearTablero" class="btn btn-success"> <i
+                            class="fas fa-user-plus me-1"></i>Crear Tablero</a>
+                </div>
+                <div>
+                    <a asp-controller="Tablero" asp-action="MostrarTodosLosTableros" class="btn btn-secondary">
+                        <i class="fas fa-list me-1"></i> Mostrar Todos los Tableros
+                    </a>
+                </div>
+                <div class="input-group w-50">
+                    <form asp-controller="Tablero" asp-action="BuscarTableroPorNombre" method="get">
+                        <div class="input-group">
+                            <input type="text" name="nombre" class="form-control" placeholder="Nombre del Tablero"
+                                aria-label="Nombre del Tablero" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" type="submit" id="button-addon2"><i
+                                    class="fas fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nº</th>
+                            <th scope="col">Nombre de Tablero</th>
+                            <th scope="col">Descripcion</th>
+                            <th scope="col">Nombre del Propietario</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ListaTablerosVM.Count > 0)
+                        {
+                            @foreach (var tablero in Model.ListaTablerosVM)
+                            {
+                                <tr>
+                                    <td>@(Model.ListaTablerosVM.IndexOf(tablero) + 1)</td>
+                                    <td>@tablero.NombreTableroVM</td>
+                                    <td>@tablero.DescripcionVM</td>
+                                    <td>@tablero.NombrePropietarioVM</td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Opciones">
+                                            <a asp-controller="Tablero" asp-action="EditarTablero" class="btn btn-primary"
+                                                asp-route-idTablero="@tablero.IdTableroVM">
+                                                <i class="fas fa-edit me-1"></i>Editar</a>
+
+                                            <a asp-controller="Tablero" asp-action="EliminarTablero" class="btn btn-danger"
+                                                asp-route-idTablero="@tablero.IdTableroVM">
+                                                <i class="fas fa-trash-alt me-1"></i>Eliminar</a>
+
+                                            <a asp-controller="Tarea" asp-action="MostrarTareaDeTableroIdEspecifico"
+                                                class="btn btn-info" asp-route-idTablero="@tablero.IdTableroVM">
+                                                <i class="far fa-eye me-1"></i>Ver tareas</a>
+
+                                            <a asp-controller="Tarea" asp-action="CrearTareaPorId" class="btn btn-secondary"
+                                                asp-route-idTablero="@tablero.IdTableroVM">
+                                                <i class="fas fa-user-plus me-1"></i>Agregar tarea</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8">No hay tareas disponibles.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

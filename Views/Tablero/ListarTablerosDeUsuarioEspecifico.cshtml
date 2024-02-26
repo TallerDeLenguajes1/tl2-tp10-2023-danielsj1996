@@ -1,0 +1,61 @@
+@using tl2_tp10_2023_danielsj1996.Repositorios
+@model tl2_tp10_2023_danielsj1996.ViewModels.ListarTablerosViewModel
+@{
+    ViewData["Title"] = "Tableros del Usuario";
+}
+<h1>Listado de Tablero Del Usuario</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nº</th>
+                <th scope="col">Nombre de Tablero</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ListaTablerosVM.Count > 0)
+            {
+                @foreach (var tablero in Model.ListaTablerosVM)
+                {
+                    <tr>
+                        <td>@(Model.ListaTablerosVM.IndexOf(tablero) + 1)</td>
+                        <td>@tablero.NombreTableroVM</td>
+                        <td>@tablero.DescripcionVM</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Opciones">
+                                @if (Autorizacion.ObtenerRol(ViewContext.HttpContext) == "admin")
+
+
+
+                                {
+                                    <a asp-controller="Tablero" asp-action="ModificarTablero" class="btn btn-primary"
+                                        asp-route-idTablero="@tablero.IdTableroVM">
+                                        <i class="fas fa-edit me-1"></i>Editar</a>
+                                    <a asp-controller="Tablero" asp-action="EliminarTablero" class="btn btn-danger"
+                                        asp-route-idTablero="@tablero.IdTableroVM">
+                                        <i class="fas fa-trash-alt me-1"></i>Eliminar</a>
+                                }
+                                <a asp-controller="Tarea" asp-action="MostrarTareasTableroIdEspecifico" class="btn btn-info"
+                                    asp-route-idTablero="@tablero.IdTableroVM">
+                                    <i class="bi bi-eye me-1"></i>Ver tareas</a>
+
+                                <a asp-controller="Tarea" asp-action="CrearTareaPorId" class="btn btn-secondary"
+                                    asp-route-idTablero="@tablero.IdTableroVM">
+                                    <i class="fas fa-user-plus me-1"></i>Agregar tarea</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8">No hay tareas disponibles.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

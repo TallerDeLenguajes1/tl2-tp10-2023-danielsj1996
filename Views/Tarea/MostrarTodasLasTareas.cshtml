@@ -1,0 +1,95 @@
+@using tl2_tp10_2023_danielsj1996.Repositorios
+@model tl2_tp10_2023_danielsj1996.ViewModels.ListarTareaViewModel
+@{
+    ViewData["Title"] = "Mostrar Todas Las Tareas";
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div>
+                <h1>Listado de tareas</h1>
+
+            <div class="mb-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <a asp-controller="Tarea" asp-action="CrearTarea" class="btn btn-success"><i
+                            class="fas fa-user-plus me-1"></i>Agregar Tareas</a>
+                </div>
+                <div>
+                    <a asp-controller="Tarea" asp-action="MostrarTodasLasTareas" class="btn btn-secondary">
+                        <i class="fas fa-list me-1"></i> Mostrar Todas las Tareas
+                    </a>
+                </div>
+                <div class="input-group w-50">
+                    <form asp-controller="Tarea" asp-action="BuscarTareasPorNombre" method="get">
+                        <div class="input-group">
+                            <input type="text" name="nombre" class="form-control" placeholder="Nombre de Tarea"
+                                aria-label="Nombre de Tarea" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" type="submit" id="button-addon2"><i
+                                    class="fas fa-search"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nº</th>
+                            <th scope="col">Nombre de la tarea</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Color</th>
+                            <th scope="col">Nombre del tablero</th>
+                            <th scope="col">Usuario Asignado</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ListaTareasVM!.Count > 0)
+                        {
+                            @foreach (var tarea in Model.ListaTareasVM!)
+                            {
+                                <tr>
+                                    <td>@(Model.ListaTareasVM.IndexOf(tarea) + 1)</td>
+                                    <td>@tarea.NombreTareaVM</td>
+                                    <td>@tarea.DescripcionTareaVM</td>
+                                    <td>@tarea.EstadoTareaVM</td>
+                                    <td><input type="color" value="@tarea.ColorVM" disabled /></td>
+                                    <td>@tarea.NombreDelTableroPerteneceVM</td>
+                                    <td>@if (tarea.IdUsuarioAsignadoVM == 0)
+                                        {
+                                            <span class="text-danger"><strong>No asignado</strong></span>
+                                        }
+                                        else
+                                        {
+                                            <span>@tarea.NombreUsuarioAsignadoVM</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group" aria-label="Opciones">
+                                            <a asp-controller="Tarea" asp-action="EditarTarea" class="btn btn-primary"
+                                                asp-route-idTarea="@tarea.IdTareaVM"><i class="fas fa-edit me-1"></i>Editar</a>
+
+                                            <a asp-controller="Tarea" asp-action="EliminarTarea" class="btn btn-danger"
+                                                asp-route-idTarea="@tarea.IdTareaVM"><i
+                                                    class="fas fa-trash-alt me-1"></i>Eliminar</a>
+
+                                            <a asp-controller="Tablero" asp-action="MostrarTableroId" class="btn btn-info"
+                                                asp-route-idTablero="@tarea.IdTableroVM">
+                                                <i class="far fa-eye me-1"></i>Ver Tablero</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="8">No hay tareas disponibles.</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

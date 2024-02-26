@@ -1,0 +1,64 @@
+@using tl2_tp10_2023_danielsj1996.Models
+@model tl2_tp10_2023_danielsj1996.ViewModels.CrearTareaViewModel
+@{
+    ViewData["Title"] = "Crear Tarea por ID de Tablero";
+}
+
+
+<h1>Crear Nueva Tarea</h1>
+
+<form asp-controller="Tarea" asp-action="ConfirmarCrearTarea" method="post">
+    <fieldset>
+        <legend>Detalles de la tarea</legend>
+        <input hidden asp-for="@Model.IdTablero">
+        <div class="form-group">
+            <label asp-for="@Model.NombreTarea" class="form-label">Nombre de la tarea</label>
+            <input type="text" asp-for="@Model.NombreTarea" class="form-control" />
+            <span asp-validation-for="@Model.NombreTarea" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.DescripcionTarea" class="form-label">Descripción</label>
+            <textarea asp-for="@Model.DescripcionTarea" class="form-control"></textarea>
+            <span asp-validation-for="@Model.DescripcionTarea" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.EstadoTarea" class="input-group-text">Estado</label>
+            <select asp-for="@Model.EstadoTarea" class="form-select" asp-items="@Html.GetEnumSelectList<EstadoTarea>()">
+                <option value="" selected disabled> ---Seleccionar--- </option>
+            </select>
+            <span asp-validation-for="@Model.EstadoTarea" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.IdUsuarioAsignado" class="input-group-text">Usuario a Asignar</label>
+            <select asp-for="@Model.IdUsuarioAsignado" class="form-select">
+                <option value="" selected>--- Sin asignar ---</option>
+                @foreach (var usuario in Model.ListadoUsuariosDisponibles!)
+                {
+                    <option value="@usuario.IdUsuario">@usuario.NombreDeUsuario</option>
+                }
+            </select>
+            <span asp-validation-for="@Model.IdUsuarioAsignado" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.ColorTarea" class="form-label" class="input-group-text">Color</label>
+            <input type="color" class="form-control form-control-color" asp-for="@Model.ColorTarea" value="#563d7c"
+                title="Selecciona un color">
+            <span asp-validation-for="@Model.ColorTarea" class="text-danger"></span>
+        </div>
+    </fieldset>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Crear Tarea</button>
+        <a asp-controller="Tarea" asp-action="MostrarTodasLasTareas" class="btn btn-danger">Cancelar</a>
+    </div>
+</form>
+</div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

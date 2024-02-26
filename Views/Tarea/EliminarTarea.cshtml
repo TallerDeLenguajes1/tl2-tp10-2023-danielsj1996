@@ -1,8 +1,8 @@
-@{ 
+@model tl2_tp10_2023_danielsj1996.Models.Tarea
+
+@{
     ViewData["Title"] = "Eliminar Tarea";
 }
-
-@model tl2_tp10_2023_danielsj1996.Models.Tarea
 
 <h2>Eliminar Tarea</h2>
 
@@ -14,9 +14,10 @@
         <dt>Nombre de la Tarea:</dt>
         <dd>@Model.NombreTarea</dd>
     </dl>
-    <form asp-controller="Tarea"asp-action="ConfirmarEliminacionTarea" method="post">
+    <form asp-controller="Tarea" asp-action="ConfirmarEliminarTarea" method="post">
         <input type="hidden" asp-for="@Model.IdTarea" />
-        <button type="submit" class="btn btn-danger">Confirmar Eliminación</button>
-        <a asp-controller="Tarea"asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-danger">Confirmar</button>
+        <input asp-for="IdTablero" type="hidden">
+        <a asp-controller="Tarea" asp-action="Index" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>

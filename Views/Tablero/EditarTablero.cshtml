@@ -1,32 +1,39 @@
 @{
-    ViewData["Title"] = "Editar Tablero";
+    ViewData["Title"] = "Confirmar Edición del Tablero";
 }
 
 @model tl2_tp10_2023_danielsj1996.ViewModels.EditarTableroViewModel
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-controller="Tablero" asp-action="EditarTableroFromForm" method="post">
-    <input hidden asp-for="@Model.Id" />
-    <input hidden asp-for="@Model.IdUsuarioPropietario" />
+<form asp-controller="Tablero" asp-action="ConfirmarEditarTablero" method="post">
+    <input hidden asp-for="@Model.IdTablero" />
+
     <div>
-        <label asp-for="@Model.Nombre"></label>
-        <input asp-for="@Model.Nombre" class="form-control" id="nombre" />
-        <span asp-validation-for="@Model.Nombre" class="text-danger"></span>
+        <label asp-for="@Model.NombreDeTablero"></label>
+        <input asp-for="@Model.NombreDeTablero" class="form-control" id="nombre" />
+        <span asp-validation-for="@Model.NombreDeTablero" class="text-danger"></span>
     </div>
     <div>
-        <label asp-for="@Model.Descripcion"></label>
-        <input asp-for="@Model.Descripcion" class="form-control" id="descripcion" />
-        <span asp-validation-for="@Model.Descripcion" class="text-danger"></span>
+        <label asp-for="@Model.DescripcionDeTablero"></label>
+        <input asp-for="@Model.DescripcionDeTablero" class="form-control" id="descripcion" />
+        <span asp-validation-for="@Model.DescripcionDeTablero" class="text-danger"></span>
     </div>
     <div>
-        <label asp-for="@Model.EstadoTablero"></label>
-        <select asp-for="@Model.EstadoTablero" asp-items="Html.GetEnumSelectList<EstadoTablero>()" class="form-control"  >
-        <option value="">Seleccionar Estado</option>
+        <label class="input-group-text" asp-for="IdUsuarioPropietario">Propietario del tablero</label>
+        <select class="form-select" asp-for="IdUsuarioPropietario">
+            <option value="" selected disabled>Seleccione un Usuario</option>
+            @foreach (var tablero in Model.ListadoUsuarios!)
+            {
+                <option value="@tablero.IdUsuario">@tablero.NombreDeUsuario</option>
+            }
         </select>
-        <span asp-validation-for="@Model.EstadoTablero" class="text-danger"></span>
+        <span asp-validation-for="IdUsuarioPropietario" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Guardar Cambio</button>
+    <button type="submit" class="btn btn-success">Actualizar</button>
+    <a asp-controller="Tablero" asp-action="MostrarTodosLosTablero" class="btn btn-danger ms-2">Cancelar</a>
 </form>
 
-@section Scripts {<partial name="_ValidationScriptsPartial"/>}
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,54 @@
+@using tl2_tp10_2023_danielsj1996.Repositorios
+@model tl2_tp10_2023_danielsj1996.ViewModels.ListarTareaViewModel
+@{
+    ViewData["Title"] = "Mostrar Tarea del Usuario";
+}
+<h1>Listado de tarea del Usuario</h1>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Nro</th>
+                <th scope="col">Nombre de la tarea</th>
+                <th scope="col">Descripción</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Color</th>
+                <th scope="col">Nombre del tablero</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ListaTareasVM!.Count > 0)
+            {
+                @foreach (var tarea in Model.ListaTareasVM!)
+                {
+                    <tr>
+                        <td>@(Model.ListaTareasVM.IndexOf(tarea) + 1)</td>
+                        <td>@tarea.NombreTareaVM</td>
+                        <td>@tarea.DescripcionTareaVM</td>
+                        <td>@tarea.EstadoTareaVM</td>
+                        <td><input type="color" value="@tarea.ColorVM" disabled /></td>
+                        <td>@tarea.NombreDelTableroPerteneceVM</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Opciones">
+                                <a asp-controller="Tarea" asp-action="ModificarTarea" class="btn btn-primary"
+                                    asp-route-idTarea="@tarea.IdTareaVM"><i class="fas fa-edit me-1"></i>Editar</a>
+                                <a asp-controller="Tarea" asp-action="EliminarTarea" class="btn btn-danger"
+                                    asp-route-idTarea="@tarea.IdTareaVM"><i class="fas fa-trash-alt me-1"></i>Eliminar</a>
+                                <a asp-controller="Tablero" asp-action="MostrarTableroId" class="btn btn-info"
+                                    asp-route-idTablero="@tarea.IdTableroVM">
+                                    <i class="far fa-eye me-1"></i>Ver Tablero</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8">No hay tareas disponibles.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

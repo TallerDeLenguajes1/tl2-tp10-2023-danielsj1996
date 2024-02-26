@@ -1,49 +1,31 @@
 namespace tl2_tp10_2023_danielsj1996.Models;
 
 using tl2_tp10_2023_danielsj1996.ViewModels;
-
-public class Usuario{
+public enum NivelDeAcceso
+{
+    admin = 1,
+    operador = 2
+}
+public class Usuario
+{
     private int idUsuario;
     private string? nombreDeUsuario;
     private string contrasenia;
-    private int nivel;
-    
-
-    public Usuario(){
-
-    }
-
-    public Usuario(int idUsuario, string? nombreDeUsuario, string contrasenia, int nivel)
-    {
-        this.idUsuario = idUsuario;
-        this.nombreDeUsuario = nombreDeUsuario;
-        this.contrasenia = contrasenia;
-        this.nivel = nivel;
-    }
+    private NivelDeAcceso nivel;
 
     public int IdUsuario { get => idUsuario; set => idUsuario = value; }
     public string? NombreDeUsuario { get => nombreDeUsuario; set => nombreDeUsuario = value; }
     public string Contrasenia { get => contrasenia; set => contrasenia = value; }
-    public int Nivel { get => nivel; set => nivel = value; }
+    public NivelDeAcceso Nivel { get => nivel; set => nivel = value; }
 
-    public static Usuario FromCrearUsuarioViewModel(CrearUsuarioViewModel usuarioVM)
+    public Usuario() { }
+
+    public Usuario(UsuarioViewModel usuarioViewModel)
     {
-        return new Usuario
-        {
-            nombreDeUsuario = usuarioVM.Nombre,
-            Contrasenia = usuarioVM.Contrasenia,
-            Nivel = usuarioVM.Nivel
-        };
+
+        IdUsuario = usuarioViewModel.IdUsuarioVM;
+        NombreDeUsuario = usuarioViewModel.NombreDeUsuarioVM;
+        Contrasenia = usuarioViewModel.ContraseniaVM;
+        Nivel = usuarioViewModel.NivelVM;
     }
-    public static Usuario FromEditarUsuarioViewModel(EditarUsuarioViewModel usuarioVM)
-    {
-        return new Usuario
-        {
-            idUsuario = usuarioVM.Id,
-            nombreDeUsuario = usuarioVM.Nombre,
-            Contrasenia = usuarioVM.Contrasenia,
-            Nivel = usuarioVM.Nivel
-        };
-    }
-    
 }

@@ -1,0 +1,13 @@
+agregar nombre en cada id en los campos de la tabla //
+fijarme que funcionen todas las paginas correctamente con los botones correspondientes//
+se puede presentar discriminando por td como hice en editar tarea // Corregir para que funcione correctamente //
+el usuario admin puede hacer de todo // 
+el operador no puede crear otros usuarios //
+solamente puede crear tableros y crear tareas en sus propios tableros nada mas y 
+tiene que tener el boton de editar tarea en los tableros donde tiene asignado tareas para modificar el estado de la tarea//
+Agregar en la vista de editar que muestre la tarea/tablero el nombre del mismo//
+sacar de todos los controladores la consulta de obtener id del usuario logueado y mandarla directamente al repositorio de usuarios // 
+
+ 
+
+
