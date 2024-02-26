@@ -23,11 +23,11 @@
             class="list-group-item list-group-item-action bg-success text-white mb-3"><i class="fas fa-plus me-2"></i>Crear
             Nueva Tarea</a>
 
-        <a asp-controller="Tarea" asp-action="MostrarTodasTareas"
+        <a asp-controller="Tarea" asp-action="MostrarTodasLasTareas"
             class="list-group-item list-group-item-action bg-primary text-white mb-3"><i
                 class="fas fa-list me-2"></i>Mostrar todas las Tareas</a>
     }
-    <a asp-controller="Tarea" asp-action="MostrarTareasUsuarioEspecifico"
+    <a asp-controller="Tarea" asp-action="ModificarTareaDeUsuarioEspecifico"
         asp-route-idUsuario="@Autorizacion.ObtenerIdUsuario(ViewContext.HttpContext)"
         class="list-group-item list-group-item-action bg-primary text-white">
         <i class="fas fa-tasks me-2"></i>Mostrar Mis Tareas</a>
